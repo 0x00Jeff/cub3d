@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/21 19:01:51 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/21 20:49:44 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(void)
 		return (-1);
 	install_hooks(&vars);
 	clear_screen(&vars);
-	draw_player(&vars, 0, 0);
+	draw_player(&vars, DICK_SIZE, 0);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	return (0);

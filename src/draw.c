@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/21 19:01:07 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/21 20:52:18 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,18 @@
 int		adjust_transparancy(int color, float trans);
 void	draw_player(t_vars *vars, int start_x, int start_y)
 {
-	for (int i = 0; i < 69; i++)
+	int size;
+	for (size = 0; size <= DICK_SIZE; size++)
 	{
-		for (int j = 0; j < 69; j++)
-			protected_mlx_put_pixel(vars -> image, start_x + i, start_y + j, 0xffffffff);
+		for (int j = -size; j <= size; j++)
+			protected_mlx_put_pixel(vars -> image, start_x + j, start_y, 0xffffffff);
+		start_y++;
+	}
+	for (; size >= 0; size--)
+	{
+		for (int j = -size; j <= size; j++)
+			protected_mlx_put_pixel(vars -> image, start_x + j, start_y, 0xffffffff);
+		start_y++;
 	}
 }
 

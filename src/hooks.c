@@ -1,12 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/21 20:31:59 by afatimi           #+#    #+#             */
+/*   Updated: 2024/01/21 20:53:21 by afatimi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   hooks.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/21 19:02:10 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/21 20:29:26 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +39,7 @@ void	win_close(void *param)
 
 void	print_key(void *param)
 {
-	static int	start_x;
+	static int	start_x = DICK_SIZE;
 	static int	start_y;
 	int x_step;
 	int y_step;
@@ -40,14 +52,14 @@ void	print_key(void *param)
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		win_close(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		start_x += x_step * (start_x + x_step + 69 <= M_WIDTH);
+		start_x += x_step * (start_x + x_step + DICK_SIZE <= M_WIDTH);
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		start_x -= x_step * (start_x > 0);
+		start_x -= x_step * (start_x > DICK_SIZE);
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		start_y += y_step * (start_y + y_step + 69 <= M_HEIGHT);
+		start_y += y_step * (start_y + y_step + DICK_SIZE * 2<= M_HEIGHT);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 		start_y -= y_step * (start_y > 0);
-	if (needs_clearing != (start_x << 8 ) + start_y){
+	if (needs_clearing != (start_x << 8) + start_y){
 		clear_screen(param);
 		draw_player(param, start_x, start_y);
 	}
