@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/21 18:47:30 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/21 19:02:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_key(void *param)
 		start_y -= y_step * (start_y > 0);
 	if (needs_clearing != (start_x << 8 ) + start_y){
 		clear_screen(param);
-		draw_shit(param, start_x, start_y);
+		draw_player(param, start_x, start_y);
 	}
 	printf("%.2f     \r", 1/mlx -> delta_time);
 	fflush(stdout);
