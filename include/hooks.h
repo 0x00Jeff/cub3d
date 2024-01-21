@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/20 20:47:53 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/21 16:43:25 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ enum
 };
 void	install_hooks(t_vars *vars);
 void	win_close(void *param);
-void	print_key(mlx_key_data_t keydata, void *param);
+void	print_key(void *param);
 #endif
