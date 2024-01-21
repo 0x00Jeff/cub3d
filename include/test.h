@@ -1,19 +1,19 @@
-/* ************************************************************************** */;
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 18:36:42 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/20 20:51:24 by afatimi          ###   ########.fr       */
+/*   Created: 2024/01/21 17:17:33 by afatimi           #+#    #+#             */
+/*   Updated: 2024/01/21 17:17:43 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_H
 # define TEST_H
-# include "../mlx/include/MLX42/MLX42.h"
 # include "../include/structs.h"
+# include "../mlx/include/MLX42/MLX42.h"
 
 typedef struct s_data
 {
@@ -24,5 +24,5 @@ typedef struct s_data
 	int		endian;
 }			t_data;
 
-void	install_hooks(t_vars *vars);
+void		install_hooks(t_vars *vars);
 #endif

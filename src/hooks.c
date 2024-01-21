@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/21 16:46:44 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/21 18:47:30 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,26 @@ void	print_key(void *param)
 	static int	start_y;
 	int x_step;
 	int y_step;
+	int needs_clearing;
+	mlx_t *mlx = ((t_vars *)param) -> mlx;
 
+	needs_clearing = (start_x << 8) + start_y;
 	x_step = 10;
 	y_step = 10;
-	if (mlx_is_key_down(((t_vars *)param) -> mlx, MLX_KEY_ESCAPE))
-		win_close(((t_vars *)param)->mlx);
-	clear_screen(param, start_x, start_y);
-	if (mlx_is_key_down(((t_vars *)param) -> mlx, MLX_KEY_RIGHT))
-		start_x += x_step * (start_x + x_step + 69 <= 1920);
-	if (mlx_is_key_down(((t_vars *)param) -> mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		win_close(mlx);
+	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+		start_x += x_step * (start_x + x_step + 69 <= M_WIDTH);
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 		start_x -= x_step * (start_x > 0);
-	if (mlx_is_key_down(((t_vars *)param) -> mlx, MLX_KEY_DOWN))
-		start_y += y_step * (start_y + y_step + 69 <= 1080);
-	if (mlx_is_key_down(((t_vars *)param) -> mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+		start_y += y_step * (start_y + y_step + 69 <= M_HEIGHT);
+	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 		start_y -= y_step * (start_y > 0);
-	draw_shit(param, start_x, start_y);
+	if (needs_clearing != (start_x << 8 ) + start_y){
+		clear_screen(param);
+		draw_shit(param, start_x, start_y);
+	}
+	printf("%.2f     \r", 1/mlx -> delta_time);
+	fflush(stdout);
 }
