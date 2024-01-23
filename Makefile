@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -g -ggdb3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror # -g -fsanitize=address
 
 LINK_H = -Iinclude
 
@@ -31,11 +31,8 @@ objs:
 $(NAME): $(OBJS) $(LIB)
 	$(CC) $(OBJS) $(CFLAGS) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
-$(LIB): src/draw.c
+$(LIB): objs/draw.o
 	$(CC) $(CFLAGS) $(OBJS) -shared $< -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
-
-$(OBJSFOLDER)%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(LINK_H)
 
 $(OBJSFOLDER)%.o: src/%.c #include/%.h $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@

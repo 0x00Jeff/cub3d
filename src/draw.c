@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/23 20:46:34 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 22:23:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	draw_player(t_vars *vars, int start_x, int start_y)
 	}
 }
 
-void say_hello(void *param)
+void do_graphics(void *param)
 {
 	(void)param;
 	t_vars *vars;
 
 	vars = param;
-	clear_screen(vars);
-	shoot_rays(vars, 10);
-	//printf("%.2f     \r", 1/vars -> mlx -> delta_time);
-	fflush(stdout);
+	(void)vars;
+//	clear_screen(vars);
+//	shoot_rays(vars, 10);
+//	draw_square(param, 500, 500, 50, 0x00ff00ff);
 }
 
 void	clear_screen(t_vars *vars)
@@ -109,7 +109,7 @@ void draw_line(t_vars *vars, double x, double y, double target_x, double target_
 	int i = 0;
 	while (i < step)
 	{
-		protected_mlx_put_pixel(vars -> image, roundf(x), roundf(y), 0);
+		protected_mlx_put_pixel(vars -> image, roundf(x), roundf(y), 0xff0000ff);
 		x += xinc;
 		y += yinc;
 		i++;
