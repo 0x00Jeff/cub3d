@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:17:33 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/23 18:47:13 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 19:48:19 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "../mlx/include/MLX42/MLX42.h"
 # include <dlfcn.h>
 
-typedef void (*say_hello_t)(void);
-void *module;
 
 typedef struct s_data
 {

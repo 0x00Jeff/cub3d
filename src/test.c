@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/23 19:16:38 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 19:50:25 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 		(y * data->line_length + x * (data->bits_per_pixel >> 3));
 	*(unsigned int *)dst = color;
 }
-
-
-//void	draw_random(t_data *data, int start_x, int start_y, int size, int color)
-//{
-	//int	x;
-	//int	y;
-//
-	//for (y = 0; y < ((1080 - start_y) / 69); y++)
-	//{
-		//for (x = 0; x < ((1920 - start_x) / 69); x++)
-			//draw_square(data, start_x + x * 69, start_y + y * 69, size, color);
-		//draw_square(data, start_x + x * 69, start_y + y * 69, 60, color);
-	//}
-//}
 
 int	init_mlx_data(t_vars *vars)
 {
@@ -80,22 +66,9 @@ int	main(void)
 	if (init_mlx_data(&vars) == -1)
 		return (-1);
 
-	say_hello_t say_hello_ptr;
-	while (1)
-	{
-		module = dlopen("lib/lib.so", RTLD_NOW);
-		if (!module)
-			continue;
-		say_hello_ptr = dlsym(module, "say_hello");
-		say_hello_ptr();
-		dlclose(module);
-		usleep(500000);
-		module = NULL;
-	}
-
 	install_hooks(&vars);
-	clear_screen(&vars);
-	draw_player(&vars, DICK_SIZE, 0);
+//	clear_screen(&vars);
+//	draw_player(&vars, DICK_SIZE, 0);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	return (0);

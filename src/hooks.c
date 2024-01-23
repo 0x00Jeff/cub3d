@@ -6,13 +6,14 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/23 19:02:07 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 20:42:32 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/draw.h"
 #include "../include/hooks.h"
 #include <stdio.h> // to delete;
+#include <stdlib.h>
 
 void	install_hooks(t_vars *vars)
 {
@@ -25,6 +26,17 @@ void	win_close(void *param)
 	mlx_close_window(param);
 }
 
+void hot_reload(t_vars *vars)
+{
+	dlclose(module);
+	system("make");
+	while (!module)
+		module = dlopen("lib/lib.so", RTLD_NOW);
+	do_graphics = dlsym(module, "say_hello");
+	do_graphics(vars);
+	module = NULL;
+}
+
 void	print_key(void *param)
 {
 	static int	start_x = DICK_SIZE;
@@ -33,6 +45,9 @@ void	print_key(void *param)
 	int y_step;
 	int needs_clearing;
 	mlx_t *mlx = ((t_vars *)param) -> mlx;
+
+	if (!do_graphics)
+		hot_reload(param);
 
 	needs_clearing = (start_x << 8) + start_y;
 	x_step = 10;
@@ -47,16 +62,16 @@ void	print_key(void *param)
 		start_y += y_step * (start_y + y_step + DICK_SIZE * 2<= M_HEIGHT);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 		start_y -= y_step * (start_y > 0);
-	if (needs_clearing != (start_x << 8) + start_y){
-		//clear_screen(param);
-		//draw_player(param, start_x, start_y);
-		;
+	/*
+	if (needs_clearing != (start_x << 8) + start_y)
+	{
+		if (!do_graphics)
+			hot_reload(param);
+		do_graphics(param);
 	}
+	*/
+	do_graphics(param);
 
-//		clear_screen(param);
-//		draw_player(param, start_x, start_y);
-
-//	shoot_rays(param, 50);
-	printf("%.2f     \r", 1/mlx -> delta_time);
-	fflush(stdout);
+	if (mlx_is_key_down(mlx, MLX_KEY_R))
+		hot_reload(param);
 }

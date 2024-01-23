@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/21 16:43:25 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 20:37:25 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define HOOKS_H
 # include "../mlx/include/MLX42/MLX42.h"
 # include "../include/structs.h"
+
+typedef void (*do_graphics_t)(t_vars *vars);
+do_graphics_t do_graphics = NULL;
+void *module;
 
 enum
 {

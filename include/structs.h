@@ -6,13 +6,14 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/21 20:51:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 19:49:20 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 # include "../mlx/include/MLX42/MLX42.h"
+# include <dlfcn.h>
 
 #define M_WIDTH		1920
 #define M_HEIGHT	1080
