@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:17:33 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/21 17:17:43 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 18:47:13 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define TEST_H
 # include "../include/structs.h"
 # include "../mlx/include/MLX42/MLX42.h"
+# include <dlfcn.h>
+
+typedef void (*say_hello_t)(void);
+void *module;
 
 typedef struct s_data
 {

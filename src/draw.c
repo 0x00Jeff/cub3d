@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/22 22:35:03 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 19:16:52 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	draw_player(t_vars *vars, int start_x, int start_y)
 			protected_mlx_put_pixel(vars -> image, start_x + j, start_y, 0xffffffff);
 		start_y++;
 	}
+}
+
+void say_hello(void)
+{
+	puts("345");
 }
 
 void	clear_screen(t_vars *vars)

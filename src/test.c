@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/22 20:51:10 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 19:16:38 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 int	adjust_transparancy(int color, float trans)
 {
@@ -78,6 +79,20 @@ int	main(void)
 
 	if (init_mlx_data(&vars) == -1)
 		return (-1);
+
+	say_hello_t say_hello_ptr;
+	while (1)
+	{
+		module = dlopen("lib/lib.so", RTLD_NOW);
+		if (!module)
+			continue;
+		say_hello_ptr = dlsym(module, "say_hello");
+		say_hello_ptr();
+		dlclose(module);
+		usleep(500000);
+		module = NULL;
+	}
+
 	install_hooks(&vars);
 	clear_screen(&vars);
 	draw_player(&vars, DICK_SIZE, 0);

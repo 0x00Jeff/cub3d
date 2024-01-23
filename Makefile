@@ -6,10 +6,10 @@ LINK_H = -Iinclude
 
 OBJSFOLDER = objs/
 
+LIB = lib/lib.so
+
 OBJS_FILES = test.o \
 			 hooks.o \
-			 draw.o
-
 
 OS := $(shell uname -s)
 
@@ -28,20 +28,22 @@ all: objs $(NAME)
 objs:
 	@mkdir objs
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIB)
 	$(CC) $(OBJS) $(CFLAGS) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
+
+$(LIB): src/draw.c
+	$(CC) $(CFLAGS) $(OBJS) -shared $< -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(OBJSFOLDER)%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(LINK_H)
 
 $(OBJSFOLDER)%.o: src/%.c #include/%.h $(GLOBAL_HEADERS)
-	@echo "Compiling $<..."
-	@$(CC) $(CFLAGS) $(LINK_H) -c $< -o $@
+	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
 
 re: fclean all
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(LIB)
 
 clean:
 	rm -rf $(OBJS)

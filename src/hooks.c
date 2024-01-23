@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/22 22:30:02 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/23 19:02:07 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	print_key(void *param)
 		;
 	}
 
-		clear_screen(param);
-		draw_player(param, start_x, start_y);
+//		clear_screen(param);
+//		draw_player(param, start_x, start_y);
 
-	shoot_rays(param, 50);
+//	shoot_rays(param, 50);
 	printf("%.2f     \r", 1/mlx -> delta_time);
 	fflush(stdout);
 }
