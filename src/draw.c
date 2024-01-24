@@ -6,13 +6,12 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 21:35:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 21:42:32 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/draw.h"
 #include "../include/vectors.h"
-#include "../include/new.h"
 #include <math.h>
 #include <stdio.h> // to delete
 #include <stdlib.h>
