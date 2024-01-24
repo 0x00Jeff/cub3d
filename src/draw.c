@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 21:42:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 22:38:16 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	draw_square(t_vars *vars, int x, int y, int size, int color)
 
 void	protected_mlx_put_pixel(mlx_image_t *image, int x, int y, int color)
 {
-	if (x < 0 | x >= M_WIDTH | y < 0 | y >= M_HEIGHT)
+	if ((x < 0) | (x >= M_WIDTH) | (y < 0) | (y >= M_HEIGHT))
 		return ;
 	mlx_put_pixel(image, x, y, color);
 }
@@ -158,10 +158,11 @@ void	shoot_rays(t_vars *vars, int num)
 	player = &vars->player;
 	color = adjust_transparancy(0xff0000, 0);
 	i = 0;
+	(void)i;
 	(void)num;
 
 	mlx_get_mouse_pos(vars->mlx, &mouse_pos.x, &mouse_pos.y);
-	draw_line(vars, vars->player.pos, &mouse_pos, color);
+	draw_line(vars, player -> pos, &mouse_pos, color);
 }
 
 void	draw_line(t_vars *vars, t_vector pos, t_ivector *target_pos, int color)
