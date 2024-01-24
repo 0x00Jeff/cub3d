@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/23 22:23:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 17:35:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,15 @@
 #include <math.h>
 #include <stdlib.h>
 
-int		adjust_transparancy(int color, float trans);
+int	adjust_transparancy(int color, float trans)
+{
+	if (trans < 0)
+		trans = -trans;
+	if (trans > 1)
+		trans = 1;
+	return ((color << 8) + (int)(0xff - (trans * 0xff)));
+}
+
 void	draw_player(t_vars *vars, int start_x, int start_y)
 {
 	int size;
@@ -38,16 +46,16 @@ void do_graphics(void *param)
 	(void)param;
 	t_vars *vars;
 
+	printf("do_graphics function @ %p\n", do_graphics);
 	vars = param;
 	(void)vars;
-//	clear_screen(vars);
-//	shoot_rays(vars, 10);
-//	draw_square(param, 500, 500, 50, 0x00ff00ff);
+	clear_screen(param);
+	shoot_rays(param, 10);
 }
 
 void	clear_screen(t_vars *vars)
 {
-	int adjusted_color = adjust_transparancy(0xffffff, 0.5);
+	int adjusted_color = adjust_transparancy(0xffffff, 0.1);
 	for (int i = 0; i < (1920 / 69) + 1; i++)
 	{
 		for (int j = 0; j < (1080 / 69) + 1; j++)

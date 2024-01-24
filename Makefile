@@ -8,8 +8,10 @@ OBJSFOLDER = objs/
 
 LIB = lib/lib.so
 
+HOT_RELOAD_FILES = draw.o
+
 OBJS_FILES = test.o \
-			 hooks.o \
+			 hooks.o
 
 OS := $(shell uname -s)
 
@@ -32,7 +34,7 @@ $(NAME): $(OBJS) $(LIB)
 	$(CC) $(OBJS) $(CFLAGS) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(LIB): objs/draw.o
-	$(CC) $(CFLAGS) $(OBJS) -shared $< -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
+	$(CC) $(CFLAGS) -shared $< -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(OBJSFOLDER)%.o: src/%.c #include/%.h $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@

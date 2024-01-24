@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/23 21:35:09 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 17:34:02 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 #include <stdio.h> // to delete;
 #include <stdlib.h>
 
-void hot_reload(t_vars *vars)
+void hot_reload()
 {
-	(void)vars;
-	system("make");
-	while (!module)
-		module = dlopen("lib/lib.so", RTLD_NOW);
-	do_graphics_ptr = dlsym(module, "do_graphics");
-	do_graphics_ptr(vars);
 	dlclose(module);
 	module = NULL;
+	system("make lib/lib.so");
+//	while (!module)
+	module = dlopen("lib/lib.so", RTLD_NOW);
+	do_graphics_ptr = dlsym(module, "do_graphics");
 }
 
 void	install_hooks(t_vars *vars)
 {
-	hot_reload(vars);
+	hot_reload();
 	mlx_loop_hook(vars->mlx, print_key, vars);
 	mlx_close_hook(vars->mlx, win_close, vars->mlx);
 }
@@ -64,14 +62,14 @@ void	print_key(void *param)
 		start_y += y_step * (start_y + y_step + DICK_SIZE * 2<= M_HEIGHT);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 		start_y -= y_step * (start_y > 0);
-	if (needs_clearing != (start_x << 8) + start_y){
-		do_graphics_ptr(param);
-		//clear_screen(param);
-		//draw_player(param, start_x, start_y);
-		;
-	}
-	//do_graphics_ptr(param);
+	//if (needs_clearing != (start_x << 8) + start_y){
+		//do_graphics_ptr(param);
+		////clear_screen(param);
+		////draw_player(param, start_x, start_y);
+		//;
+	//}
+	do_graphics_ptr(param);
 
 	if (mlx_is_key_down(mlx, MLX_KEY_R))
-		hot_reload(param);
+		hot_reload();
 }

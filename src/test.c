@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/23 19:50:25 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 17:22:13 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-
-int	adjust_transparancy(int color, float trans)
-{
-	if (trans < 0)
-		trans = -trans;
-	if (trans > 1)
-		trans = 1;
-	return ((color << 8) + (int)(0xff - (trans * 0xff)));
-}
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
