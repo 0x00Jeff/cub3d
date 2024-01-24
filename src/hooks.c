@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 17:34:02 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 21:14:05 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@ void hot_reload()
 	dlclose(module);
 	module = NULL;
 	system("make lib/lib.so");
-//	while (!module)
 	module = dlopen("lib/lib.so", RTLD_NOW);
 	do_graphics_ptr = dlsym(module, "do_graphics");
 }
 
 void	install_hooks(t_vars *vars)
 {
+	// TODO : move these to some kinda init_player function
+	// specially the first line for now, the second one is meh
+	vars -> player.mouse_needs_clearing = 0;
+	vars -> player.pos.x = DICK_SIZE;
 	hot_reload();
 	mlx_loop_hook(vars->mlx, print_key, vars);
 	mlx_close_hook(vars->mlx, win_close, vars->mlx);
@@ -39,29 +42,10 @@ void	win_close(void *param)
 
 void	print_key(void *param)
 {
-	static int	start_x = DICK_SIZE;
-	static int	start_y;
-	int x_step;
-	int y_step;
-	int needs_clearing;
 	mlx_t *mlx = ((t_vars *)param) -> mlx;
 
-//	if (!do_graphics_ptr)
-//		hot_reload(param);
-
-	needs_clearing = (start_x << 8) + start_y;
-	x_step = 10;
-	y_step = 10;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		win_close(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		start_x += x_step * (start_x + x_step + DICK_SIZE <= M_WIDTH);
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		start_x -= x_step * (start_x > DICK_SIZE);
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		start_y += y_step * (start_y + y_step + DICK_SIZE * 2<= M_HEIGHT);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		start_y -= y_step * (start_y > 0);
 	//if (needs_clearing != (start_x << 8) + start_y){
 		//do_graphics_ptr(param);
 		////clear_screen(param);
