@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 21:14:05 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 22:41:33 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 void hot_reload()
 {
-	dlclose(module);
+	if (module)
+		dlclose(module);
 	module = NULL;
 	system("make lib/lib.so");
 	module = dlopen("lib/lib.so", RTLD_NOW);

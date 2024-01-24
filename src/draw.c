@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 22:38:16 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 22:40:39 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,16 +153,16 @@ void	shoot_rays(t_vars *vars, int num)
 	int			i;
 	int			color;
 	t_ivector	mouse_pos;
-	t_player	*player;
+	//t_player	*player;
 
-	player = &vars->player;
+	//player = &vars->player;
 	color = adjust_transparancy(0xff0000, 0);
 	i = 0;
 	(void)i;
 	(void)num;
 
 	mlx_get_mouse_pos(vars->mlx, &mouse_pos.x, &mouse_pos.y);
-	draw_line(vars, player -> pos, &mouse_pos, color);
+	draw_line(vars, vars->player.pos, &mouse_pos, color);
 }
 
 void	draw_line(t_vars *vars, t_vector pos, t_ivector *target_pos, int color)
