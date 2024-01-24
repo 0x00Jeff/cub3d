@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 22:41:33 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 23:01:43 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	install_hooks(t_vars *vars)
 	// specially the first line for now, the second one is meh
 	vars -> player.mouse_needs_clearing = 0;
 	vars -> player.pos.x = DICK_SIZE;
+	vars -> players.angle = 180 / M_PI * 180;
 	hot_reload();
 	mlx_loop_hook(vars->mlx, print_key, vars);
 	mlx_close_hook(vars->mlx, win_close, vars->mlx);

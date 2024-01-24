@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 22:40:39 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/24 23:02:43 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,21 +153,35 @@ void	shoot_rays(t_vars *vars, int num)
 	int			i;
 	int			color;
 	t_ivector	mouse_pos;
-	//t_player	*player;
 
-	//player = &vars->player;
 	color = adjust_transparancy(0xff0000, 0);
 	i = 0;
 	(void)i;
 	(void)num;
 
+	t_vector target;
+
+	printf("player angle = %f\n", vars -> player.angle);
 	mlx_get_mouse_pos(vars->mlx, &mouse_pos.x, &mouse_pos.y);
-	draw_line(vars, vars->player.pos, &mouse_pos, color);
+	while (i < 45)
+	{
+		target.x = vars -> player.pos.x;
+		target.y = vars -> player.pos.y;
+
+		printf("new player angle = %f\n", vars -> player.angle);
+		target.x += 80 * cos((vars -> player.angle + i) * M_PI / 180);
+		target.y += 80 * sin((vars -> player.angle + i) * M_PI / 180);
+
+		draw_line(vars, vars->player.pos, &target, color);
+		i++;
+	}
+
+	//draw_line(vars, vars->player.pos, &mouse_pos, color);
 }
 
-void	draw_line(t_vars *vars, t_vector pos, t_ivector *target_pos, int color)
+void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color)
 {
-	t_ivector	delta;
+	t_vector	delta;
 	t_vector	inc;
 	double		step;
 	int			i;
@@ -175,10 +189,12 @@ void	draw_line(t_vars *vars, t_vector pos, t_ivector *target_pos, int color)
 	i = 0;
 	delta.x = target_pos->x - pos.x;
 	delta.y = target_pos->y - pos.y;
-	if (abs(delta.x) > abs(delta.y))
-		step = abs(delta.x);
+	if (abs((int)delta.x) > abs((int)delta.y))
+		step = delta.x;
 	else
-		step = abs(delta.y);
+		step = delta.y;
+	if (step < 0)
+		step *= -1;
 	inc.x = delta.x / step;
 	inc.y = delta.y / step;
 	while (i < step)
