@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 13:41:30 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/25 15:04:36 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	move_player(t_vars *vars)
 	return ;
 }
 
+/*
 void	register_mouse_pos(t_vars *vars)
 {
 	t_ivector	mouse;
@@ -96,6 +97,7 @@ void	register_mouse_pos(t_vars *vars)
 	mlx_get_mouse_pos(vars->mlx, &mouse.x, &mouse.y);
 	vars->player.mouse_needs_clearing = mouse.x * 10000 + mouse.y;
 }
+*/
 
 int	needs_clearing(t_vars *vars)
 {
@@ -126,12 +128,12 @@ void	do_graphics(void *param)
 		return ;
 	clear_screen(param);
 	draw_player(vars);
-	shoot_rays(param, 75, 100);
-	register_mouse_pos(vars);
+	shoot_rays(param, 50, 200);
+	//register_mouse_pos(vars);
 }
 
 void	clear_screen(t_vars *vars)
-{
+{;
 	int	adjusted_color;
 
 	adjusted_color = adjust_transparancy(0xffffff, 0.5);
@@ -172,24 +174,19 @@ void	shoot_rays(t_vars *vars, int num, int factor)
 {
 	int			i;
 	int			color;
-	t_ivector	mouse_pos;
 	double		angle;
 	t_vector	target;
 
 	color = adjust_transparancy(0xff0000, 0);
-	i = (-num >> 1);
-	mlx_get_mouse_pos(vars->mlx, &mouse_pos.x, &mouse_pos.y);
-	i = 0;
+	i = -num / 2;
 	angle = vars->player.angle;
-	while (i < ((num >> 1) + (num % 2)))
-	//while (i < (num >> 1))
+	while (i < ((num / 2) + (num % 2)))
 	{
 		target.x = vars->player.pos.x;
 		target.y = vars->player.pos.y;
-		target.x += factor * cos(angle * (M_PI / 180));
-		target.y += factor * sin(angle * (M_PI / 180));
+		target.x += factor * cos((angle + i) * (M_PI / 180));
+		target.y += factor * sin((angle + i) * (M_PI / 180));
 		draw_line(vars, vars->player.pos, &target, color);
-		angle++;
 		i++;
 	}
 }

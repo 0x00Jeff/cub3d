@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 13:18:22 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/25 14:54:03 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_player
 	t_vector	pos;
 	float		angle;
 	double		map_needs_clearing;
-	int			mouse_needs_clearing;
+	//int			mouse_needs_clearing;
 	float		old_angle;
 }				t_player;
 
