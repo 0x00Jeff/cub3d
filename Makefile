@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: afatimi <marvin@42.fr>                     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/01/25 18:27:58 by afatimi           #+#    #+#              #
+#    Updated: 2024/01/25 18:33:05 by afatimi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = cub3D
 
 CFLAGS = -Wall -Wextra -Werror #-g -ggdb3 -fsanitize=address
@@ -9,9 +21,10 @@ OBJSFOLDER = objs/
 LIB = lib/lib.so
 
 HOT_RELOAD_FILES = draw.o \
-				 vectors.o 
+				 vectors.o
 
 HOT_RELOAD = $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
+#HOT_RELOAD_HEAD = $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj:.o=.h))
 
 OBJS_FILES = test.o \
 			 hooks.o
@@ -28,7 +41,7 @@ OBJS = $(foreach obj, $(OBJS_FILES), $(OBJSFOLDER)$(obj))
 
 GLOBAL_HEADERS = include/structs.h
 
-all: objs $(NAME)
+all: objs $(LIB) $(NAME)
 
 objs:
 	@mkdir objs

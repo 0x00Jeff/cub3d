@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 14:54:03 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/25 16:22:26 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_vars
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_player	player;
+	t_player	player2;
 	t_ivector	mouse;
 }				t_vars;
 #endif

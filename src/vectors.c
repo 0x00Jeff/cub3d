@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:25:52 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 12:03:38 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/25 16:36:35 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ void	vect_normalize(t_vector *vect)
 float	get_vect_len(t_vector *vect)
 {
 	return (sqrt((vect->x * vect->x) + (vect->y * vect->y)));
+}
+
+float	vect_get_distance(t_vector *vect1, t_vector *vect2)
+{
+	float	dx;
+	float	dy;
+
+	dx = vect1->x - vect2->x;
+	dy = vect1->y - vect2->y;
+	return (sqrt((pow(dx, 2) + pow(dy, 2))));
 }

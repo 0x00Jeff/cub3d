@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 15:04:36 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/25 18:25:00 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <math.h>
 #include <stdio.h> // to delete
 #include <stdlib.h>
+#include <time.h>
 
 int	adjust_transparancy(int color, float trans)
 {
@@ -49,43 +50,49 @@ void	draw_player(t_vars *vars)
 	}
 }
 
+void	inc_pos_vect(t_vector *vect, double angle)
+{
+	vect->x += SPEED * cos(angle * (M_PI / 180));
+	vect->y += SPEED * sin(angle * (M_PI / 180));
+}
+
 void	move_player(t_vars *vars)
 {
 	void		*mlx;
 	t_player	*player;
-	t_vector	step;
 
-	step.x = 10;
-	step.y = 10;
 	mlx = vars->mlx;
 	player = &vars->player;
 	player->map_needs_clearing = player->pos.x * 10000 +
 		player->pos.y;
 	player->old_angle = player->angle;
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		player->angle += 3;
+		player->angle += ROT_SPEED;
+
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		player->angle -= 3;
+		player->angle -= ROT_SPEED;
+
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 	{
-		player->pos.x -= 5 * cos((player->angle - 90) * (M_PI / 180));
-		player->pos.y -= 5 * sin((player->angle - 90) * (M_PI / 180));
+		player->pos.x -= SPEED * cos((player->angle - 90) * (M_PI / 180));
+		player->pos.y -= SPEED * sin((player->angle - 90) * (M_PI / 180));
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
 	{
-		player->pos.x -= 5 * cos((player->angle + 90) * (M_PI / 180));
-		player->pos.y -= 5 * sin((player->angle + 90) * (M_PI / 180));
+		player->pos.x -= SPEED * cos((player->angle + 90) * (M_PI / 180));
+		player->pos.y -= SPEED * sin((player->angle + 90) * (M_PI / 180));
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
 	{
-		player->pos.x -= 5 * cos(player->angle * (M_PI / 180));
-		player->pos.y -= 5 * sin(player->angle * (M_PI / 180));
+		player->pos.x -= SPEED * cos(player->angle * (M_PI / 180));
+		player->pos.y -= SPEED * sin(player->angle * (M_PI / 180));
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
 	{
-		player->pos.x += 5 * cos(player->angle * (M_PI / 180));
-		player->pos.y += 5 * sin(player->angle * (M_PI / 180));
+		player->pos.x += SPEED * cos(player->angle * (M_PI / 180));
+		player->pos.y += SPEED * sin(player->angle * (M_PI / 180));
 	}
+
 	return ;
 }
 
@@ -122,20 +129,64 @@ void	do_graphics(void *param)
 {
 	t_vars	*vars;
 
+	static int dead = 0;
+	static int total = 0;
+	static int rays_number = 270;
 	vars = param;
 	move_player(vars);
+	t_player old_player = ((t_vars *)param) -> player;
 	if (!needs_clearing(vars))
 		return ;
 	clear_screen(param);
 	draw_player(vars);
-	shoot_rays(param, 50, 200);
+
+	shoot_rays(param, rays_number, 250);
+	if ((total / 20) % 2)
+		rays_number = 360;
+	else
+		rays_number = 270;
+	total++;
+
+	static t_player p =
+	{
+		.pos = {
+			.x = 900,
+			.y = 600
+		},
+		.angle = 0,
+	};
+	(void)p;
+	((t_vars *)param) -> player2 = p;
+	printf("distance = %f\n", vect_get_distance(&p.pos, &old_player.pos));
+	float d = vect_get_distance(&p.pos, &old_player.pos);
+	if (d < 350 && d > 250)
+		rays_number = 270;
+	if (vect_get_distance(&p.pos, &old_player.pos) < 250 && (total / 20) % 2)
+		dead = 1;
+	if (!dead)
+		shoot_rays(param, 380, 25);
+	if (dead)
+	{
+		do
+		{
+			srand(time(NULL));
+			p.pos.x = rand() % 1920;
+			p.pos.y = rand() % 1080;
+		}while(vect_get_distance(&p.pos, &old_player.pos) < 250);
+		dead = 0;
+	}
+
+	((t_vars *)param) -> player = old_player;
+
 	//register_mouse_pos(vars);
+	return;
 }
 
 void	clear_screen(t_vars *vars)
-{;
+{
 	int	adjusted_color;
 
+	;
 	adjusted_color = adjust_transparancy(0xffffff, 0.5);
 	for (int i = 0; i < (1920 / 69) + 1; i++)
 	{
@@ -172,22 +223,36 @@ void	protected_mlx_put_pixel(mlx_image_t *image, int x, int y, int color)
 
 void	shoot_rays(t_vars *vars, int num, int factor)
 {
-	int			i;
+	double		i;
 	int			color;
 	double		angle;
 	t_vector	target;
 
 	color = adjust_transparancy(0xff0000, 0);
+	if (num == 380)
+		color = adjust_transparancy(0x00ff00, 0);
 	i = -num / 2;
-	angle = vars->player.angle;
+	angle = vars->player.angle + 180;
 	while (i < ((num / 2) + (num % 2)))
+	{
+	if (num == 380)
+	{
+		target.x = vars->player2.pos.x;
+		target.y = vars->player2.pos.y;
+		target.x += factor * cos((angle + i) * (M_PI / 180));
+		target.y += factor * sin((angle + i) * (M_PI / 180));
+		draw_line(vars, vars->player2.pos, &target, color);
+		i += 0.5;
+	}
+	else
 	{
 		target.x = vars->player.pos.x;
 		target.y = vars->player.pos.y;
 		target.x += factor * cos((angle + i) * (M_PI / 180));
 		target.y += factor * sin((angle + i) * (M_PI / 180));
 		draw_line(vars, vars->player.pos, &target, color);
-		i++;
+		i += 0.5;
+	}
 	}
 }
 
