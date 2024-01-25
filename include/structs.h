@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 21:17:13 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:18:22 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 # define M_WIDTH 1920
 # define M_HEIGHT 1080
-# define DICK_SIZE 2
+# define DICK_SIZE 4
 
 typedef struct s_vector
 {
@@ -37,6 +37,7 @@ typedef struct s_player
 	float		angle;
 	double		map_needs_clearing;
 	int			mouse_needs_clearing;
+	float		old_angle;
 }				t_player;
 
 typedef struct s_vars

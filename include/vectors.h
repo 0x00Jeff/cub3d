@@ -6,13 +6,14 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:26:00 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 21:23:36 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/25 12:05:07 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTORS_H
 # define VECTORS_H
 # include "../include/structs.h"
+
 void	vect_assign(t_vector *to, t_vector *from);
 void	vect_add(t_vector *to, t_vector *from);
 void	vect_sub(t_vector *to, t_vector *from);

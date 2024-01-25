@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 23:01:43 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:35:14 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../include/hooks.h"
 #include <stdio.h> // to delete;
 #include <stdlib.h>
+#include <math.h>
 
 void hot_reload()
 {
@@ -31,8 +32,11 @@ void	install_hooks(t_vars *vars)
 	// specially the first line for now, the second one is meh
 	vars -> player.mouse_needs_clearing = 0;
 	vars -> player.pos.x = DICK_SIZE;
-	vars -> players.angle = 180 / M_PI * 180;
+	vars -> player.angle = 45;
+	vars -> player.map_needs_clearing = 69;
+	printf("install_hooks : player angle = %f\n", vars -> player.angle);
 	hot_reload();
+	do_graphics_ptr(vars);
 	mlx_loop_hook(vars->mlx, print_key, vars);
 	mlx_close_hook(vars->mlx, win_close, vars->mlx);
 }

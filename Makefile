@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -g -ggdb3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -ggdb3 -fsanitize=address
 
 LINK_H = -Iinclude
 
@@ -9,7 +9,7 @@ OBJSFOLDER = objs/
 LIB = lib/lib.so
 
 HOT_RELOAD_FILES = draw.o \
-				 vectors.o \
+				 vectors.o 
 
 HOT_RELOAD = $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
 
