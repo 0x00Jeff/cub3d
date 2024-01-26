@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 15:04:36 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/26 14:51:43 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	draw_player(t_vars *vars)
 	int	start_y;
 
 	start_x = (int)vars->player.pos.x;
-	start_y = (int)vars->player.pos.y - DICK_SIZE;
-	for (size = 0; size <= DICK_SIZE; size++)
+	start_y = (int)vars->player.pos.y - PLAYER_SIZE;
+	for (size = 0; size <= PLAYER_SIZE; size++)
 	{
 		for (int j = -size; j <= size; j++)
 			protected_mlx_put_pixel(vars->image, start_x + j, start_y,
@@ -47,6 +47,12 @@ void	draw_player(t_vars *vars)
 					0xffffffff);
 		start_y++;
 	}
+}
+
+void inc_pos_vect(t_vector *vect, double factor, double angle)
+{
+	vect -> x += factor * cos(angle * (M_PI / 180));
+	vect -> y += factor * sin(angle * (M_PI / 180));
 }
 
 void	move_player(t_vars *vars)
@@ -63,29 +69,17 @@ void	move_player(t_vars *vars)
 		player->pos.y;
 	player->old_angle = player->angle;
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		player->angle += 3;
+		player->angle += ROT_SPEED;
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		player->angle -= 3;
+		player->angle -= ROT_SPEED;
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
-	{
-		player->pos.x -= 5 * cos((player->angle - 90) * (M_PI / 180));
-		player->pos.y -= 5 * sin((player->angle - 90) * (M_PI / 180));
-	}
+		inc_pos_vect(&player -> pos, -SPEED, player -> angle - 90);
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
-	{
-		player->pos.x -= 5 * cos((player->angle + 90) * (M_PI / 180));
-		player->pos.y -= 5 * sin((player->angle + 90) * (M_PI / 180));
-	}
+		inc_pos_vect(&player -> pos, -SPEED, player -> angle + 90);
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
-	{
-		player->pos.x -= 5 * cos(player->angle * (M_PI / 180));
-		player->pos.y -= 5 * sin(player->angle * (M_PI / 180));
-	}
+		inc_pos_vect(&player -> pos, -SPEED, player -> angle);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
-	{
-		player->pos.x += 5 * cos(player->angle * (M_PI / 180));
-		player->pos.y += 5 * sin(player->angle * (M_PI / 180));
-	}
+		inc_pos_vect(&player -> pos, SPEED, player -> angle);
 	return ;
 }
 
@@ -128,7 +122,7 @@ void	do_graphics(void *param)
 		return ;
 	clear_screen(param);
 	draw_player(vars);
-	shoot_rays(param, 50, 200);
+	shoot_rays(param, 50, RAY_LEN);
 	//register_mouse_pos(vars);
 }
 
