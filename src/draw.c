@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 18:25:00 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/26 14:22:44 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ void	do_graphics(void *param)
 	vars = param;
 	move_player(vars);
 	t_player old_player = ((t_vars *)param) -> player;
-	if (!needs_clearing(vars))
-		return ;
+//	if (!needs_clearing(vars))
+//		return ;
 	clear_screen(param);
 	draw_player(vars);
 
