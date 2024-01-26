@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/26 14:51:43 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/26 18:56:37 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,23 @@ void	draw_player(t_vars *vars)
 	for (size = 0; size <= PLAYER_SIZE; size++)
 	{
 		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, start_x + j, start_y,
+			protected_mlx_put_pixel(vars->image, start_x + j, start_y, \
 					0xffffffff);
 		start_y++;
 	}
 	for (; size >= 0; size--)
 	{
 		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, start_x + j, start_y,
+			protected_mlx_put_pixel(vars->image, start_x + j, start_y, \
 					0xffffffff);
 		start_y++;
 	}
 }
 
-void inc_pos_vect(t_vector *vect, double factor, double angle)
+void	inc_pos_vect(t_vector *vect, double factor, double angle)
 {
-	vect -> x += factor * cos(angle * (M_PI / 180));
-	vect -> y += factor * sin(angle * (M_PI / 180));
+	vect->x += factor * cos(angle * (M_PI / 180));
+	vect->y += factor * sin(angle * (M_PI / 180));
 }
 
 void	move_player(t_vars *vars)
@@ -65,7 +65,7 @@ void	move_player(t_vars *vars)
 	step.y = 10;
 	mlx = vars->mlx;
 	player = &vars->player;
-	player->map_needs_clearing = player->pos.x * 10000 +
+	player->map_needs_clearing = player->pos.x * 10000 + \
 		player->pos.y;
 	player->old_angle = player->angle;
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
@@ -73,37 +73,23 @@ void	move_player(t_vars *vars)
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 		player->angle -= ROT_SPEED;
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
-		inc_pos_vect(&player -> pos, -SPEED, player -> angle - 90);
+		inc_pos_vect(&player->pos, -SPEED, player->angle - 90);
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
-		inc_pos_vect(&player -> pos, -SPEED, player -> angle + 90);
+		inc_pos_vect(&player->pos, -SPEED, player->angle + 90);
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
-		inc_pos_vect(&player -> pos, -SPEED, player -> angle);
+		inc_pos_vect(&player->pos, -SPEED, player->angle);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
-		inc_pos_vect(&player -> pos, SPEED, player -> angle);
+		inc_pos_vect(&player->pos, SPEED, player->angle);
 	return ;
 }
-
-/*
-void	register_mouse_pos(t_vars *vars)
-{
-	t_ivector	mouse;
-
-	mlx_get_mouse_pos(vars->mlx, &mouse.x, &mouse.y);
-	vars->player.mouse_needs_clearing = mouse.x * 10000 + mouse.y;
-}
-*/
 
 int	needs_clearing(t_vars *vars)
 {
 	t_player	*player;
 
-	//	t_ivector	mouse;
 	player = &vars->player;
 	if (player->map_needs_clearing != player->pos.x * 10000 + player->pos.y)
 		return (1);
-	//	mlx_get_mouse_pos(vars->mlx, &mouse.x, &mouse.y);
-	//	if (player->mouse_needs_clearing != (mouse.x * 10000 + mouse.y))
-	//		return (1);
 	if (player->angle != player->old_angle)
 	{
 		player->old_angle = player->angle;
@@ -112,22 +98,56 @@ int	needs_clearing(t_vars *vars)
 	return (0);
 }
 
+void	draw_map(t_vars *vars)
+{
+	static int map[MAP_SIZE][MAP_SIZE] = {
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	};
+
+	vars -> map.m = (int *)map;
+	vars -> map.height = MAP_SIZE;
+	vars -> map.width = MAP_SIZE;
+
+	for (int y = 0; y < vars -> map.height; y++)
+	{
+		for (int x = 0; x < vars -> map.width; x++)
+		{
+			if (vars -> map.m[y * MAP_SIZE + x] == 1)
+				draw_square(vars, (t_ivector){x * 69, y * 69}, 69, 0x00ff00ff);
+		}
+	}
+}
+
 void	do_graphics(void *param)
 {
-	t_vars	*vars;
+		t_vars	*vars;
 
 	vars = param;
 	move_player(vars);
 	if (!needs_clearing(vars))
 		return ;
 	clear_screen(param);
+	draw_map(vars);
 	draw_player(vars);
 	shoot_rays(param, 50, RAY_LEN);
-	//register_mouse_pos(vars);
 }
 
 void	clear_screen(t_vars *vars)
-{;
+{
 	int	adjusted_color;
 
 	adjusted_color = adjust_transparancy(0xffffff, 0.5);
@@ -166,7 +186,7 @@ void	protected_mlx_put_pixel(mlx_image_t *image, int x, int y, int color)
 
 void	shoot_rays(t_vars *vars, int num, int factor)
 {
-	int			i;
+	double		i;
 	int			color;
 	double		angle;
 	t_vector	target;
@@ -181,7 +201,7 @@ void	shoot_rays(t_vars *vars, int num, int factor)
 		target.x += factor * cos((angle + i) * (M_PI / 180));
 		target.y += factor * sin((angle + i) * (M_PI / 180));
 		draw_line(vars, vars->player.pos, &target, color);
-		i++;
+		i += 0.25;
 	}
 }
 

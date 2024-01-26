@@ -6,19 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/26 14:51:32 by afatimi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/21 17:38:22 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 12:06:59 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/26 17:49:30 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +26,5 @@ void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color);
 void	shoot_rays(t_vars *vars, int num, int factor);
 void	move_player(t_vars *vars);
 void	inc_pos_vect(t_vector *vect, double factor, double angle);
+void	draw_map(t_vars *vars);
 #endif

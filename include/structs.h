@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/26 14:30:18 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/26 18:14:21 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define M_WIDTH 1920
 # define M_HEIGHT 1080
 # define PLAYER_SIZE 5
+# define MAP_SIZE 15
 
 typedef struct s_vector
 {
@@ -39,11 +40,20 @@ typedef struct s_player
 	float		old_angle;
 }				t_player;
 
+typedef struct s_map
+{
+	int			height;
+	int			width;
+	int			*m;
+	int			color;
+}				t_map;
+
 typedef struct s_vars
 {
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_player	player;
 	t_ivector	mouse;
+	t_map		map;
 }				t_vars;
 #endif
