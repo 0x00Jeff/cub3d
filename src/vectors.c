@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:25:52 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/25 12:03:38 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/28 20:44:21 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	vect_sub(t_vector *to, t_vector *from)
 	to->y -= from->y;
 }
 
-void	vect_mul(t_vector *to, float factor)
+void	vect_scale(t_vector *to, float factor)
 {
 	to->x *= factor;
 	to->y *= factor;
@@ -41,8 +41,8 @@ void	vect_div(t_vector *to, float divisor)
 {
 	if (divisor == 0)
 		return ;
-	to->x *= divisor;
-	to->y *= divisor;
+	to->x /= divisor;
+	to->y /= divisor;
 }
 
 void	vect_normalize(t_vector *vect)

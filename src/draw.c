@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/26 18:56:37 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/28 20:47:48 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,23 @@ int	adjust_transparancy(int color, float trans)
 void	draw_player(t_vars *vars)
 {
 	int	size;
-	int	start_x;
-	int	start_y;
+	double	start_x;
+	double	start_y;
 
-	start_x = (int)vars->player.pos.x;
-	start_y = (int)vars->player.pos.y - PLAYER_SIZE;
+	printf("player = (%f, %f)\n", vars -> player.pos.x , vars -> player.pos.y );
+	start_x = vars->player.pos.x * TILE_SIZE;
+	start_y = vars->player.pos.y * TILE_SIZE - PLAYER_SIZE;
+	printf("drawing player @ (%f, %f)\n\n", start_x, start_y);
 	for (size = 0; size <= PLAYER_SIZE; size++)
 	{
 		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, start_x + j, start_y, \
-					0xffffffff);
+			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, 0);
 		start_y++;
 	}
 	for (; size >= 0; size--)
 	{
 		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, start_x + j, start_y, \
-					0xffffffff);
+			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, 0);
 		start_y++;
 	}
 }
@@ -59,10 +59,7 @@ void	move_player(t_vars *vars)
 {
 	void		*mlx;
 	t_player	*player;
-	t_vector	step;
 
-	step.x = 10;
-	step.y = 10;
 	mlx = vars->mlx;
 	player = &vars->player;
 	player->map_needs_clearing = player->pos.x * 10000 + \
@@ -127,14 +124,14 @@ void	draw_map(t_vars *vars)
 		for (int x = 0; x < vars -> map.width; x++)
 		{
 			if (vars -> map.m[y * MAP_SIZE + x] == 1)
-				draw_square(vars, (t_ivector){x * 69, y * 69}, 69, 0x00ff00ff);
+				draw_square(vars, (t_ivector){x, y}, 0x00ff00ff);
 		}
 	}
 }
 
 void	do_graphics(void *param)
 {
-		t_vars	*vars;
+	t_vars	*vars;
 
 	vars = param;
 	move_player(vars);
@@ -143,7 +140,7 @@ void	do_graphics(void *param)
 	clear_screen(param);
 	draw_map(vars);
 	draw_player(vars);
-	shoot_rays(param, 50, RAY_LEN);
+	shoot_rays(param, 30, RAY_LEN);
 }
 
 void	clear_screen(t_vars *vars)
@@ -154,26 +151,28 @@ void	clear_screen(t_vars *vars)
 	for (int i = 0; i < (1920 / 69) + 1; i++)
 	{
 		for (int j = 0; j < (1080 / 69) + 1; j++)
-			draw_square(vars, (t_ivector){i * 69, j * 69}, 69, ((i + j)
+			draw_square(vars, (t_ivector){i, j}, ((i + j)
 						% 2) ? adjusted_color : 0);
 	}
+	return;
 }
 
-void	draw_square(t_vars *vars, t_ivector pos, int size, int color)
+void	draw_square(t_vars *vars, t_ivector pos, int color)
 {
-	int	dx;
-	int	dy;
+	t_ivector delta;
+	int size;
 
-	dy = 0;
-	while (dy < size)
+	size = TILE_SIZE;
+	delta.y = 0;
+	while (delta.y < size)
 	{
-		dx = 0;
-		while (dx < size)
+		delta.x = 0;
+		while (delta.x < size)
 		{
-			protected_mlx_put_pixel(vars->image, pos.x + dx, pos.y + dy, color);
-			dx++;
+			protected_mlx_put_pixel(vars->image, pos.x * TILE_SIZE + delta.x, pos.y * TILE_SIZE+ delta.y, color);
+			delta.x++;
 		}
-		dy++;
+		delta.y++;
 	}
 }
 
@@ -190,17 +189,20 @@ void	shoot_rays(t_vars *vars, int num, int factor)
 	int			color;
 	double		angle;
 	t_vector	target;
+	t_vector	visual_player;
 
+	vect_assign(&visual_player, &vars -> player.pos);
+	vect_scale(&visual_player, TILE_SIZE);
 	color = adjust_transparancy(0xff0000, 0);
 	i = -num / 2;
 	angle = vars->player.angle;
 	while (i < ((num / 2) + (num % 2)))
 	{
-		target.x = vars->player.pos.x;
-		target.y = vars->player.pos.y;
+		target.x = vars->player.pos.x * TILE_SIZE;
+		target.y = vars->player.pos.y * TILE_SIZE;
 		target.x += factor * cos((angle + i) * (M_PI / 180));
 		target.y += factor * sin((angle + i) * (M_PI / 180));
-		draw_line(vars, vars->player.pos, &target, color);
+		draw_line(vars, visual_player, &target, color);
 		i += 0.25;
 	}
 }

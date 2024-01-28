@@ -5,13 +5,15 @@ CFLAGS = -Wall -Wextra -Werror -g -ggdb3 -fsanitize=address
 LINK_H = -Iinclude
 
 OBJSFOLDER = objs/
+INCLUDEFOLDER = include/
 
 LIB = lib/lib.so
 
 HOT_RELOAD_FILES = draw.o \
-				 vectors.o 
+				 vectors.o
 
-HOT_RELOAD = $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
+HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
+HOT_RELOAD_H	= $(foreach obj, $(HOT_RELOAD_FILES), $(INCLUDEFOLDER)$(obj:.o=.h))
 
 OBJS_FILES = test.o \
 			 hooks.o
@@ -36,10 +38,10 @@ objs:
 $(NAME): $(OBJS) $(LIB)
 	$(CC) $(OBJS) $(CFLAGS) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
-$(LIB): $(HOT_RELOAD)
+$(LIB): $(HOT_RELOAD) $(HOT_RELOAD_H)
 	$(CC) $(CFLAGS) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
-$(OBJSFOLDER)%.o: src/%.c #include/%.h $(GLOBAL_HEADERS)
+$(OBJSFOLDER)%.o: src/%.c include/%.h $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
 
 re: fclean all
@@ -48,7 +50,7 @@ fclean: clean
 	rm -rf $(NAME) $(LIB)
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJS) $(HOT_RELOAD)
 
 norm:
 	norminette src/*.c include/*.h

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/26 14:30:17 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/28 20:37:50 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	install_hooks(t_vars *vars)
 	// specially the first line for now, the second one is meh
 	//vars -> player.mouse_needs_clearing = 0;
 	vars -> player.pos.x = PLAYER_SIZE;
+	vars -> player.pos.y = PLAYER_SIZE;
 	vars -> player.angle = 45;
 	vars -> player.map_needs_clearing = 69;
 	printf("install_hooks : player angle = %f\n", vars -> player.angle);
@@ -52,12 +53,6 @@ void	print_key(void *param)
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		win_close(mlx);
-	//if (needs_clearing != (start_x << 8) + start_y){
-		//do_graphics_ptr(param);
-		////clear_screen(param);
-		////draw_player(param, start_x, start_y);
-		//;
-	//}
 	do_graphics_ptr(param);
 
 	if (mlx_is_key_down(mlx, MLX_KEY_R))
