@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/30 20:38:20 by afatimi           #+#    #+#             */
+/*   Updated: 2024/01/30 20:48:58 by afatimi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/30 18:02:46 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/30 20:38:08 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,50 +204,50 @@ void	protected_mlx_put_pixel(mlx_image_t *image, int x, int y, int color)
 	mlx_put_pixel(image, x, y, color);
 }
 
-void dda(t_vars *vars, t_vector *vect, double angle, t_vector *collision)
-{
-	int done;
-
-	(void)vars;
-	(void)angle;
-	t_vector ten_vect =
-	{
-		.x = 1000,
-		.y = 1000
-	};
-
-	vect_assign(collision, vect);
-	vect_add(collision, &ten_vect);
-
-	return;
-	done = 0;
-	while(!done)
-	{
-
-	}
-}
 
 void	shoot_rays(t_vars *vars, int num, int factor)
 {
 	double		i;
-	int			color;
 	double		angle;
-	t_vector	target;
 	t_vector	visual_player;
+	t_ray		ray;
+	(void)factor;
+	int			color;
+	color = adjust_transparancy(0xff0000, 0);
 
 	vect_assign(&visual_player, &vars -> player.pos);
 	vect_scale(&visual_player, TILE_SIZE);
-	color = adjust_transparancy(0xff0000, 0);
 	angle = vars->player.angle - (vars->player.fov >> 1);
+	vect_assign(&ray.from, &visual_player);
 	i = 0;
 	while (i < num)
 	{
-		vect_assign(&target, &visual_player);
-		inc_pos_vect(&target, factor, angle);
-		draw_line(vars, visual_player, &target, color);
+		vect_assign(&ray.to, &visual_player);
+		shoot_ray(vars, &ray, angle, color);
 		angle += (double)vars -> player.fov / num;
 		i++;
 	}
+}
+
+void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
+{
+	t_vector	direction;
+	inc_pos_vect(&ray -> to, RAY_LEN, angle);
+	vect_sub(&ray -> to, &ray -> from);
+
+	vect_assign(&direction, &ray -> to); // TODO : give this to dda
+	double dist_to_hit = dda(vars, &direction);
+
+	vect_scale(&ray -> to, dist_to_hit);
+	vect_add(&ray -> to, &ray -> from);
+	draw_line(vars, ray -> from, &ray -> to, color);
+}
+
+double dda(t_vars *vars, t_vector *direction)
+{
+	return (5);
+	(void)vars;
+	(void)direction;
 }
 
 void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color)

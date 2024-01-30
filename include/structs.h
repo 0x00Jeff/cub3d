@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/30 17:35:49 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/30 20:43:07 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ typedef struct s_ivector
 	int			x;
 	int			y;
 }				t_ivector;
+
+typedef struct s_ray
+{
+	t_vector from;
+	t_vector to;
+	t_vector direction;
+}				t_ray;
 
 typedef struct s_player
 {
