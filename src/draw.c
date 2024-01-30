@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/28 20:47:48 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/30 18:02:46 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,18 @@ void	draw_player(t_vars *vars)
 	double	start_x;
 	double	start_y;
 
-	printf("player = (%f, %f)\n", vars -> player.pos.x , vars -> player.pos.y );
 	start_x = vars->player.pos.x * TILE_SIZE;
 	start_y = vars->player.pos.y * TILE_SIZE - PLAYER_SIZE;
-	printf("drawing player @ (%f, %f)\n\n", start_x, start_y);
 	for (size = 0; size <= PLAYER_SIZE; size++)
 	{
 		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, 0);
+			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, PRIV_ESC);
 		start_y++;
 	}
 	for (; size >= 0; size--)
 	{
 		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, 0);
+			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, PRIV_ESC);
 		start_y++;
 	}
 }
@@ -129,18 +127,29 @@ void	draw_map(t_vars *vars)
 	}
 }
 
-void	do_graphics(void *param)
+void display_fps(t_vars *vars)
 {
-	t_vars	*vars;
+	static double old_time = 0;
 
-	vars = param;
+	int fps = (int)(1 / vars->mlx->delta_time);
+	if (mlx_get_time() - old_time > 0.1)
+	{
+		printf("fps: %d    \r", fps);
+		fflush(stdout);
+		old_time = mlx_get_time();
+	}
+}
+
+void	do_graphics(t_vars *vars)
+{
+	display_fps(vars);
 	move_player(vars);
 	if (!needs_clearing(vars))
 		return ;
-	clear_screen(param);
+	clear_screen(vars);
 	draw_map(vars);
 	draw_player(vars);
-	shoot_rays(param, 30, RAY_LEN);
+	shoot_rays(vars, RAYS_NUM, RAY_LEN);
 }
 
 void	clear_screen(t_vars *vars)
@@ -183,6 +192,29 @@ void	protected_mlx_put_pixel(mlx_image_t *image, int x, int y, int color)
 	mlx_put_pixel(image, x, y, color);
 }
 
+void dda(t_vars *vars, t_vector *vect, double angle, t_vector *collision)
+{
+	int done;
+
+	(void)vars;
+	(void)angle;
+	t_vector ten_vect =
+	{
+		.x = 1000,
+		.y = 1000
+	};
+
+	vect_assign(collision, vect);
+	vect_add(collision, &ten_vect);
+
+	return;
+	done = 0;
+	while(!done)
+	{
+
+	}
+}
+
 void	shoot_rays(t_vars *vars, int num, int factor)
 {
 	double		i;
@@ -194,16 +226,15 @@ void	shoot_rays(t_vars *vars, int num, int factor)
 	vect_assign(&visual_player, &vars -> player.pos);
 	vect_scale(&visual_player, TILE_SIZE);
 	color = adjust_transparancy(0xff0000, 0);
-	i = -num / 2;
-	angle = vars->player.angle;
-	while (i < ((num / 2) + (num % 2)))
+	angle = vars->player.angle - (vars->player.fov >> 1);
+	i = 0;
+	while (i < num)
 	{
-		target.x = vars->player.pos.x * TILE_SIZE;
-		target.y = vars->player.pos.y * TILE_SIZE;
-		target.x += factor * cos((angle + i) * (M_PI / 180));
-		target.y += factor * sin((angle + i) * (M_PI / 180));
+		vect_assign(&target, &visual_player);
+		inc_pos_vect(&target, factor, angle);
 		draw_line(vars, visual_player, &target, color);
-		i += 0.25;
+		angle += (double)vars -> player.fov / num;
+		i++;
 	}
 }
 

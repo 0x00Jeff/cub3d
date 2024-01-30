@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/28 17:51:45 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/30 17:35:49 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # define M_HEIGHT 1080
 # define PLAYER_SIZE 5
 # define MAP_SIZE 15
+
+# define PRIV_ESC	0xffffffff
+# define NIGGER		0
+# define RED		0xff0000
+# define GREEN		0x00ff00
+# define BLUE		0x0000ff
 
 typedef struct s_vector
 {
@@ -38,6 +44,7 @@ typedef struct s_player
 	float		angle;
 	double		map_needs_clearing;
 	float		old_angle;
+	int			fov;
 }				t_player;
 
 typedef struct s_map

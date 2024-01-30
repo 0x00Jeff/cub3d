@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/28 20:37:50 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/30 18:02:44 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void hot_reload()
 	if (module)
 		dlclose(module);
 	module = NULL;
-	system("make lib/lib.so");
+	system("clear && make lib/lib.so && clear");
 	module = dlopen("lib/lib.so", RTLD_NOW);
 	do_graphics_ptr = dlsym(module, "do_graphics");
 }
@@ -35,6 +35,7 @@ void	install_hooks(t_vars *vars)
 	vars -> player.pos.y = PLAYER_SIZE;
 	vars -> player.angle = 45;
 	vars -> player.map_needs_clearing = 69;
+	vars -> player.fov = 90;
 	printf("install_hooks : player angle = %f\n", vars -> player.angle);
 	hot_reload();
 	do_graphics_ptr(vars);
