@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:11:10 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/31 19:58:54 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:42:16 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,16 +113,16 @@ void	draw_map(t_vars *vars)
 		{1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
@@ -265,55 +265,54 @@ void	draw_point(t_vars *vars, t_vector pos, int point_size, int color) //  DEBUG
 	}
 }
 
-int get_map_item(int *map, int x, int y)
+int get_map_item(int *map, int x, int y, int *color)
 {
 	if (x < 0 || x >= MAP_SIZE)
+	{
+		*color = adjust_transparancy(RED, 0);
 		return (1);
+	}
 	if (y < 0 || y >= MAP_SIZE)
+	{
+		*color = adjust_transparancy(RED, 0);
 		return (1);
+	}
+	if (map[y * MAP_SIZE + x] == 1)
+		*color = adjust_transparancy(RED, 0);
+	else
+		*color = adjust_transparancy(BLUE, 0);
 	return (map[y * MAP_SIZE + x]);
 }
 
 double	dda(t_vars *vars, t_vector *direction, double angle)
 {
 	t_vector step;
-	t_vector intersect;
+	t_vector h_intersect;
+	t_vector v_intersect;
 	t_player *player = &vars -> player;
 	int *m = vars -> map.m;
-	int color_red = adjust_transparancy(RED, 0);
-	int color_blue = adjust_transparancy(BLUE, 0);
 	int color;
 
-	printf("player = (%f, %f)\n", player -> pos.x, player -> pos.y);
-	intersect.y = floor(player -> pos.y) + 1 * (direction -> y > 0);
-	intersect.x = (player -> pos.x + ((player -> pos.y - intersect.y) / tan(angle * (M_PI / 180))) );
+	v_intersect.x = TILE_SIZE;
+	v_intersect.y = tan(angle) * v_intersect.x;
+	h_intersect.y = floor(player -> pos.y) + 1 * (direction -> y > 0);
+	h_intersect.x = (player -> pos.x + ((player -> pos.y - h_intersect.y) / tan(angle * (M_PI / 180))) );
 
 	step.y = -1 + 2 * (direction -> y > 0);
 	step.x = step.y / tan(-angle * (M_PI / 180));
 
-	if (get_map_item(m, (int)floor(intersect.x), (int)floor(intersect.y)) == 1)
-	{
-		color = color_red;
+	if (get_map_item(m, (int)floor(h_intersect.x), (int)floor(h_intersect.y), &color) == 1)
 		return 1;
-	}
-	else
-		color = color_blue;
-	draw_point(vars, intersect, 3, color);
+	draw_point(vars, h_intersect, 4, color);
 	printf("direction.x = (%f, %f)\n", direction -> x, direction -> y);
 	for(int i = 0; i < 20; i ++)
 	{
-		vect_add(&intersect, &step);
-		if (get_map_item(m, (int)floor(intersect.x), (int)floor(intersect.y)))
-		{
+		vect_add(&h_intersect, &step);
+		if (get_map_item(m, (int)floor(h_intersect.x), (int)floor(h_intersect.y), &color))
 			return 1;
-			color = color_red;
-		}
-		else
-			color = color_blue;
-		draw_point(vars, intersect, 3, color);
-		printf("next intersection = (%f, %f)\n\n", intersect.x, intersect.y);
+		draw_point(vars, h_intersect, 4, color);
+		printf("next h_intersection = (%f, %f)\n\n", h_intersect.x, h_intersect.y);
 	}
-
 	return (1);
 }
 
