@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 20:38:20 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/30 20:48:58 by afatimi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/30 20:38:08 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/31 10:45:09 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +15,7 @@
 #include <math.h>
 #include <stdio.h> // to delete
 #include <stdlib.h>
+#include <time.h>
 
 int	adjust_transparancy(int color, float trans)
 {
@@ -169,9 +158,9 @@ void	clear_screen(t_vars *vars)
 	int	adjusted_color;
 
 	adjusted_color = adjust_transparancy(0xffffff, 0.5);
-	for (int i = 0; i < (1920 / 69) + 1; i++)
+	for (int i = 0; i < (1920 / TILE_SIZE) + 1; i++)
 	{
-		for (int j = 0; j < (1080 / 69) + 1; j++)
+		for (int j = 0; j < (1080 / TILE_SIZE) + 1; j++)
 			draw_square(vars, (t_ivector){i, j}, ((i + j)
 						% 2) ? adjusted_color : 0);
 	}
@@ -226,6 +215,7 @@ void	shoot_rays(t_vars *vars, int num, int factor)
 		shoot_ray(vars, &ray, angle, color);
 		angle += (double)vars -> player.fov / num;
 		i++;
+		return;
 	}
 }
 
@@ -236,18 +226,58 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 	vect_sub(&ray -> to, &ray -> from);
 
 	vect_assign(&direction, &ray -> to); // TODO : give this to dda
-	double dist_to_hit = dda(vars, &direction);
+	double dist_to_hit = dda(vars, &direction, angle);
 
 	vect_scale(&ray -> to, dist_to_hit);
 	vect_add(&ray -> to, &ray -> from);
 	draw_line(vars, ray -> from, &ray -> to, color);
 }
 
-double dda(t_vars *vars, t_vector *direction)
+void	draw_point(t_vars *vars, t_vector pos, int point_size, int color) //  DEBUG
 {
-	return (5);
+	int size;
+	long start_x = pos.x *= TILE_SIZE;
+	long start_y = pos.y *= TILE_SIZE;
+	for (size = 0; size <= point_size; size++)
+	{
+		for (int j = -size; j <= size; j++)
+			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
+		start_y++;
+	}
+	for (; size >= 0; size--)
+	{
+		for (int j = -size; j <= point_size; j++)
+			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
+		start_y++;
+	}
+}
+
+double dda(t_vars *vars, t_vector *direction, double angle)
+{
+	t_vector step;
+	t_vector intersect;
+	t_player *player = &vars -> player;
+
+	intersect.y = floor(player -> pos.y);
+	intersect.x = (player -> pos.x + ((player -> pos.y - intersect.y) / tan(angle)) );
+
+	draw_point(vars, intersect, 2, adjust_transparancy(BLUE, 0));
+	printf("angle = %f\n", angle);
+	printf("first intersection = (%f, %f)\n", intersect.x, intersect.y);
+
+	step.y = TILE_SIZE;
+	step.x = step.y / tan(angle);
+	printf("xstep = %f\n", step.x);
+	intersect.x += step.x;
+	intersect.y += 1;
+	printf("second intersection = (%f, %f)\n", intersect.x, intersect.y);
+	draw_point(vars, intersect, 2, adjust_transparancy(BLUE, 0));
+
+	(void)step;
+	(void)intersect;
 	(void)vars;
 	(void)direction;
+	return (2);
 }
 
 void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color)
