@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/31 17:11:10 by afatimi           #+#    #+#             */
+/*   Updated: 2024/01/31 19:58:54 by afatimi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/31 10:45:09 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/01/31 17:11:04 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,13 +221,13 @@ void	shoot_rays(t_vars *vars, int num, int factor)
 	angle = vars->player.angle - (vars->player.fov >> 1);
 	vect_assign(&ray.from, &visual_player);
 	i = 0;
+
 	while (i < num)
 	{
 		vect_assign(&ray.to, &visual_player);
 		shoot_ray(vars, &ray, angle, color);
 		angle += (double)vars -> player.fov / num;
 		i++;
-		return;
 	}
 }
 
@@ -225,8 +237,9 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 	inc_pos_vect(&ray -> to, RAY_LEN, angle);
 	vect_sub(&ray -> to, &ray -> from);
 
-	vect_assign(&direction, &ray -> to); // TODO : give this to dda
-	double dist_to_hit = dda(vars, &direction, angle);
+	vect_assign(&direction, &ray -> to);
+	double dist_to_hit = dda(vars, &direction, -angle);
+	//double dist_to_hit = 1;
 
 	vect_scale(&ray -> to, dist_to_hit);
 	vect_add(&ray -> to, &ray -> from);
@@ -237,7 +250,7 @@ void	draw_point(t_vars *vars, t_vector pos, int point_size, int color) //  DEBUG
 {
 	int size;
 	long start_x = pos.x *= TILE_SIZE;
-	long start_y = pos.y *= TILE_SIZE;
+	long start_y = pos.y *= TILE_SIZE - point_size / 2;
 	for (size = 0; size <= point_size; size++)
 	{
 		for (int j = -size; j <= size; j++)
@@ -246,38 +259,62 @@ void	draw_point(t_vars *vars, t_vector pos, int point_size, int color) //  DEBUG
 	}
 	for (; size >= 0; size--)
 	{
-		for (int j = -size; j <= point_size; j++)
+		for (int j = -size; j <= size; j++)
 			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
 		start_y++;
 	}
 }
 
-double dda(t_vars *vars, t_vector *direction, double angle)
+int get_map_item(int *map, int x, int y)
+{
+	if (x < 0 || x >= MAP_SIZE)
+		return (1);
+	if (y < 0 || y >= MAP_SIZE)
+		return (1);
+	return (map[y * MAP_SIZE + x]);
+}
+
+double	dda(t_vars *vars, t_vector *direction, double angle)
 {
 	t_vector step;
 	t_vector intersect;
 	t_player *player = &vars -> player;
+	int *m = vars -> map.m;
+	int color_red = adjust_transparancy(RED, 0);
+	int color_blue = adjust_transparancy(BLUE, 0);
+	int color;
 
-	intersect.y = floor(player -> pos.y);
-	intersect.x = (player -> pos.x + ((player -> pos.y - intersect.y) / tan(angle)) );
+	printf("player = (%f, %f)\n", player -> pos.x, player -> pos.y);
+	intersect.y = floor(player -> pos.y) + 1 * (direction -> y > 0);
+	intersect.x = (player -> pos.x + ((player -> pos.y - intersect.y) / tan(angle * (M_PI / 180))) );
 
-	draw_point(vars, intersect, 2, adjust_transparancy(BLUE, 0));
-	printf("angle = %f\n", angle);
-	printf("first intersection = (%f, %f)\n", intersect.x, intersect.y);
+	step.y = -1 + 2 * (direction -> y > 0);
+	step.x = step.y / tan(-angle * (M_PI / 180));
 
-	step.y = TILE_SIZE;
-	step.x = step.y / tan(angle);
-	printf("xstep = %f\n", step.x);
-	intersect.x += step.x;
-	intersect.y += 1;
-	printf("second intersection = (%f, %f)\n", intersect.x, intersect.y);
-	draw_point(vars, intersect, 2, adjust_transparancy(BLUE, 0));
+	if (get_map_item(m, (int)floor(intersect.x), (int)floor(intersect.y)) == 1)
+	{
+		color = color_red;
+		return 1;
+	}
+	else
+		color = color_blue;
+	draw_point(vars, intersect, 3, color);
+	printf("direction.x = (%f, %f)\n", direction -> x, direction -> y);
+	for(int i = 0; i < 20; i ++)
+	{
+		vect_add(&intersect, &step);
+		if (get_map_item(m, (int)floor(intersect.x), (int)floor(intersect.y)))
+		{
+			return 1;
+			color = color_red;
+		}
+		else
+			color = color_blue;
+		draw_point(vars, intersect, 3, color);
+		printf("next intersection = (%f, %f)\n\n", intersect.x, intersect.y);
+	}
 
-	(void)step;
-	(void)intersect;
-	(void)vars;
-	(void)direction;
-	return (2);
+	return (1);
 }
 
 void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color)
