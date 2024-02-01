@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/31 20:31:03 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/01 19:25:35 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # define ROT_SPEED 4
 # define TILE_SIZE 64
 # define SPEED ((double)10 / (double)TILE_SIZE)
-# define RAY_LEN 2000
+# define RAY_LEN 200
 //# define RAYS_NUM 1920
 # define RAYS_NUM 200
 
 void	draw_player(t_vars *vars);
 void	draw_point(t_vars *vars, t_vector pos, int point_size, int color);
+void	draw_point2(t_vars *vars, int x, int y, int point_size, int color);
 //  DEBUG
 void	clear_screen(t_vars *vars);
 void	draw_square(t_vars *vars, t_ivector pos, int color);
@@ -36,5 +37,5 @@ void	draw_map(t_vars *vars);
 void	display_fps(t_vars *vars);
 double	dda(t_vars *vars, t_vector *direction, double angle);
 void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color);
-int		get_map_item(int *map, int x, int y, int *color);
+int		get_map_item(int *map, double _x, double _y, int *color);
 #endif

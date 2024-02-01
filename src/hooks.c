@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/30 18:02:44 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/01 19:16:28 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	install_hooks(t_vars *vars)
 	// TODO : move these to some kinda init_player function
 	// specially the first line for now, the second one is meh
 	//vars -> player.mouse_needs_clearing = 0;
-	vars -> player.pos.x = PLAYER_SIZE;
-	vars -> player.pos.y = PLAYER_SIZE;
+	vars -> player.pos.x = 2;
+	vars -> player.pos.y = 2;
 	vars -> player.angle = 45;
 	vars -> player.map_needs_clearing = 69;
 	vars -> player.fov = 90;

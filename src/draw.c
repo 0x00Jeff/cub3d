@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 17:11:10 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/31 20:42:16 by afatimi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/31 17:11:04 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/01 19:28:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +26,29 @@ int	adjust_transparancy(int color, float trans)
 	return ((color << 8) + (int)(0xff - (trans * 0xff)));
 }
 
-void	draw_player(t_vars *vars)
+void draw_player(t_vars *vars)
+{
+	draw_point2(vars, vars -> player.pos.x * TILE_SIZE, vars -> player.pos.y * TILE_SIZE, 4, PRIV_ESC);
+}
+
+void	draw_point2(t_vars *vars, int x, int y, int point_size, int color)
 {
 	int	size;
-	double	start_x;
-	double	start_y;
+	int	start_x;
+	int	start_y;
 
-	start_x = vars->player.pos.x * TILE_SIZE;
-	start_y = vars->player.pos.y * TILE_SIZE - PLAYER_SIZE;
-	for (size = 0; size <= PLAYER_SIZE; size++)
+	start_x = x;
+	start_y = y - point_size;
+	for (size = 0; size <= point_size; size++)
 	{
 		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, PRIV_ESC);
+			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
 		start_y++;
 	}
 	for (; size >= 0; size--)
 	{
 		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, PRIV_ESC);
+			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
 		start_y++;
 	}
 }
@@ -155,6 +148,13 @@ void display_fps(t_vars *vars)
 
 void	do_graphics(t_vars *vars)
 {
+	static int a = 0;
+	if (a == 0)
+	{
+		a++;
+		draw_map(vars);
+		draw_player(vars);
+	}
 	display_fps(vars);
 	move_player(vars);
 	if (!needs_clearing(vars))
@@ -265,8 +265,12 @@ void	draw_point(t_vars *vars, t_vector pos, int point_size, int color) //  DEBUG
 	}
 }
 
-int get_map_item(int *map, int x, int y, int *color)
+int get_map_item(int *map, double _x, double _y, int *color)
 {
+	int x, y;
+	x = (int)floor(_x);
+	y = (int)floor(_y);
+
 	if (x < 0 || x >= MAP_SIZE)
 	{
 		*color = adjust_transparancy(RED, 0);
@@ -301,17 +305,15 @@ double	dda(t_vars *vars, t_vector *direction, double angle)
 	step.y = -1 + 2 * (direction -> y > 0);
 	step.x = step.y / tan(-angle * (M_PI / 180));
 
-	if (get_map_item(m, (int)floor(h_intersect.x), (int)floor(h_intersect.y), &color) == 1)
+	if (get_map_item(m, h_intersect.x, h_intersect.y, &color) == 1)
 		return 1;
-	draw_point(vars, h_intersect, 4, color);
-	printf("direction.x = (%f, %f)\n", direction -> x, direction -> y);
+	draw_point2(vars, h_intersect.x * TILE_SIZE, h_intersect.y * TILE_SIZE, 2, color);
 	for(int i = 0; i < 20; i ++)
 	{
 		vect_add(&h_intersect, &step);
-		if (get_map_item(m, (int)floor(h_intersect.x), (int)floor(h_intersect.y), &color))
+		if (get_map_item(m, h_intersect.x, h_intersect.y, &color))
 			return 1;
-		draw_point(vars, h_intersect, 4, color);
-		printf("next h_intersection = (%f, %f)\n\n", h_intersect.x, h_intersect.y);
+		draw_point2(vars, h_intersect.x * TILE_SIZE, h_intersect.y * TILE_SIZE, 2, color);
 	}
 	return (1);
 }
