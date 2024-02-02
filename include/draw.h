@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/01 19:25:35 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/02 16:15:35 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 # define ROT_SPEED 4
 # define TILE_SIZE 64
 # define SPEED ((double)10 / (double)TILE_SIZE)
-# define RAY_LEN 200
-//# define RAYS_NUM 1920
-# define RAYS_NUM 200
+# define RAY_LEN 10
+# define RAYS_NUM 1920
 
 void	draw_player(t_vars *vars);
 void	draw_point(t_vars *vars, t_vector pos, int point_size, int color);
@@ -30,12 +29,12 @@ void	draw_square(t_vars *vars, t_ivector pos, int color);
 void	protected_mlx_put_pixel(mlx_image_t *image, int x, int y, int color);
 void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color);
 void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color);
-void	shoot_rays(t_vars *vars, int num, int factor);
+void	shoot_rays(t_vars *vars, int num);
 void	move_player(t_vars *vars);
 void	inc_pos_vect(t_vector *vect, double factor, double angle);
 void	draw_map(t_vars *vars);
 void	display_fps(t_vars *vars);
-double	dda(t_vars *vars, t_vector *direction, double angle);
+void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray);
 void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color);
-int		get_map_item(int *map, double _x, double _y, int *color);
+int		get_map_item(t_map *map, double _x, double _y);
 #endif

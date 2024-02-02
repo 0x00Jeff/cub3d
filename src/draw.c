@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/01 19:28:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/02 16:20:02 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,33 +101,35 @@ int	needs_clearing(t_vars *vars)
 
 void	draw_map(t_vars *vars)
 {
-	static int map[MAP_SIZE][MAP_SIZE] = {
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	static int map[MAP_SIZE + 2][MAP_SIZE + 2] = {
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
 	vars -> map.m = (int *)map;
-	vars -> map.height = MAP_SIZE;
-	vars -> map.width = MAP_SIZE;
+	vars -> map.height = MAP_SIZE + 2;
+	vars -> map.width = MAP_SIZE + 2;
 
 	for (int y = 0; y < vars -> map.height; y++)
 	{
 		for (int x = 0; x < vars -> map.width; x++)
 		{
-			if (vars -> map.m[y * MAP_SIZE + x] == 1)
+			if (vars -> map.m[y * vars -> map.width+ x] == 1)
 				draw_square(vars, (t_ivector){x, y}, 0x00ff00ff);
 		}
 	}
@@ -149,11 +151,12 @@ void display_fps(t_vars *vars)
 void	do_graphics(t_vars *vars)
 {
 	static int a = 0;
-	if (a == 0)
+	if (a++ == 0)
 	{
-		a++;
+		clear_screen(vars);
 		draw_map(vars);
 		draw_player(vars);
+		shoot_rays(vars, RAYS_NUM);
 	}
 	display_fps(vars);
 	move_player(vars);
@@ -162,7 +165,7 @@ void	do_graphics(t_vars *vars)
 	clear_screen(vars);
 	draw_map(vars);
 	draw_player(vars);
-	shoot_rays(vars, RAYS_NUM, RAY_LEN);
+	shoot_rays(vars, RAYS_NUM);
 }
 
 void	clear_screen(t_vars *vars)
@@ -206,13 +209,12 @@ void	protected_mlx_put_pixel(mlx_image_t *image, int x, int y, int color)
 }
 
 
-void	shoot_rays(t_vars *vars, int num, int factor)
+void	shoot_rays(t_vars *vars, int num)
 {
 	double		i;
 	double		angle;
 	t_vector	visual_player;
 	t_ray		ray;
-	(void)factor;
 	int			color;
 	color = adjust_transparancy(0xff0000, 0);
 
@@ -234,15 +236,14 @@ void	shoot_rays(t_vars *vars, int num, int factor)
 void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 {
 	t_vector	direction;
-	inc_pos_vect(&ray -> to, RAY_LEN, angle);
+	inc_pos_vect(&ray -> to, 1, angle);
 	vect_sub(&ray -> to, &ray -> from);
-
 	vect_assign(&direction, &ray -> to);
-	double dist_to_hit = dda(vars, &direction, -angle);
-	//double dist_to_hit = 1;
-
-	vect_scale(&ray -> to, dist_to_hit);
 	vect_add(&ray -> to, &ray -> from);
+
+	//ray -> from = vars -> player.pos;
+	dda(vars, &direction, -angle, ray);
+
 	draw_line(vars, ray -> from, &ray -> to, color);
 }
 
@@ -265,57 +266,63 @@ void	draw_point(t_vars *vars, t_vector pos, int point_size, int color) //  DEBUG
 	}
 }
 
-int get_map_item(int *map, double _x, double _y, int *color)
+int get_map_item(t_map *map, double _x, double _y)
 {
-	int x, y;
+	int x;
+	int y;
+
+	int *m = map -> m;
+
 	x = (int)floor(_x);
 	y = (int)floor(_y);
-
-	if (x < 0 || x >= MAP_SIZE)
-	{
-		*color = adjust_transparancy(RED, 0);
+	if (x < 0 || x >= map -> width)
 		return (1);
-	}
-	if (y < 0 || y >= MAP_SIZE)
-	{
-		*color = adjust_transparancy(RED, 0);
+	if (y < 0 || y >= map -> height)
 		return (1);
-	}
-	if (map[y * MAP_SIZE + x] == 1)
-		*color = adjust_transparancy(RED, 0);
-	else
-		*color = adjust_transparancy(BLUE, 0);
-	return (map[y * MAP_SIZE + x]);
+	return (m[y * map -> width + x]);
 }
 
-double	dda(t_vars *vars, t_vector *direction, double angle)
+void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 {
-	t_vector step;
+	t_vector h_step;
+	t_vector v_step;
 	t_vector h_intersect;
 	t_vector v_intersect;
 	t_player *player = &vars -> player;
-	int *m = vars -> map.m;
-	int color;
 
-	v_intersect.x = TILE_SIZE;
-	v_intersect.y = tan(angle) * v_intersect.x;
+	v_intersect.x = floor(player -> pos.x) + 1 * (direction -> x > 0);
+	v_intersect.y = player -> pos.y + (v_intersect.x - player -> pos.x) * tan(-angle * (M_PI / 180));
+
 	h_intersect.y = floor(player -> pos.y) + 1 * (direction -> y > 0);
 	h_intersect.x = (player -> pos.x + ((player -> pos.y - h_intersect.y) / tan(angle * (M_PI / 180))) );
 
-	step.y = -1 + 2 * (direction -> y > 0);
-	step.x = step.y / tan(-angle * (M_PI / 180));
+	h_step.y = -1 + 2 * (direction -> y > 0);
+	h_step.x = (angle == 0) ? 1e69 : h_step.y / tan(-angle * (M_PI / 180));
 
-	if (get_map_item(m, h_intersect.x, h_intersect.y, &color) == 1)
-		return 1;
-	draw_point2(vars, h_intersect.x * TILE_SIZE, h_intersect.y * TILE_SIZE, 2, color);
+	v_step.x = -1 + 2 * (direction -> x > 0);
+	v_step.y = tan(angle * (M_PI / 180));
+	v_step.y *= (direction -> y < 0 && v_step.y > 0) ? -1 : 1;
+    v_step.y *= (direction -> y > 0 && v_step.y < 0) ? -1 : 1;
+
 	for(int i = 0; i < 20; i ++)
 	{
-		vect_add(&h_intersect, &step);
-		if (get_map_item(m, h_intersect.x, h_intersect.y, &color))
-			return 1;
-		draw_point2(vars, h_intersect.x * TILE_SIZE, h_intersect.y * TILE_SIZE, 2, color);
+		if (get_map_item(&vars -> map, h_intersect.x, h_intersect.y - (direction->y < 0)))
+			break;
+		vect_add(&h_intersect, &h_step);
 	}
-	return (1);
+	for(int i = 0; i < 20; i ++)
+	{
+		if (get_map_item(&vars -> map, v_intersect.x - (direction -> x < 0), v_intersect.y))
+			break;
+		vect_add(&v_intersect, &v_step);
+	}
+	float h_distance = vect_get_distance(&player -> pos, &h_intersect);
+	float v_distance = vect_get_distance(&player -> pos, &v_intersect);
+	if (h_distance < v_distance)
+		ray -> to = h_intersect;
+	else
+		ray -> to = v_intersect;
+	vect_scale(&ray -> to, TILE_SIZE);
 }
 
 void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color)

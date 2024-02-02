@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:26:00 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/30 16:44:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/02 15:27:49 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void	vect_scale(t_vector *to, float factor);
 void	vect_div(t_vector *to, float divisor);
 void	vect_normalize(t_vector *vect);
 float	get_vect_len(t_vector *vect);
+float	vect_get_distance(t_vector *p1, t_vector *p2);
 #endif
