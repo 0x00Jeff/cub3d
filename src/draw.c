@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/02 17:51:25 by afatimi           #+#    #+#             */
+/*   Updated: 2024/02/02 18:11:03 by afatimi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/02 16:20:02 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/02 17:50:51 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +240,7 @@ void	shoot_rays(t_vars *vars, int num)
 	{
 		vect_assign(&ray.to, &visual_player);
 		shoot_ray(vars, &ray, angle, color);
+		draw_stripe(vars, &ray, i);
 		angle += (double)vars -> player.fov / num;
 		i++;
 	}
@@ -243,8 +256,23 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 
 	//ray -> from = vars -> player.pos;
 	dda(vars, &direction, -angle, ray);
+	(void)color;
+}
 
-	draw_line(vars, ray -> from, &ray -> to, color);
+void	draw_stripe(t_vars *vars, t_ray *ray, int x)
+{
+	t_vector wall_start;
+	t_vector wall_end;
+
+	int wall_len = M_HEIGHT / ray -> distance;
+
+	wall_start.y = M_HEIGHT / 2 - wall_len / 2;
+	wall_end.y = M_HEIGHT / 2 + wall_len / 2;
+
+	wall_start.x = x;
+	wall_end.x = x;
+
+	draw_line(vars, wall_start, &wall_end, adjust_transparancy(BLUE, 0));
 }
 
 void	draw_point(t_vars *vars, t_vector pos, int point_size, int color) //  DEBUG
@@ -319,9 +347,15 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 	float h_distance = vect_get_distance(&player -> pos, &h_intersect);
 	float v_distance = vect_get_distance(&player -> pos, &v_intersect);
 	if (h_distance < v_distance)
+	{
 		ray -> to = h_intersect;
+		ray -> distance = h_distance;
+	}
 	else
+	{
 		ray -> to = v_intersect;
+		ray -> distance = v_distance;
+	}
 	vect_scale(&ray -> to, TILE_SIZE);
 }
 

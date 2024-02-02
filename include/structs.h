@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/30 20:43:07 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/02 17:26:14 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # define PLAYER_SIZE 5
 # define MAP_SIZE 15
 
-# define PRIV_ESC	0xffffffff
-# define NIGGER		0
-# define RED		0xff0000
-# define GREEN		0x00ff00
-# define BLUE		0x0000ff
+# define PRIV_ESC 0xffffffff
+# define NIGGER 0
+# define RED 0xff0000
+# define GREEN 0x00ff00
+# define BLUE 0x0000ff
 
 typedef struct s_vector
 {
@@ -40,9 +40,10 @@ typedef struct s_ivector
 
 typedef struct s_ray
 {
-	t_vector from;
-	t_vector to;
-	t_vector direction;
+	t_vector	from;
+	t_vector	to;
+	t_vector	direction;
+	float		distance;
 }				t_ray;
 
 typedef struct s_player
