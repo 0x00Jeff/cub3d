@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/02 17:26:14 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/03 21:10:43 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@
 # define GREEN 0x00ff00
 # define BLUE 0x0000ff
 
+enum
+{
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT,
+	NORTH = UP,
+	EAST = RIGHT,
+	SOUTH = DOWN,
+	WEST = LEFT
+};
+
 typedef struct s_vector
 {
 	double		x;
@@ -44,6 +56,7 @@ typedef struct s_ray
 	t_vector	to;
 	t_vector	direction;
 	float		distance;
+	int			side;
 }				t_ray;
 
 typedef struct s_player
