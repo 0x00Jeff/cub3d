@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/04 17:58:34 by afatimi           #+#    #+#             */
+/*   Updated: 2024/02/04 18:00:58 by afatimi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/04 17:40:13 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/04 17:58:19 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,8 +304,8 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 	double		wall_len;
 	int			color;
 
-	wall_len = M_HEIGHT / ((ray->distance * (cos((vars->player.angle - angle)
-					* (M_PI / 180)))) + 0.1) ;
+	double how_far_from_dir = fabs(vars->player.angle - angle) / (vars->player.fov / 2);
+	wall_len = M_HEIGHT / (ray->distance - how_far_from_dir * 0.4);
 	wall_start.y = M_HEIGHT / 2 - wall_len / 2;
 	wall_end.y = M_HEIGHT / 2 + wall_len / 2;
 	if (wall_start.y < 0)
