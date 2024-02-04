@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/03 21:13:36 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/04 16:13:52 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	adjust_transparancy(int color, float trans)
 
 void	draw_player(t_vars *vars)
 {
-	draw_point2(vars, vars->player.pos.x * TILE_SIZE, vars->player.pos.y
-			* TILE_SIZE, 4, PRIV_ESC);
+	draw_point2(vars, vars->player.pos.x * TILE_SIZE * MAP_SCALE_FACTOR, vars->player.pos.y
+			* TILE_SIZE * MAP_SCALE_FACTOR, 4, PRIV_ESC);
 }
 
 void	draw_point2(t_vars *vars, int x, int y, int point_size, int color)
@@ -120,6 +120,7 @@ void	draw_map(t_vars *vars)
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+
 	vars->map.m = (int *)map;
 	vars->map.height = MAP_SIZE + 2;
 	vars->map.width = MAP_SIZE + 2;
@@ -128,7 +129,12 @@ void	draw_map(t_vars *vars)
 		for (int x = 0; x < vars->map.width; x++)
 		{
 			if (vars->map.m[y * vars->map.width + x] == 1)
-				draw_square(vars, (t_ivector){x, y}, 0x00ff00ff);
+			{
+				draw_square(vars,
+						(t_ivector){x, y},
+						TILE_SIZE * MAP_SCALE_FACTOR,
+						0x00ff00ff);
+			}
 		}
 	}
 }
@@ -148,56 +154,76 @@ void	display_fps(t_vars *vars)
 	}
 }
 
+void	draw_surroundings(t_vars *vars)
+{
+	draw_rectangle(vars, (t_vector){0, 0}, (t_vector){M_WIDTH, M_HEIGHT / 2}, adjust_transparancy(BLUE, 0.5));
+	draw_rectangle(vars, (t_vector){0, M_HEIGHT / 2}, (t_vector){M_WIDTH, M_HEIGHT}, adjust_transparancy(BEIGE, 0.5));
+}
+
 void	do_graphics(t_vars *vars)
 {
 	static int	a;
 
-	a = 0;
 	if (a++ == 0)
 	{
-		clear_screen(vars);
-		//draw_map(vars);
-		//draw_player(vars);
+		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
+		draw_map(vars);
+		draw_player(vars);
 	}
 	display_fps(vars);
 	move_player(vars);
 	if (!needs_clearing(vars))
 		return ;
-	clear_screen(vars);
-	//draw_map(vars);
-	//draw_player(vars);
+	draw_surroundings(vars);
 	shoot_rays(vars, RAYS_NUM);
+	draw_map(vars);
+	draw_player(vars);
 }
 
 void	clear_screen(t_vars *vars)
 {
-	int	adjusted_color;
+	int	color;
 
-	adjusted_color = adjust_transparancy(0xffffff, 0.5);
+	color = adjust_transparancy(0xffffff, 0.5);
 	for (int i = 0; i < (1920 / TILE_SIZE) + 1; i++)
 	{
 		for (int j = 0; j < (1080 / TILE_SIZE) + 1; j++)
-			draw_square(vars, (t_ivector){i, j}, ((i + j)
-						% 2) ? adjusted_color : 0);
+			draw_square(vars,
+					(t_ivector){i, j},
+					TILE_SIZE,
+					((i + j) % 2) ? color : 0);
 	}
-	return ;
 }
 
-void	draw_square(t_vars *vars, t_ivector pos, int color)
+void	draw_rectangle(t_vars *vars, t_vector start, t_vector end, int color)
+{
+	t_ivector	delta;
+
+	delta.y = start.y;
+	while (delta.y < end.y)
+	{
+		delta.x = start.x;
+		while (delta.x < end.x)
+			protected_mlx_put_pixel(vars->image, delta.x++, delta.y, color);
+		delta.y++;
+	}
+}
+
+void	draw_square(t_vars *vars, t_ivector pos, int tile_size, int color)
 {
 	t_ivector	delta;
 	int			size;
 
-	size = TILE_SIZE;
+	size = tile_size;
 	delta.y = 0;
 	while (delta.y < size)
 	{
 		delta.x = 0;
 		while (delta.x < size)
 		{
-			protected_mlx_put_pixel(vars->image, pos.x * TILE_SIZE + delta.x,
-					pos.y * TILE_SIZE + delta.y, color);
+			protected_mlx_put_pixel(vars->image, pos.x * tile_size + delta.x,
+					pos.y * tile_size + delta.y, color);
 			delta.x++;
 		}
 		delta.y++;
@@ -238,6 +264,8 @@ void	shoot_rays(t_vars *vars, int num)
 void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 {
 	t_vector	direction;
+	t_vector tmp_from;
+	t_vector tmp_to;
 
 	inc_pos_vect(&ray->to, 1, angle);
 	vect_sub(&ray->to, &ray->from);
@@ -245,6 +273,11 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 	vect_add(&ray->to, &ray->from);
 	//ray -> from = vars -> player.pos;
 	dda(vars, &direction, -angle, ray);
+	vect_assign(&tmp_from, &ray -> from);
+	vect_assign(&tmp_to, &ray -> to);
+	vect_scale(&tmp_from, MAP_SCALE_FACTOR);
+	vect_scale(&tmp_to, MAP_SCALE_FACTOR);
+	draw_line(vars, tmp_from, &tmp_to, color);
 	(void)color;
 }
 

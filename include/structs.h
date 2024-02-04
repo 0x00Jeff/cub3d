@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/03 21:10:43 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/04 15:14:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define RED 0xff0000
 # define GREEN 0x00ff00
 # define BLUE 0x0000ff
+# define BEIGE 0xF5F5DC
 
 enum
 {
