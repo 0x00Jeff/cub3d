@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/04 16:33:41 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/04 17:01:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,6 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 	double		wall_len;
 	int			color;
 
-	(void)angle;
 	wall_len = M_HEIGHT / (ray->distance * (cos((vars ->player.angle - angle) * (M_PI / 180))));
 	wall_start.y = M_HEIGHT / 2 - wall_len / 2;
 	wall_end.y = M_HEIGHT / 2 + wall_len / 2;
@@ -298,14 +297,13 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 		wall_end.y = M_HEIGHT - 1;
 	wall_start.x = x;
 	wall_end.x = x;
+	color = adjust_transparancy(GREEN, 0.7);
 	if (ray->side == UP)
-		color = adjust_transparancy(RED, 0.5);
+		color = adjust_transparancy(RED, 0.35);
 	else if (ray->side == DOWN)
 		color = adjust_transparancy(RED, 0.7);
 	else if (ray->side == RIGHT)
 		color = adjust_transparancy(GREEN, 0.35);
-	else
-		color = adjust_transparancy(GREEN, 0.7);
 	draw_line(vars, wall_start, &wall_end, color);
 }
 
