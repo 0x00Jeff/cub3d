@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/04 17:01:10 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/04 17:26:30 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,8 @@ void	display_fps(t_vars *vars)
 	static double	old_time;
 	int				fps;
 
-	old_time = 0;
 	fps = (int)(1 / vars->mlx->delta_time);
-	if (mlx_get_time() - old_time > 0.1)
+	if (mlx_get_time() - old_time > 0.25)
 	{
 		printf("fps: %d    \r", fps);
 		fflush(stdout);
@@ -163,6 +162,7 @@ void	draw_surroundings(t_vars *vars)
 void	do_graphics(t_vars *vars)
 {
 	static int	a;
+	static double	old_time;
 
 	if (a++ == 0)
 	{
@@ -171,14 +171,18 @@ void	do_graphics(t_vars *vars)
 		draw_map(vars);
 		draw_player(vars);
 	}
-	display_fps(vars);
-	move_player(vars);
-	if (!needs_clearing(vars))
-		return ;
-	draw_surroundings(vars);
-	shoot_rays(vars, RAYS_NUM);
-	draw_map(vars);
-	draw_player(vars);
+	if (mlx_get_time() - old_time > 0.016)
+	{
+		display_fps(vars);
+		move_player(vars);
+		old_time = mlx_get_time();
+		if (!needs_clearing(vars))
+			return ;
+		draw_surroundings(vars);
+		shoot_rays(vars, RAYS_NUM);
+		draw_map(vars);
+		draw_player(vars);
+	}
 }
 
 void	clear_screen(t_vars *vars)
