@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/04 16:13:52 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/04 16:33:41 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ void	shoot_rays(t_vars *vars, int num)
 	{
 		vect_assign(&ray.to, &visual_player);
 		shoot_ray(vars, &ray, angle, color);
-		draw_stripe(vars, &ray, i);
+		draw_stripe(vars, &ray, i, angle);
 		angle += (double)vars->player.fov / num;
 		i++;
 	}
@@ -281,14 +281,15 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 	(void)color;
 }
 
-void	draw_stripe(t_vars *vars, t_ray *ray, int x)
+void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 {
 	t_vector	wall_start;
 	t_vector	wall_end;
 	double		wall_len;
 	int			color;
 
-	wall_len = M_HEIGHT / ray->distance;
+	(void)angle;
+	wall_len = M_HEIGHT / (ray->distance * (cos((vars ->player.angle - angle) * (M_PI / 180))));
 	wall_start.y = M_HEIGHT / 2 - wall_len / 2;
 	wall_end.y = M_HEIGHT / 2 + wall_len / 2;
 	if (wall_start.y < 0)

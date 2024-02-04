@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/04 16:02:44 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/04 16:33:16 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	inc_pos_vect(t_vector *vect, double factor, double angle);
 void	draw_map(t_vars *vars);
 void	display_fps(t_vars *vars);
 void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray);
-void	draw_stripe(t_vars *vars, t_ray *ray, int x);
+void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle);
 void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color);
 int		get_map_item(t_map *map, double _x, double _y);
 void	draw_surroundings(t_vars *vars);

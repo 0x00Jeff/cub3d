@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/04 15:14:10 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/04 16:22:17 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_ray
 	t_vector	direction;
 	float		distance;
 	int			side;
+	double		angle;
 }				t_ray;
 
 typedef struct s_player
