@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/04 17:40:13 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:12:21 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,13 @@ void	draw_map(t_vars *vars)
 		{1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -132,7 +132,7 @@ void	draw_map(t_vars *vars)
 				draw_square(vars,
 							(t_ivector){x, y},
 							TILE_SIZE * MAP_SCALE_FACTOR,
-							0x00ff00ff);
+							adjust_transparancy(0x9b734f, 0.2));
 			}
 		}
 	}
@@ -163,7 +163,7 @@ void	draw_surroundings(t_vars *vars)
 void	do_graphics(t_vars *vars)
 {
 	static int		a;
-	static double	old_time;
+	//static double	old_time;
 
 	if (a++ == 0)
 	{
@@ -172,18 +172,18 @@ void	do_graphics(t_vars *vars)
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
 	}
-	if (mlx_get_time() - old_time > 0.016)
-	{
+//	if (mlx_get_time() - old_time > 0.016)
+//	{
 		display_fps(vars);
 		move_player(vars);
-		old_time = mlx_get_time();
+//		old_time = mlx_get_time();
 		if (!needs_clearing(vars))
 			return ;
 		draw_surroundings(vars);
-		shoot_rays(vars, RAYS_NUM);
 		draw_map(vars);
+		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
-	}
+//	}
 }
 
 void	clear_screen(t_vars *vars)
