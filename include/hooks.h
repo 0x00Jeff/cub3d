@@ -6,18 +6,18 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/24 18:28:03 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:21:56 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HOOKS_H
 # define HOOKS_H
-# include "../mlx/include/MLX42/MLX42.h"
 # include "../include/structs.h"
+# include "../mlx/include/MLX42/MLX42.h"
 
-typedef void (*do_graphics_t)(t_vars *vars);
-do_graphics_t do_graphics_ptr = NULL;
-void *module = NULL;
+typedef void	(*t_do_graphics)(t_vars *vars);
+t_do_graphics	g_do_graphics_ptr = NULL;
+void			*g_module = NULL;
 
 enum
 {
@@ -29,7 +29,7 @@ enum
 	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
-void	install_hooks(t_vars *vars);
-void	win_close(void *param);
-void	print_key(void *param);
+void			install_hooks(t_vars *vars);
+void			win_close(void *param);
+void			print_key(void *param);
 #endif

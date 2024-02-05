@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/05 14:07:27 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/05 18:50:22 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@
 # define SPEED ((double)5 / (double)TILE_SIZE)
 # define RAY_LEN 10
 # define RAYS_NUM 1920
-# define MAP_SCALE_FACTOR	0.25
+# define MAP_SCALE_FACTOR	0.5
+
+typedef struct lil_end
+{
+	char c1;
+	char c2;
+	char c3;
+	char c4;
+} lil_end;
 
 void	draw_player(t_vars *vars);
 void	draw_point(t_vars *vars, t_vector pos, int point_size, int color);

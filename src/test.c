@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/01/26 14:29:01 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:41:47 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr +
+	dst = data->addr + \
 		(y * data->line_length + x * (data->bits_per_pixel >> 3));
 	*(unsigned int *)dst = color;
 }
@@ -56,10 +56,7 @@ int	main(void)
 
 	if (init_mlx_data(&vars) == -1)
 		return (-1);
-
 	install_hooks(&vars);
-//	clear_screen(&vars);
-//	draw_player(&vars, PLAYER_SIZE, 0);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	return (0);

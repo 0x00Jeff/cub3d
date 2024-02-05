@@ -10,10 +10,15 @@ INCLUDEFOLDER = include/
 LIB = lib/lib.so
 
 HOT_RELOAD_FILES = draw.o \
-				 vectors.o \
+				vect_utils1.o \
+				vect_utils2.o
 
 HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
-HOT_RELOAD_H	= $(foreach obj, $(HOT_RELOAD_FILES), $(INCLUDEFOLDER)$(obj:.o=.h))
+HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h \
+					$(INCLUDEFOLDER)vectors.h
+
+#HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
+#HOT_RELOAD_H	= $(foreach obj, $(HOT_RELOAD_FILES), $(INCLUDEFOLDER)$(obj:.o=.h))
 
 OBJS_FILES = test.o \
 			 hooks.o
@@ -41,7 +46,7 @@ $(NAME): $(OBJS) $(LIB)
 $(LIB): $(HOT_RELOAD) $(HOT_RELOAD_H)
 	$(CC) $(CFLAGS) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
-$(OBJSFOLDER)%.o: src/%.c include/%.h $(GLOBAL_HEADERS)
+$(OBJSFOLDER)%.o: src/%.c $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
 
 re: fclean all

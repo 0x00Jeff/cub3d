@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/05 18:10:55 by afatimi           #+#    #+#             */
+/*   Updated: 2024/02/05 19:06:29 by afatimi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/05 14:12:21 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/05 18:07:50 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +82,10 @@ void	move_player(t_vars *vars)
 	player->map_needs_clearing = player->pos.x * 10000 +
 		player->pos.y;
 	player->old_angle = player->angle;
+	if (mlx_is_key_down(mlx, MLX_KEY_K))
+		player->fov += 3;
+	if (mlx_is_key_down(mlx, MLX_KEY_J))
+		player->fov -= 3;
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 		player->angle += ROT_SPEED;
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
@@ -116,10 +132,11 @@ void	draw_map(t_vars *vars)
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+
 	vars->map.m = (int *)map;
 	vars->map.height = MAP_SIZE + 2;
 	vars->map.width = MAP_SIZE + 2;
@@ -163,27 +180,27 @@ void	draw_surroundings(t_vars *vars)
 void	do_graphics(t_vars *vars)
 {
 	static int		a;
-	//static double	old_time;
+	static double	old_time;
 
 	if (a++ == 0)
 	{
 		draw_surroundings(vars);
-		draw_map(vars);
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
+		draw_map(vars);
 	}
-//	if (mlx_get_time() - old_time > 0.016)
-//	{
+	if (mlx_get_time() - old_time > 0.016)
+	{
 		display_fps(vars);
 		move_player(vars);
-//		old_time = mlx_get_time();
+		old_time = mlx_get_time();
 		if (!needs_clearing(vars))
 			return ;
 		draw_surroundings(vars);
-		draw_map(vars);
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
-//	}
+		draw_map(vars);
+	}
 }
 
 void	clear_screen(t_vars *vars)
@@ -282,34 +299,56 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 	vect_scale(&tmp_from, MAP_SCALE_FACTOR);
 	vect_scale(&tmp_to, MAP_SCALE_FACTOR);
 	draw_line(vars, tmp_from, &tmp_to, color);
-	(void)color;
+	(void)color; // TODO : delete this
 }
 
 void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 {
 	t_vector	wall_start;
 	t_vector	wall_end;
+	int			start_y;
+	int			end_y;
 	double		wall_len;
 	int			color;
 
-	wall_len = M_HEIGHT / ((ray->distance * (cos((vars->player.angle - angle)
-					* (M_PI / 180)))) + 0.1) ;
+	wall_len = M_HEIGHT / (ray->distance * (cos((vars->player.angle - angle)
+					* (M_PI / 180))) * sin((vars->player.fov / 2) * (M_PI / 180)));
 	wall_start.y = M_HEIGHT / 2 - wall_len / 2;
 	wall_end.y = M_HEIGHT / 2 + wall_len / 2;
+	start_y = wall_start.y;
+	end_y = wall_end.y;
 	if (wall_start.y < 0)
-		wall_start.y = 0;
+		start_y = 0;
 	if (wall_end.y >= M_HEIGHT)
-		wall_end.y = M_HEIGHT - 1;
-	wall_start.x = x;
-	wall_end.x = x;
+		end_y = M_HEIGHT - 1;
+//	wall_start.x = x;
+//	wall_end.x = x;
 	color = adjust_transparancy(GREEN, 0.7);
+	/*
 	if (ray->side == UP)
 		color = adjust_transparancy(RED, 0.35);
 	else if (ray->side == DOWN)
 		color = adjust_transparancy(RED, 0.7);
 	else if (ray->side == RIGHT)
 		color = adjust_transparancy(GREEN, 0.35);
-	draw_line(vars, wall_start, &wall_end, color);
+		*/
+	mlx_texture_t *tex;
+	tex = vars -> texture[ray -> side];
+
+	int x_tex = ray -> percent_in_tex * tex -> width;
+	int i = start_y;
+	while(i < end_y)
+	{
+		int y_tex = tex -> height * (i - wall_start.y) / (wall_end.y - wall_start.y);
+		uint32_t pix = ((uint32_t *)tex -> pixels)[y_tex * tex -> width + x_tex];
+		lil_end l1 = *(lil_end *)&pix;
+		lil_end l2;
+		l2.c4 = l1.c1;
+		l2.c3 = l1.c2;
+		l2.c2 = l1.c3;
+		l2.c1 = l1.c4;
+		protected_mlx_put_pixel(vars -> image, x, i++, *(uint32_t *)&l2);
+	}
 }
 
 void	draw_point(t_vars *vars, t_vector pos, int point_size, int color)
@@ -395,6 +434,7 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 			ray->side = DOWN;
 		else
 			ray->side = UP;
+		ray -> percent_in_tex = fabs(ray -> to.x - floor(ray -> to.x));
 	}
 	else
 	{
@@ -404,6 +444,7 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 			ray->side = RIGHT;
 		else
 			ray->side = LEFT;
+		ray -> percent_in_tex = fabs(ray -> to.y - floor(ray -> to.y));
 	}
 	vect_scale(&ray->to, TILE_SIZE);
 }
