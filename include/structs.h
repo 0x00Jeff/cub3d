@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/05 18:14:35 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/06 16:20:06 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,13 @@ typedef struct s_vars
 	t_map			map;
 	mlx_texture_t	*texture[4];
 }					t_vars;
+
+typedef struct s_lil_end
+{
+	char	c1;
+	char	c2;
+	char	c3;
+	char	c4;
+}			t_lil_end;
+
 #endif

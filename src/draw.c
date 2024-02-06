@@ -5,72 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 18:10:55 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/05 19:06:29 by afatimi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/05 18:07:50 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/06 20:54:01 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/draw.h"
-#include "../include/vectors.h"
+#include <draw.h>
+#include <vectors.h>
 #include <math.h>
-#include <stdio.h> // to delete
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-int	adjust_transparancy(int color, float trans)
-{
-	if (trans < 0)
-		trans = -trans;
-	if (trans > 1)
-		trans = 1;
-	return ((color << 8) + (int)(0xff - (trans * 0xff)));
-}
-
-void	draw_player(t_vars *vars)
-{
-	draw_point2(vars, vars->player.pos.x * TILE_SIZE * MAP_SCALE_FACTOR,
-			vars->player.pos.y * TILE_SIZE * MAP_SCALE_FACTOR, 4, PRIV_ESC);
-}
-
-void	draw_point2(t_vars *vars, int x, int y, int point_size, int color)
-{
-	int	size;
-	int	start_x;
-	int	start_y;
-
-	start_x = x;
-	start_y = y - point_size;
-	for (size = 0; size <= point_size; size++)
-	{
-		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
-		start_y++;
-	}
-	for (; size >= 0; size--)
-	{
-		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
-		start_y++;
-	}
-}
-
-void	inc_pos_vect(t_vector *vect, double factor, double angle)
-{
-	vect->x += factor * cos(angle * (M_PI / 180));
-	vect->y += factor * sin(angle * (M_PI / 180));
-}
+#include <utils.h>
+#include <unused.h> // TODO : delete this later
+#include <fps.h> // TODO : delete this later
 
 void	move_player(t_vars *vars)
 {
@@ -79,7 +27,7 @@ void	move_player(t_vars *vars)
 
 	mlx = vars->mlx;
 	player = &vars->player;
-	player->map_needs_clearing = player->pos.x * 10000 +
+	player->map_needs_clearing = player->pos.x * 10000 + \
 		player->pos.y;
 	player->old_angle = player->angle;
 	if (mlx_is_key_down(mlx, MLX_KEY_K))
@@ -98,7 +46,6 @@ void	move_player(t_vars *vars)
 		inc_pos_vect(&player->pos, -SPEED, player->angle);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
 		inc_pos_vect(&player->pos, SPEED, player->angle);
-	return ;
 }
 
 int	needs_clearing(t_vars *vars)
@@ -116,58 +63,6 @@ int	needs_clearing(t_vars *vars)
 	return (0);
 }
 
-void	draw_map(t_vars *vars)
-{
-	static int map[MAP_SIZE + 2][MAP_SIZE + 2] = {
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
-
-	vars->map.m = (int *)map;
-	vars->map.height = MAP_SIZE + 2;
-	vars->map.width = MAP_SIZE + 2;
-	for (int y = 0; y < vars->map.height; y++)
-	{
-		for (int x = 0; x < vars->map.width; x++)
-		{
-			if (vars->map.m[y * vars->map.width + x] == 1)
-			{
-				draw_square(vars,
-							(t_ivector){x, y},
-							TILE_SIZE * MAP_SCALE_FACTOR,
-							adjust_transparancy(0x9b734f, 0.2));
-			}
-		}
-	}
-}
-
-void	display_fps(t_vars *vars)
-{
-	static double	old_time;
-	int				fps;
-
-	fps = (int)(1 / vars->mlx->delta_time);
-	if (mlx_get_time() - old_time > 0.25)
-	{
-		printf("fps: %d    \r", fps);
-		fflush(stdout);
-		old_time = mlx_get_time();
-	}
-}
 
 void	draw_surroundings(t_vars *vars)
 {
@@ -182,24 +77,29 @@ void	do_graphics(t_vars *vars)
 	static int		a;
 	static double	old_time;
 
+	(void)vars;
 	if (a++ == 0)
 	{
-		draw_surroundings(vars);
-		shoot_rays(vars, RAYS_NUM);
-		draw_player(vars);
-		draw_map(vars);
+		//draw_surroundings(vars);
+		//shoot_rays(vars, RAYS_NUM);
+		//draw_player(vars);
+		//draw_map(vars);
+		//display_fps(vars);
 	}
 	if (mlx_get_time() - old_time > 0.016)
 	{
-		display_fps(vars);
 		move_player(vars);
 		old_time = mlx_get_time();
 		if (!needs_clearing(vars))
+		{
+			display_fps(vars);
 			return ;
+		}
 		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
 		draw_map(vars);
+		//display_fps(vars);
 	}
 }
 
@@ -268,6 +168,7 @@ void	shoot_rays(t_vars *vars, int num)
 	int			color;
 
 	color = adjust_transparancy(0xff0000, 0);
+	color = adjust_transparancy(0x0000ff, 0);
 	vect_assign(&visual_player, &vars->player.pos);
 	vect_scale(&visual_player, TILE_SIZE);
 	angle = vars->player.angle - (vars->player.fov >> 1);
@@ -276,14 +177,14 @@ void	shoot_rays(t_vars *vars, int num)
 	while (i < num)
 	{
 		vect_assign(&ray.to, &visual_player);
-		shoot_ray(vars, &ray, angle, color);
+		shoot_ray(vars, &ray, angle);
 		draw_stripe(vars, &ray, i, angle);
 		angle += (double)vars->player.fov / num;
 		i++;
 	}
 }
 
-void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
+void	shoot_ray(t_vars *vars, t_ray *ray, double angle)
 {
 	t_vector	direction;
 	t_vector	tmp_from;
@@ -298,14 +199,15 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle, int color)
 	vect_assign(&tmp_to, &ray->to);
 	vect_scale(&tmp_from, MAP_SCALE_FACTOR);
 	vect_scale(&tmp_to, MAP_SCALE_FACTOR);
-	draw_line(vars, tmp_from, &tmp_to, color);
-	(void)color; // TODO : delete this
+	SKIP
+	draw_line(vars, tmp_from, &tmp_to, adjust_transparancy(GREEN, 0));
+
 }
 
 void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 {
-	t_vector	wall_start;
-	t_vector	wall_end;
+	t_ivector	wall_start;
+	t_ivector	wall_end;
 	int			start_y;
 	int			end_y;
 	double		wall_len;
@@ -321,17 +223,7 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 		start_y = 0;
 	if (wall_end.y >= M_HEIGHT)
 		end_y = M_HEIGHT - 1;
-//	wall_start.x = x;
-//	wall_end.x = x;
 	color = adjust_transparancy(GREEN, 0.7);
-	/*
-	if (ray->side == UP)
-		color = adjust_transparancy(RED, 0.35);
-	else if (ray->side == DOWN)
-		color = adjust_transparancy(RED, 0.7);
-	else if (ray->side == RIGHT)
-		color = adjust_transparancy(GREEN, 0.35);
-		*/
 	mlx_texture_t *tex;
 	tex = vars -> texture[ray -> side];
 
@@ -339,52 +231,10 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 	int i = start_y;
 	while(i < end_y)
 	{
-		int y_tex = tex -> height * (i - wall_start.y) / (wall_end.y - wall_start.y);
+		int y_tex = tex -> height * (double)(i - wall_start.y) / (wall_end.y - wall_start.y);
 		uint32_t pix = ((uint32_t *)tex -> pixels)[y_tex * tex -> width + x_tex];
-		lil_end l1 = *(lil_end *)&pix;
-		lil_end l2;
-		l2.c4 = l1.c1;
-		l2.c3 = l1.c2;
-		l2.c2 = l1.c3;
-		l2.c1 = l1.c4;
-		protected_mlx_put_pixel(vars -> image, x, i++, *(uint32_t *)&l2);
+		protected_mlx_put_pixel(vars -> image, x, i++, swap_endianess(pix));
 	}
-}
-
-void	draw_point(t_vars *vars, t_vector pos, int point_size, int color)
-//  DEBUG
-{
-	int size;
-	long start_x = pos.x *= TILE_SIZE;
-	long start_y = pos.y *= TILE_SIZE - point_size / 2;
-	for (size = 0; size <= point_size; size++)
-	{
-		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
-		start_y++;
-	}
-	for (; size >= 0; size--)
-	{
-		for (int j = -size; j <= size; j++)
-			protected_mlx_put_pixel(vars->image, (start_x + j), start_y, color);
-		start_y++;
-	}
-}
-
-int	get_map_item(t_map *map, double _x, double _y)
-{
-	int	x;
-	int	y;
-	int	*m;
-
-	m = map->m;
-	x = (int)floor(_x);
-	y = (int)floor(_y);
-	if (x < 0 || x >= map->width)
-		return (1);
-	if (y < 0 || y >= map->height)
-		return (1);
-	return (m[y * map->width + x]);
 }
 
 void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
@@ -410,14 +260,14 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 	v_step.y = tan(angle * (M_PI / 180));
 	v_step.y *= (direction->y < 0 && v_step.y > 0) ? -1 : 1;
 	v_step.y *= (direction->y > 0 && v_step.y < 0) ? -1 : 1;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 2000; i++)
 	{
 		if (get_map_item(&vars->map, h_intersect.x, h_intersect.y
 				- (direction->y < 0)))
 			break ;
 		vect_add(&h_intersect, &h_step);
 	}
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 2000; i++)
 	{
 		if (get_map_item(&vars->map, v_intersect.x - (direction->x < 0),
 				v_intersect.y))
@@ -447,31 +297,4 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 		ray -> percent_in_tex = fabs(ray -> to.y - floor(ray -> to.y));
 	}
 	vect_scale(&ray->to, TILE_SIZE);
-}
-
-void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color)
-{
-	t_vector	delta;
-	t_vector	inc;
-	double		step;
-	int			i;
-
-	i = 0;
-	delta.x = target_pos->x - pos.x;
-	delta.y = target_pos->y - pos.y;
-	if (abs((int)delta.x) > abs((int)delta.y))
-		step = delta.x;
-	else
-		step = delta.y;
-	if (step < 0)
-		step *= -1;
-	inc.x = delta.x / step;
-	inc.y = delta.y / step;
-	while (i < step)
-	{
-		protected_mlx_put_pixel(vars->image, roundf(pos.x), roundf(pos.y),
-				color);
-		vect_add(&pos, &inc);
-		i++;
-	}
 }
