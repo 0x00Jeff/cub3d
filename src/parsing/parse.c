@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/21 17:17:33 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/07 15:21:16 by afatimi          ###   ########.fr       */
+/*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
+/*   Updated: 2024/02/07 15:48:09 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
-# include "../include/structs.h"
-# include "../mlx/include/MLX42/MLX42.h"
-# include <dlfcn.h>
+#include<parse.h>
+#include<fcntl.h>
 
-typedef struct s_data
+int	parser(char *arg, t_vars *vars)
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_data;
+	int fd;
 
-void		install_hooks(t_vars *vars);
-#endif
+	fd = open(arg, )
+}

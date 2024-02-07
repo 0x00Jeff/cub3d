@@ -13,16 +13,15 @@ HOT_RELOAD_FILES = draw.o \
 				vect_utils1.o \
 				vect_utils2.o \
 				utils.o \
-				unused.o
+				unused.o \
+				get_next_line.o \
+				get_next_line_utils.o
 
 HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
 HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h \
 					$(INCLUDEFOLDER)vectors.h \
 					$(INCLUDEFOLDER)utils.h \
 					$(INCLUDEFOLDER)unused.h
-
-#HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
-#HOT_RELOAD_H	= $(foreach obj, $(HOT_RELOAD_FILES), $(INCLUDEFOLDER)$(obj:.o=.h))
 
 OBJS_FILES = test.o \
 			 hooks.o
@@ -39,10 +38,16 @@ OBJS = $(foreach obj, $(OBJS_FILES), $(OBJSFOLDER)$(obj))
 
 GLOBAL_HEADERS = include/structs.h
 
-all: objs $(NAME)
+LIBFT = src/libft/libft.a
+
+all: objs $(LIBFT) $(NAME)
 
 objs:
 	@mkdir objs
+
+$(LIBFT):
+	@echo "Compiling libft..."
+	@make -C src/libft
 
 $(NAME): $(OBJS) $(LIB)
 	$(CC) $(OBJS) $(CFLAGS) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
