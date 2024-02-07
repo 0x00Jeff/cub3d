@@ -6,19 +6,32 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/06 20:54:01 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:11:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <draw.h>
-#include <vectors.h>
+#include <fps.h> // TODO : delete this later
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <utils.h>
 #include <unused.h> // TODO : delete this later
-#include <fps.h> // TODO : delete this later
+#include <utils.h>
+#include <vectors.h>
+
+void	rotate_player(t_vars *vars)
+{
+	void		*mlx;
+	t_player	*player;
+
+	mlx = vars->mlx;
+	player = &vars->player;
+	if (mlx_is_key_down(mlx, MLX_KEY_K))
+		player->fov += 3;
+	if (mlx_is_key_down(mlx, MLX_KEY_J))
+		player->fov -= 3;
+}
 
 void	move_player(t_vars *vars)
 {
@@ -30,10 +43,6 @@ void	move_player(t_vars *vars)
 	player->map_needs_clearing = player->pos.x * 10000 + \
 		player->pos.y;
 	player->old_angle = player->angle;
-	if (mlx_is_key_down(mlx, MLX_KEY_K))
-		player->fov += 3;
-	if (mlx_is_key_down(mlx, MLX_KEY_J))
-		player->fov -= 3;
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 		player->angle += ROT_SPEED;
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
@@ -63,13 +72,12 @@ int	needs_clearing(t_vars *vars)
 	return (0);
 }
 
-
 void	draw_surroundings(t_vars *vars)
 {
 	draw_rectangle(vars, (t_vector){0, 0}, (t_vector){M_WIDTH, M_HEIGHT / 2},
-			adjust_transparancy(BLUE, 0.5));
+		adjust_transparancy(BLUE, 0.5));
 	draw_rectangle(vars, (t_vector){0, M_HEIGHT / 2}, (t_vector){M_WIDTH,
-			M_HEIGHT}, adjust_transparancy(BEIGE, 0.5));
+		M_HEIGHT}, adjust_transparancy(BEIGE, 0.5));
 }
 
 void	do_graphics(t_vars *vars)
@@ -80,11 +88,11 @@ void	do_graphics(t_vars *vars)
 	(void)vars;
 	if (a++ == 0)
 	{
-		//draw_surroundings(vars);
-		//shoot_rays(vars, RAYS_NUM);
-		//draw_player(vars);
-		//draw_map(vars);
-		//display_fps(vars);
+		draw_surroundings(vars);
+		shoot_rays(vars, RAYS_NUM);
+		draw_player(vars);
+		draw_map(vars);
+		display_fps(vars);
 	}
 	if (mlx_get_time() - old_time > 0.016)
 	{
@@ -99,22 +107,7 @@ void	do_graphics(t_vars *vars)
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
 		draw_map(vars);
-		//display_fps(vars);
-	}
-}
-
-void	clear_screen(t_vars *vars)
-{
-	int	color;
-
-	color = adjust_transparancy(0xffffff, 0.5);
-	for (int i = 0; i < (1920 / TILE_SIZE) + 1; i++)
-	{
-		for (int j = 0; j < (1080 / TILE_SIZE) + 1; j++)
-			draw_square(vars,
-						(t_ivector){i, j},
-						TILE_SIZE,
-						((i + j) % 2) ? color : 0);
+		display_fps(vars);
 	}
 }
 
@@ -145,7 +138,7 @@ void	draw_square(t_vars *vars, t_ivector pos, int tile_size, int color)
 		while (delta.x < size)
 		{
 			protected_mlx_put_pixel(vars->image, pos.x * tile_size + delta.x,
-					pos.y * tile_size + delta.y, color);
+				pos.y * tile_size + delta.y, color);
 			delta.x++;
 		}
 		delta.y++;
@@ -199,22 +192,27 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle)
 	vect_assign(&tmp_to, &ray->to);
 	vect_scale(&tmp_from, MAP_SCALE_FACTOR);
 	vect_scale(&tmp_to, MAP_SCALE_FACTOR);
-	SKIP
+	SKIP;
 	draw_line(vars, tmp_from, &tmp_to, adjust_transparancy(GREEN, 0));
-
 }
 
 void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 {
-	t_ivector	wall_start;
-	t_ivector	wall_end;
-	int			start_y;
-	int			end_y;
-	double		wall_len;
-	int			color;
+	t_ivector		wall_start;
+	t_ivector		wall_end;
+	int				start_y;
+	int				end_y;
+	double			wall_len;
+	int				color;
+	mlx_texture_t	*tex;
+	int				x_tex;
+	int				i;
+	int				y_tex;
+	uint32_t		pix;
 
 	wall_len = M_HEIGHT / (ray->distance * (cos((vars->player.angle - angle)
-					* (M_PI / 180))) * sin((vars->player.fov / 2) * (M_PI / 180)));
+					* (M_PI / 180))) * sin((vars->player.fov / 2) * (M_PI
+					/ 180)));
 	wall_start.y = M_HEIGHT / 2 - wall_len / 2;
 	wall_end.y = M_HEIGHT / 2 + wall_len / 2;
 	start_y = wall_start.y;
@@ -224,16 +222,15 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 	if (wall_end.y >= M_HEIGHT)
 		end_y = M_HEIGHT - 1;
 	color = adjust_transparancy(GREEN, 0.7);
-	mlx_texture_t *tex;
-	tex = vars -> texture[ray -> side];
-
-	int x_tex = ray -> percent_in_tex * tex -> width;
-	int i = start_y;
-	while(i < end_y)
+	tex = vars->texture[ray->side];
+	x_tex = ray->percent_in_tex * tex->width;
+	i = start_y;
+	while (i < end_y)
 	{
-		int y_tex = tex -> height * (double)(i - wall_start.y) / (wall_end.y - wall_start.y);
-		uint32_t pix = ((uint32_t *)tex -> pixels)[y_tex * tex -> width + x_tex];
-		protected_mlx_put_pixel(vars -> image, x, i++, swap_endianess(pix));
+		y_tex = tex->height * (double)(i - wall_start.y) / (wall_end.y
+				- wall_start.y);
+		pix = ((uint32_t *)tex->pixels)[y_tex * tex->width + x_tex];
+		protected_mlx_put_pixel(vars->image, x, i++, swap_endianess(pix));
 	}
 }
 
@@ -284,7 +281,7 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 			ray->side = DOWN;
 		else
 			ray->side = UP;
-		ray -> percent_in_tex = fabs(ray -> to.x - floor(ray -> to.x));
+		ray->percent_in_tex = fabs(ray->to.x - floor(ray->to.x));
 	}
 	else
 	{
@@ -294,7 +291,7 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 			ray->side = RIGHT;
 		else
 			ray->side = LEFT;
-		ray -> percent_in_tex = fabs(ray -> to.y - floor(ray -> to.y));
+		ray->percent_in_tex = fabs(ray->to.y - floor(ray->to.y));
 	}
 	vect_scale(&ray->to, TILE_SIZE);
 }

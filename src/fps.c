@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:39:43 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/06 20:49:44 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:04:40 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	draw_digit(t_vars *vars, int digit, t_ivector pos, int size)
 {
-	t_ivector iter;
-	t_ivector tmp;
+	t_ivector	iter;
+	t_ivector	tmp;
 	static int	digits_patt[5][3 * 10] = {
 	{1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},

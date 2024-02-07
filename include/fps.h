@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:39:58 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/06 17:55:02 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:12:22 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 # include <draw.h>
 # include <stdio.h>
 # include <structs.h>
+
 void	draw_fps(t_vars *vars);
 #endif

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/06 17:28:59 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/07 14:54:33 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # define SPEED ((double)5 / (double)TILE_SIZE)
 # define RAY_LEN 10
 # define RAYS_NUM 1920
-# define MAP_SCALE_FACTOR	0.5
+# define MAP_SCALE_FACTOR 0.5
 
+void	rotate_player(t_vars *vars);
 void	draw_rectangle(t_vars *vars, t_vector start, t_vector end, int color);
 void	clear_screen(t_vars *vars);
 void	draw_square(t_vars *vars, t_ivector pos, int tile_size, int color);

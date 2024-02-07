@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:11:14 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/06 17:35:16 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:07:45 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,20 @@ void	draw_map(t_vars *vars)
 					adjust_transparancy(0x9b734f, 0.2));
 			}
 		}
+	}
+}
+
+void	clear_screen(t_vars *vars)
+{
+	int	color;
+
+	color = adjust_transparancy(0xffffff, 0.5);
+	for (int i = 0; i < (1920 / TILE_SIZE) + 1; i++)
+	{
+		for (int j = 0; j < (1080 / TILE_SIZE) + 1; j++)
+			draw_square(vars,
+						(t_ivector){i, j},
+						TILE_SIZE,
+						((i + j) % 2) ? color : 0);
 	}
 }

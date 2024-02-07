@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/06 20:48:12 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/07 15:02:34 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,8 @@ void	init_data(t_vars *vars)
 	vars->map.m = (int *)map;
 	vars->map.height = MAP_SIZE + 2;
 	vars->map.width = MAP_SIZE + 2;
-	vars->player.pos.x = 1;
-	vars->player.pos.y = 1;
-	//vars->player.pos.x = -1;
-	//vars->player.pos.y = -1;
+	vars->player.pos.x = 4.5;
+	vars->player.pos.y = 5.5;
 	vars->player.angle = 0;
 	vars->player.map_needs_clearing = 69;
 	vars->player.fov = 60;
@@ -69,7 +67,6 @@ void	init_data(t_vars *vars)
 void	install_hooks(t_vars *vars)
 {
 	init_data(vars);
-	printf("install_hooks : player angle = %f\n", vars->player.angle);
 	hot_reload();
 	g_do_graphics_ptr(vars);
 	mlx_loop_hook(vars->mlx, print_key, vars);
