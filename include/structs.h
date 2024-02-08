@@ -6,14 +6,18 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/07 15:35:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/07 17:19:28 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 # include "../mlx/include/MLX42/MLX42.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <fcntl.h>
 # include <dlfcn.h>
+# include <libft.h>
 
 # define M_WIDTH 1920
 # define M_HEIGHT 1080
@@ -77,6 +81,7 @@ typedef struct s_map
 	int				width;
 	int				*m;
 	int				color;
+	int				fd;
 }					t_map;
 
 typedef struct s_vars

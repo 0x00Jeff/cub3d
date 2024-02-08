@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -g -ggdb3 # -O3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror # -g -ggdb3 # -O3 -fsanitize=address
 
 LINK_H = -Iinclude
 
@@ -13,9 +13,7 @@ HOT_RELOAD_FILES = draw.o \
 				vect_utils1.o \
 				vect_utils2.o \
 				utils.o \
-				unused.o \
-				get_next_line.o \
-				get_next_line_utils.o
+				unused.o
 
 HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
 HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h \
@@ -40,7 +38,8 @@ GLOBAL_HEADERS = include/structs.h
 
 LIBFT = src/libft/libft.a
 
-all: objs $(LIBFT) $(NAME)
+#all: objs $(LIBFT) $(NAME)
+all: objs $(NAME)
 
 objs:
 	@mkdir objs
@@ -51,6 +50,7 @@ $(LIBFT):
 
 $(NAME): $(OBJS) $(LIB)
 	$(CC) $(OBJS) $(CFLAGS) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
+	#$(CC) $(OBJS) $(CFLAGS) $(LIBFT) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(LIB): $(HOT_RELOAD) $(HOT_RELOAD_H)
 	$(CC) $(CFLAGS) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
@@ -62,9 +62,11 @@ re: fclean all
 
 fclean: clean
 	rm -rf $(NAME) $(LIB)
+	make -C src/libft clean
 
 clean:
 	rm -rf $(OBJS) $(HOT_RELOAD)
+	make -C src/libft fclean
 
 norm:
 	norminette src/*.c include/*.h

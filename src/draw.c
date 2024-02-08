@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/07 15:33:24 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/07 18:10:40 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,17 @@ void	do_graphics(t_vars *vars)
 	(void)vars;
 	if (a++ == 0)
 	{
+		/*
 		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
 		draw_map(vars);
 		display_fps(vars);
+		*/
 	}
 	if (mlx_get_time() - old_time > 0.016)
 	{
+
 		move_player(vars);
 		old_time = mlx_get_time();
 		if (!needs_clearing(vars))
@@ -107,7 +110,7 @@ void	do_graphics(t_vars *vars)
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
 		draw_map(vars);
-		display_fps(vars);
+		//display_fps(vars);
 	}
 }
 
