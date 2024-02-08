@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 15:55:31 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/08 17:52:03 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <test.h>
 #include <time.h>
 #include <unistd.h>
+#include <libft.h>
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -51,11 +52,20 @@ int	init_mlx_data(t_vars *vars)
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	t_vars	vars;
 
-	parser(&vars, "kek");
+	if (argc != 2)
+	{
+		// TODO : check this with youssef
+		printf("Usage: %s map.ber\n", argv[0]);
+		return (-1);
+	}
+	if (parser(&vars, argv[1]))
+		return (-1);
+	puts("OK!");
+	return (1);
 	if (init_mlx_data(&vars) == -1)
 		return (-1);
 	init_player_data(&vars);

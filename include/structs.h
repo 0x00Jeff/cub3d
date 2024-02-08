@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/07 15:35:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/08 17:54:34 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,12 @@ typedef struct s_player
 
 typedef struct s_map
 {
+	int				fd;
 	int				height;
 	int				width;
 	int				*m;
 	int				color;
+	char			*texture[4];
 }					t_map;
 
 typedef struct s_vars
@@ -91,10 +93,10 @@ typedef struct s_vars
 
 typedef struct s_lil_end
 {
-	char	c1;
-	char	c2;
-	char	c3;
-	char	c4;
-}			t_lil_end;
+	char			c1;
+	char			c2;
+	char			c3;
+	char			c4;
+}					t_lil_end;
 
 #endif

@@ -6,11 +6,21 @@
 /*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 19:51:35 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/10/15 16:18:05 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:24:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
+
+void	free_list(char **list)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (list[i])
+		free(list[i++]);
+	free(list);
+}
 
 static int	count_words(char const *s, char c)
 {
