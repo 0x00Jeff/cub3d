@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/05 15:21:56 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/08 15:54:45 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ enum
 	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
+void	init_player_data(t_vars *vars);
 void			install_hooks(t_vars *vars);
 void			win_close(void *param);
 void			print_key(void *param);

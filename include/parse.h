@@ -6,12 +6,12 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:23:11 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/07 15:48:08 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/08 15:24:40 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 # include <structs.h>
-int	parser(char *arg, t_vars *vars);
+int	parser(t_vars *vars, char *file);
 #endif

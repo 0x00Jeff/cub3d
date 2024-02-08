@@ -6,16 +6,16 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/07 15:48:09 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/08 15:24:45 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include<parse.h>
 #include<fcntl.h>
 
-int	parser(char *arg, t_vars *vars)
+int	parser(t_vars *vars, char *file)
 {
-	int fd;
-
-	fd = open(arg, )
+	(void)vars;
+	(void)file;
+	return (1);
 }

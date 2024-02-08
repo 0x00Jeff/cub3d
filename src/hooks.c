@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/07 15:02:34 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/08 15:52:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	hot_reload(void)
 	g_do_graphics_ptr = dlsym(g_module, "do_graphics");
 }
 
-void	init_data(t_vars *vars)
+void	init_player_data(t_vars *vars)
 {
 	static int	map[MAP_SIZE + 2][MAP_SIZE + 2] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -57,7 +57,6 @@ void	init_data(t_vars *vars)
 	vars->player.angle = 0;
 	vars->player.map_needs_clearing = 69;
 	vars->player.fov = 60;
-	//vars -> texture[NORTH] = mlx_load_png("resources/door.png");
 	vars -> texture[NORTH] = mlx_load_png("resources/badgeOnRedbricks.png");
 	vars -> texture[SOUTH] = mlx_load_png("resources/greybricks.png");
 	vars -> texture[EAST] = mlx_load_png("resources/figureOnWood.png");
@@ -66,7 +65,6 @@ void	init_data(t_vars *vars)
 
 void	install_hooks(t_vars *vars)
 {
-	init_data(vars);
 	hot_reload();
 	g_do_graphics_ptr(vars);
 	mlx_loop_hook(vars->mlx, print_key, vars);
