@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 17:54:34 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/08 20:43:57 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,18 @@ typedef struct s_map
 	int				height;
 	int				width;
 	int				*m;
-	int				color;
-	char			*texture[4];
+	char			*tex[4];
+	int				celing_color;
+	int				floor_color;
 }					t_map;
+
+typedef struct e_color
+{
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+	uint8_t a;
+} t_color;
 
 typedef struct s_vars
 {

@@ -6,7 +6,7 @@
 /*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 22:32:03 by ylyoussf          #+#    #+#             */
-/*   Updated: 2024/02/08 17:24:13 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/08 21:09:04 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_env
 
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
+int					ft_isdigit_string(char *str);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
