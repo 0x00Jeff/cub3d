@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:05:36 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 20:01:31 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 20:03:53 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ uint32_t	construct_lgbt(char *_r, char *_g, char *_b)
 	col.r = ft_atoi(_r);
 	col.g = ft_atoi(_g);
 	col.b = ft_atoi(_b);
-	if (validate_lgbt(col, _r, _g, _b) == -1)
+	if (validate_lgbt(_r, _g, _b) == -1)
 		return (ft_putstr_fd("Error: invalid lgbt\n", 2), -1);
 	return (col.r << 16 | col.g << 8 | col.b);
 }
 
-int	validate_lgbt(t_color col, char *_r, char *_g, char *_b)
+int	validate_lgbt(char *_r, char *_g, char *_b)
 {
 	uint32_t	r;
 	uint32_t	g;
@@ -65,11 +65,9 @@ int	validate_lgbt(t_color col, char *_r, char *_g, char *_b)
 	r = ft_atoi(_r);
 	g = ft_atoi(_g);
 	b = ft_atoi(_b);
-#ifdef DEBUG
-	printf("r = %d\n", col.r);
-	printf("g = %d\n", col.g);
-	printf("b = %d\n", col.b);
-#endif
+	printf("r = %d\n", r);
+	printf("g = %d\n", g);
+	printf("b = %d\n", b);
 	if (r < 0 || r > 0xff)
 		return (-1);
 	if (g < 0 || g > 0xff)
