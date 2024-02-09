@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 12:24:48 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 14:45:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int	parser(t_vars *vars, char *file)
 	printf("text[SO] = %s\n", map->tex[SOUTH]);
 	printf("text[WE] = %s\n", map->tex[WEST]);
 	printf("text[EA] = %s\n", map->tex[EAST]);
-	printf("F = 0x%x\n", map -> floor_color);;
-	printf("C = 0x%x\n", map -> celing_color);
+	printf("F = 0x%x\n", map -> colors.floor);
+	printf("C = 0x%x\n", map -> colors.ceiling);
+	puts("OK!");
 	return (0);
 }
 
@@ -66,6 +67,9 @@ int	get_map_parts(t_map *map)
 		return (-1);
 	}
 	res = get_surroundings(map);
+#ifdef DEBUG
+	printf("res = %d\n", res);
+#endif
 	if (res != 2)
 	{
 		if (res == -1)
@@ -82,6 +86,7 @@ int	get_surroundings(t_map *m)
 	char	*line;
 	char	**ptr;
 	int		fd;
+	int		debug_color;
 
 	fd = m->fd;
 	line = get_next_line(fd);
@@ -89,10 +94,17 @@ int	get_surroundings(t_map *m)
 		line[ft_strlen(line) - 1] = 0;
 	while (line && ft_strlen(line))
 	{
+#ifdef DEBUG
+		puts(line);
+#endif
 		ptr = ft_split(line, ' ');
 		if (!ptr || get_list_len(ptr) == 2)
 		{
-			if (set_map_colors(m, *ptr[0], ptr[1]) == -1)
+			debug_color = set_map_colors(m, *ptr[0], ptr[1]);
+#ifdef DEBUG
+			printf("gotten color = %x\n", debug_color);
+#endif
+			if (debug_color == -1)
 				return (ft_putstr_fd("Error\nInvalid Color\n", 2),
 					free_list(ptr), free(line), -1);
 		}
@@ -103,8 +115,7 @@ int	get_surroundings(t_map *m)
 			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
-	printf("returning %d\n", !!m->celing_color + !!m->floor_color);
-	return (!!m->celing_color + !!m->floor_color);
+	return (!!m->colors.ceiling_set	+ !!m->colors.floor_set);
 }
 
 int	get_textures(t_map *m)
@@ -138,14 +149,27 @@ int	get_textures(t_map *m)
 int	set_map_colors(t_map *map, char obj, char *lgbt_colors)
 {
 	int		*where;
+	int		*flag;
 	char	**ptr;
 
 	if (!map || !lgbt_colors)
 		return (-1);
 	if (obj == 'F')
-		where = &map->floor_color;
+	{
+#ifdef DEBUG
+		printf("floor -> %s\n", lgbt_colors);
+#endif
+		where = &map->colors.floor;
+		flag = &map->colors.floor_set;
+	}
 	else if (obj == 'C')
-		where = &map->celing_color;
+	{
+#ifdef DEBUG
+		printf("ceil -> %s\n", lgbt_colors);
+#endif
+		where = &map->colors.ceiling;
+		flag = &map->colors.ceiling_set;
+	}
 	else
 		return (ft_putstr_fd("Error: invalid objects!\n", 2), -1);
 	ptr = ft_split(lgbt_colors, ',');
@@ -156,6 +180,7 @@ int	set_map_colors(t_map *map, char obj, char *lgbt_colors)
 	if (*where)
 		return (ft_putstr_fd("Error, duplicated colors!\n", 2), -1);
 	*where = construct_lgbt(ft_atoi(ptr[0]), ft_atoi(ptr[1]), ft_atoi(ptr[2]));
+	*flag = 1;
 	return (free_list(ptr), *where);
 }
 
@@ -205,6 +230,8 @@ t_map	*init_map(char *file)
 	map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!map)
 		return (NULL);
+	map -> colors.floor_set = 0;
+	map -> colors.ceiling_set = 0;
 	return (map);
 }
 

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 12:15:07 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 14:11:49 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int argc, char *argv[])
 		return (-1);
 	if (parser(&vars, argv[1]))
 		return (-1);
+	return (0);
 	if (init_player_data(&vars))
 		return (ft_putstr_fd("Error: could not initiate player data\n", 2), -1);
 	install_hooks(&vars);

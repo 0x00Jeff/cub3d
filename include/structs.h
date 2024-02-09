@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 20:43:57 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 14:36:33 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,14 @@ typedef struct s_player
 	int				fov;
 }					t_player;
 
+typedef struct s_surroundings
+{
+	int ceiling;
+	int floor;
+	int ceiling_set;
+	int floor_set;
+}				t_surroundings;
+
 typedef struct s_map
 {
 	int				fd;
@@ -78,8 +86,7 @@ typedef struct s_map
 	int				width;
 	int				*m;
 	char			*tex[4];
-	int				celing_color;
-	int				floor_color;
+	t_surroundings	colors;
 }					t_map;
 
 typedef struct e_color
