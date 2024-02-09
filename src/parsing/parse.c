@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 14:45:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:46:26 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,9 @@ int	set_map_colors(t_map *map, char obj, char *lgbt_colors)
 		return (ft_putstr_fd("Error: not a digit!\n", 2), -1);
 	if (*where)
 		return (ft_putstr_fd("Error, duplicated colors!\n", 2), -1);
-	*where = construct_lgbt(ft_atoi(ptr[0]), ft_atoi(ptr[1]), ft_atoi(ptr[2]));
-	*flag = 1;
+	*where = construct_lgbt(ptr[0], ptr[1], ptr[2]);
+	if (*where != -1)
+		*flag = 1;
 	return (free_list(ptr), *where);
 }
 

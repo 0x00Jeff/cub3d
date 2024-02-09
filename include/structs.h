@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 14:36:33 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:55:43 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ typedef struct s_player
 
 typedef struct s_surroundings
 {
-	int ceiling;
-	int floor;
-	int ceiling_set;
-	int floor_set;
-}				t_surroundings;
+	int				ceiling;
+	int				floor;
+	int				ceiling_set;
+	int				floor_set;
+}					t_surroundings;
 
 typedef struct s_map
 {
@@ -91,11 +91,11 @@ typedef struct s_map
 
 typedef struct e_color
 {
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
-	uint8_t a;
-} t_color;
+	uint8_t			r;
+	uint8_t			g;
+	uint8_t			b;
+	uint8_t			a;
+}					t_color;
 
 typedef struct s_vars
 {

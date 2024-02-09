@@ -3,5 +3,5 @@ EA resources/greybricks.png
 SO resources/greybricks.png
 WE resources/figureOnWood.png
 
-F 0,0,0
-C 0,0,0
+F 0,105,4294967365
+C 105,105,105
