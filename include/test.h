@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:17:33 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 15:55:51 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 12:13:24 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ typedef struct s_data
 }			t_data;
 
 void		install_hooks(t_vars *vars);
-void		init_player_data(t_vars *vars);
+int			init_player_data(t_vars *vars);
 #endif

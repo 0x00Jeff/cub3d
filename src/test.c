@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 17:52:03 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 12:15:07 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,12 @@ int	main(int argc, char *argv[])
 		printf("Usage: %s map.ber\n", argv[0]);
 		return (-1);
 	}
-	if (parser(&vars, argv[1]))
-		return (-1);
-	puts("OK!");
-	return (1);
 	if (init_mlx_data(&vars) == -1)
 		return (-1);
-	init_player_data(&vars);
+	if (parser(&vars, argv[1]))
+		return (-1);
+	if (init_player_data(&vars))
+		return (ft_putstr_fd("Error: could not initiate player data\n", 2), -1);
 	install_hooks(&vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);

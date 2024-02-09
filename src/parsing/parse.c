@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 21:18:41 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 12:24:48 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <libft.h>
 #include <parse.h>
 #include <stdio.h>
-
 
 int	parser(t_vars *vars, char *file)
 {
@@ -34,6 +33,8 @@ int	parser(t_vars *vars, char *file)
 	printf("text[SO] = %s\n", map->tex[SOUTH]);
 	printf("text[WE] = %s\n", map->tex[WEST]);
 	printf("text[EA] = %s\n", map->tex[EAST]);
+	printf("F = 0x%x\n", map -> floor_color);;
+	printf("C = 0x%x\n", map -> celing_color);
 	return (0);
 }
 
@@ -51,7 +52,7 @@ size_t	get_list_len(char **l)
 
 int	get_map_parts(t_map *map)
 {
-	int res;
+	int	res;
 
 	if (!map)
 		return (-1);
@@ -65,10 +66,18 @@ int	get_map_parts(t_map *map)
 		return (-1);
 	}
 	res = get_surroundings(map);
+	if (res != 2)
+	{
+		if (res == -1)
+			ft_putstr_fd("Erorr: duplicated colors!\n", 2);
+		else
+			ft_putstr_fd("Error: Missing colors!\n", 2);
+		return (-1);
+	}
 	return (0);
 }
 
-int get_surroundings(t_map *m)
+int	get_surroundings(t_map *m)
 {
 	char	*line;
 	char	**ptr;
@@ -76,23 +85,26 @@ int get_surroundings(t_map *m)
 
 	fd = m->fd;
 	line = get_next_line(fd);
-	line[ft_strlen(line) - 1] = 0;
-	while (ft_strlen(line))
+	if (line)
+		line[ft_strlen(line) - 1] = 0;
+	while (line && ft_strlen(line))
 	{
-	//	line[ft_strlen(line) - 1] = 0;
 		ptr = ft_split(line, ' ');
 		if (!ptr || get_list_len(ptr) == 2)
-		{ // TODO : handle error otherwise
+		{
 			if (set_map_colors(m, *ptr[0], ptr[1]) == -1)
-				return (free_list(ptr), free(line), -1);
+				return (ft_putstr_fd("Error\nInvalid Color\n", 2),
+					free_list(ptr), free(line), -1);
 		}
 		free_list(ptr);
 		free(line);
 		line = get_next_line(fd);
+		if (!line)
+			break ;
+		line[ft_strlen(line) - 1] = 0;
 	}
-	return (!!m -> tex[UP] + !!m -> tex[DOWN] + \
-			!!m -> tex[RIGHT] + !!m -> tex[LEFT]);
-
+	printf("returning %d\n", !!m->celing_color + !!m->floor_color);
+	return (!!m->celing_color + !!m->floor_color);
 }
 
 int	get_textures(t_map *m)
@@ -103,64 +115,48 @@ int	get_textures(t_map *m)
 
 	fd = m->fd;
 	line = get_next_line(fd);
-	line[ft_strlen(line) - 1] = 0;
-	while (ft_strlen(line))
+	if (line)
+		line[ft_strlen(line) - 1] = 0;
+	while (line && ft_strlen(line))
 	{
 		ptr = ft_split(line, ' ');
 		if (!ptr || get_list_len(ptr) == 2)
-		{ // TODO : handle error otherwise
 			if (set_map_texture(m, ptr[0], ft_strdup(ptr[1])) == -1)
 				return (free_list(ptr), free(line), -1);
-		}
 		free_list(ptr);
 		free(line);
 		line = get_next_line(fd);
+		if (!line)
+			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
-	return (!!m -> tex[UP] + !!m -> tex[DOWN] + \
-			!!m -> tex[RIGHT] + !!m -> tex[LEFT]);
+	return (!!m->tex[UP] + !!m->tex[DOWN] + \
+			!!m->tex[RIGHT] + !!m->tex[LEFT]);
 }
 
-uint32_t construct_lgbt(uint8_t r, uint8_t g, uint8_t b)
-{
-	return (r << 16 | g << 8 | b);
-}
 
 int	set_map_colors(t_map *map, char obj, char *lgbt_colors)
 {
-	int *where;
-	char **ptr;
+	int		*where;
+	char	**ptr;
 
-	where = NULL;
-	if (!lgbt_colors)
+	if (!map || !lgbt_colors)
 		return (-1);
 	if (obj == 'F')
-		where = &map -> floor_color;
+		where = &map->floor_color;
 	else if (obj == 'C')
-		where = &map -> celing_color;
+		where = &map->celing_color;
 	else
-	{
-		ft_putstr_fd("Error: invalid objects!\n", 2);
-		return (-1);
-	}
-
+		return (ft_putstr_fd("Error: invalid objects!\n", 2), -1);
 	ptr = ft_split(lgbt_colors, ',');
-	puts(lgbt_colors);
-	printf("list len = %ld\n", get_list_len(ptr));
 	if (!ptr || get_list_len(ptr) != 3)
-	{
-		ft_putstr_fd("Error: list does not have 3 parts\n", 2);
-		return (-1);
-	}
+		return (ft_putstr_fd("Error: list does not have 3 parts\n", 2), -1);
 	if (check_digit_list(ptr))
-	{
-		ft_putstr_fd("Error: not a digit!\n", 2);
-		return (-1);
-	}
-	if (where)
-		*where = construct_lgbt(ft_atoi(ptr[0]), ft_atoi(ptr[1]), ft_atoi(ptr[2]));
-
-	return (0);
+		return (ft_putstr_fd("Error: not a digit!\n", 2), -1);
+	if (*where)
+		return (ft_putstr_fd("Error, duplicated colors!\n", 2), -1);
+	*where = construct_lgbt(ft_atoi(ptr[0]), ft_atoi(ptr[1]), ft_atoi(ptr[2]));
+	return (free_list(ptr), *where);
 }
 
 int	set_map_texture(t_map *map, char *text, char *file)
@@ -170,25 +166,19 @@ int	set_map_texture(t_map *map, char *text, char *file)
 
 	if (!map || !text || !file)
 		return (-1);
-	// ironic name but sure xd
-	fd = try_open_file(file, "png");
-	if (fd < 0)
-		return (-1);
 	if (!ft_strncmp(text, "NO", 3))
-		texture = &map -> tex[NORTH];
+		texture = &map->tex[NORTH];
 	else if (!ft_strncmp(text, "SO", 3))
-		texture = &map -> tex[SOUTH];
+		texture = &map->tex[SOUTH];
 	else if (!ft_strncmp(text, "WE", 3))
-		texture = &map -> tex[WEST];
+		texture = &map->tex[WEST];
 	else if (!ft_strncmp(text, "EA", 3))
-		texture = &map -> tex[EAST];
+		texture = &map->tex[EAST];
 	else
-	{
-		ft_putstr_fd("Wrong, map direction\n", 2);
+		return (ft_putstr_fd("Error: Wrong map direction\n", 2), -1);
+	fd = try_open_file(file, "png");
+	if (fd < 0 || *texture)
 		return (-1);
-	}
-	if (*texture)
-		return -1;
 	if (texture)
 		*texture = file;
 	return (0);

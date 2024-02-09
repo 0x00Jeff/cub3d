@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 15:52:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 12:15:28 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	hot_reload(void)
 	g_do_graphics_ptr = dlsym(g_module, "do_graphics");
 }
 
-void	init_player_data(t_vars *vars)
+int	init_player_data(t_vars *vars)
 {
 	static int	map[MAP_SIZE + 2][MAP_SIZE + 2] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -57,10 +57,12 @@ void	init_player_data(t_vars *vars)
 	vars->player.angle = 0;
 	vars->player.map_needs_clearing = 69;
 	vars->player.fov = 60;
-	vars -> texture[NORTH] = mlx_load_png("resources/badgeOnRedbricks.png");
-	vars -> texture[SOUTH] = mlx_load_png("resources/greybricks.png");
-	vars -> texture[EAST] = mlx_load_png("resources/figureOnWood.png");
-	vars -> texture[WEST] = mlx_load_png("resources/crossOnWood.png");
+	vars -> texture[NORTH] = mlx_load_png(vars -> map.tex[NORTH]);
+	vars -> texture[SOUTH] = mlx_load_png(vars -> map.tex[SOUTH]);
+	vars -> texture[EAST] = mlx_load_png(vars -> map.tex[EAST]);
+	vars -> texture[WEST] = mlx_load_png(vars -> map.tex[WEST]);
+	return ((!!vars -> texture[NORTH] + !!vars -> texture[SOUTH] + \
+		!!vars -> texture[EAST] + !!vars -> texture[WEST]) != 4);
 }
 
 void	install_hooks(t_vars *vars)

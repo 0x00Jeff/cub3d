@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 20:04:15 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 12:23:09 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,15 @@ int	needs_clearing(t_vars *vars)
 
 void	draw_surroundings(t_vars *vars)
 {
+	int ceil_color;
+	int floor_color;
+
+	ceil_color = adjust_transparancy(vars -> map.celing_color, 1);
+	floor_color = adjust_transparancy(vars -> map.floor_color, 1);
 	draw_rectangle(vars, (t_vector){0, 0}, (t_vector){M_WIDTH, M_HEIGHT / 2},
-		adjust_transparancy(BLUE, 0.5));
+		adjust_transparancy(ceil_color, 0.5));
 	draw_rectangle(vars, (t_vector){0, M_HEIGHT / 2}, (t_vector){M_WIDTH,
-		M_HEIGHT}, adjust_transparancy(BEIGE, 0.5));
+		M_HEIGHT}, adjust_transparancy(floor_color, 0.5));
 }
 
 void	do_graphics(t_vars *vars)
