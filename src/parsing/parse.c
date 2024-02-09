@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 15:46:26 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 19:54:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ int	parser(t_vars *vars, char *file)
 		return (-1);
 	// TODO : quick fix for now, make vars -> map a ptr and make a free map function!
 	vars->map = *map;
+	/*
 	printf("text[NO] = %s\n", map->tex[NORTH]);
 	printf("text[SO] = %s\n", map->tex[SOUTH]);
 	printf("text[WE] = %s\n", map->tex[WEST]);
 	printf("text[EA] = %s\n", map->tex[EAST]);
+	*/
 	printf("F = 0x%x\n", map -> colors.floor);
 	printf("C = 0x%x\n", map -> colors.ceiling);
 	puts("OK!");

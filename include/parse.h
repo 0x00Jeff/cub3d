@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:23:11 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 15:51:05 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 19:58:25 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int			get_textures(t_map *map);
 int			set_map_texture(t_map *map, char *text, char *file);
 int			set_map_colors(t_map *map, char obj, char *lgbt_colors);
 size_t		get_list_len(char **l);
-int			get_surroundings(t_map *map);
-int			validate_lgbt(t_color col, char *r, char *g, char *b);
+int			get_surroundings(t_map *_map);
+int			validate_lgbt(t_color col, char *_r, char *_g, char *_b);
 int			check_digit_list(char **list);
 uint32_t	construct_lgbt(char *r, char *g, char *b);
 #endif

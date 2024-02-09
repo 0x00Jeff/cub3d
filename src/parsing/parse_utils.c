@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:05:36 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 15:55:36 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/09 20:01:31 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,32 @@ uint32_t	construct_lgbt(char *_r, char *_g, char *_b)
 	return (col.r << 16 | col.g << 8 | col.b);
 }
 
-int	validate_lgbt(t_color col, char *r, char *g, char *b)
+int	validate_lgbt(t_color col, char *_r, char *_g, char *_b)
 {
-	if (ft_strlen(r) > 4)
+	uint32_t	r;
+	uint32_t	g;
+	uint32_t	b;
+
+	if (ft_strlen(_r) > 3)
 		return (-1);
-	if (ft_strlen(g) > 4)
+	if (ft_strlen(_g) > 3)
 		return (-1);
-	if (ft_strlen(b) > 4)
+	if (ft_strlen(_b) > 3)
 		return (-1);
+
+	r = ft_atoi(_r);
+	g = ft_atoi(_g);
+	b = ft_atoi(_b);
 #ifdef DEBUG
-	printf("r = %d\n", col.g);
-	printf("g = %d\n", col.r);
+	printf("r = %d\n", col.r);
+	printf("g = %d\n", col.g);
 	printf("b = %d\n", col.b);
 #endif
-	if (col.r < 0 || col.r > 0xff)
+	if (r < 0 || r > 0xff)
 		return (-1);
-	if (col.g < 0 || col.g > 0xff)
+	if (g < 0 || g > 0xff)
 		return (-1);
-	if (col.b < 0 || col.b > 0xff)
+	if (b < 0 || b > 0xff)
 		return (-1);
 	return (0);
 }
