@@ -6,11 +6,11 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 21:31:29 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 00:00:02 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<validation.h>
+#include <validation.h>
 
 static size_t	count(const int *line, const int width, int c)
 {
@@ -26,10 +26,8 @@ static size_t	count(const int *line, const int width, int c)
 
 size_t	count_players(t_map *map)
 {
-	return (count_object(map, SOUTH_IN_MAP)
-			+ count_object(map, NORTH_IN_MAP)
-			+ count_object(map, WEST_IN_MAP)
-		  	+ count_object(map, EAST_IN_MAP));
+	return (count_object(map, SOUTH_IN_MAP) + count_object(map, NORTH_IN_MAP)
+		+ count_object(map, WEST_IN_MAP) + count_object(map, EAST_IN_MAP));
 }
 
 size_t	count_object(t_map *map, int object)
@@ -42,16 +40,14 @@ size_t	count_object(t_map *map, int object)
 		return (0);
 	i = 0;
 	res = 0;
-	width = map -> width;
+	width = map->width;
 	while (i < map->height)
 		res += count(&map->m[i++ * width], width, object);
 	return (res);
 }
 
-int check_for_invalid_characters(t_map *map)
+int	check_for_invalid_characters(t_map *map)
 {
-	return ((count_players(map)
-			+ count_object(map, WALL)
-			+ count_object(map, BLANK))
-			== map -> width * map -> height);
+	return ((count_players(map) + count_object(map, WALL) + count_object(map,
+				BLANK)) == map->width * map->height);
 }

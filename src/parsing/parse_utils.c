@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:05:36 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 16:37:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/10 23:52:25 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,9 @@ int	validate_lgbt(char *_r, char *_g, char *_b)
 		return (-1);
 	if (ft_strlen(_b) > 3)
 		return (-1);
-
 	r = ft_atoi(_r);
 	g = ft_atoi(_g);
 	b = ft_atoi(_b);
-#ifdef DEBUG
-	printf("r = %d\n", r);
-	printf("g = %d\n", g);
-	printf("b = %d\n", b);
-#endif
 	if (r < 0 || r > 0xff)
 		return (-1);
 	if (g < 0 || g > 0xff)

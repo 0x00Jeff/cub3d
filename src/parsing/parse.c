@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 21:44:59 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/10 23:58:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ int	parser(t_vars *vars, char *file)
 		return (-1);
 	// TODO : quick fix for now, make vars -> map a ptr and make a free map function!
 	vars->map = *map;
-#ifdef DEBUG
-	printf("text[NO] = %s\n", map->tex[NORTH]);
-	printf("text[SO] = %s\n", map->tex[SOUTH]);
-	printf("text[WE] = %s\n", map->tex[WEST]);
-	printf("text[EA] = %s\n", map->tex[EAST]);
-	printf("F = 0x%x\n", map->colors.floor);
-	printf("C = 0x%x\n", map->colors.ceiling);
-	puts("OK!");
-#endif
 	return (0);
 }
 
@@ -56,19 +47,18 @@ size_t	get_list_len(char **l)
 
 void	display_map(t_map *map)
 {
-	int *content;
-	int w,h;
-	int i,j;
+	int	*content;
+	int w, h;
+	int i, j;
 
-	content = map -> m;
-	w = map -> width;
-	h = map -> height;
-
+	content = map->m;
+	w = map->width;
+	h = map->height;
 	i = 0;
-	while(i < h)
+	while (i < h)
 	{
 		j = 0;
-		while(j < w)
+		while (j < w)
 		{
 			printf("%d, ", content[i * w + j]);
 			j++;
@@ -80,12 +70,13 @@ void	display_map(t_map *map)
 
 int	get_map_parts(t_map *map)
 {
-	t_map_data *lst_map;
-	int	res;
+	t_map_data	*lst_map;
+	int			res;
 
 	if (!map)
 		return (-1);
 	res = get_textures(map);
+	// TODO : make an error function!
 	if (res != 4)
 	{
 		if (res == -1)
@@ -95,9 +86,6 @@ int	get_map_parts(t_map *map)
 		return (-1);
 	}
 	res = get_surroundings(map);
-#ifdef DEBUG
-	printf("res = %d\n", res);
-#endif
 	if (res != 2)
 	{
 		if (res == -1)
@@ -109,51 +97,47 @@ int	get_map_parts(t_map *map)
 	lst_map = read_map(map);
 	if (!lst_map)
 		return (ft_putstr_fd("Error: while reading the map\n", 2), -1);
-	map -> m = consume_map(lst_map);
-	if(map -> m == NULL)
+	map->m = consume_map(lst_map);
+	if (map->m == NULL)
 		return (ft_putstr_fd("Error: while consuming the map\n", 2), -1);
-	map -> width = lst_map -> width;
+	map->width = lst_map->width;
 	display_map(map);
 	return (0);
 }
 
-int *consume_map(t_map_data *m)
+int	*consume_map(t_map_data *m)
 {
-	int		*res;
-	size_t	i;
-	size_t	j;
-	t_map_line *map_line;
+	int			*res;
+	size_t		i;
+	size_t		j;
+	t_map_line	*map_line;
 
 	if (!m)
 		return (NULL);
-	map_line = m -> data;
-	res = ft_calloc(m -> width * m -> height, sizeof(int));
+	map_line = m->data;
+	res = ft_calloc(m->width * m->height, sizeof(int));
 	if (!res)
 		return (NULL);
 	i = 0;
-	printf("height = %ld\n", m -> height);
-	printf("width = %ld\n", m -> width);
-	while(i < m -> height)
+	while (i < m->height)
 	{
 		j = 0;
-		while(j < m -> width)
+		while (j < m->width)
 		{
-			res[i * m -> width + j] = convert_map_char(map_line -> line[j]);
+			res[i * m->width + j] = convert_map_char(map_line->line[j]);
 			j++;
 		}
 		i++;
-		map_line = map_line -> next;
+		map_line = map_line->next;
 	}
-
 	return (res);
 }
 
-int convert_map_char(char c)
+int	convert_map_char(char c)
 {
-	int res;
+	int	res;
 
 	res = 0;
-
 	if (c == ' ' || c == '0')
 		res = 0;
 	else if (c == '1')
@@ -168,17 +152,6 @@ int convert_map_char(char c)
 		res = EAST_IN_MAP;
 	else
 		res = -1;
-
-	/*
-	res = 420;
-	res = res * !(c != ' ');
-	res = res * !(c != '0');
-	res += (c == '1');
-	res += (c == 'N') * NORTH_IN_MAP;
-	res += (c == 'S') * SOUTH_IN_MAP;
-	res += (c == 'W') * WEST_IN_MAP;
-	res += (c == 'E') * EAST_IN_MAP;
-	*/
 	return (res);
 }
 
@@ -193,7 +166,7 @@ t_map_data	*read_map(t_map *map)
 	if (!map_data)
 		return (NULL);
 	i = 0;
-	fd = map -> fd;
+	fd = map->fd;
 	line = get_next_line(fd);
 	if (line)
 		line[ft_strlen(line) - 1] = 0;
@@ -206,25 +179,26 @@ t_map_data	*read_map(t_map *map)
 			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
-	map -> height = i;
-	map_data -> height = i;
+	map->height = i;
+	map_data->height = i;
 	return (map_data);
 }
 
 // TODO: make this returns an int and test for errors
-void append_map_node(t_map_data *data, char *line)
+void	append_map_node(t_map_data *data, char *line)
 {
+	t_map_line	*node;
+
 	if (!data)
-		return;
-	t_map_line *node;
+		return ;
 	node = (t_map_line *)malloc(sizeof(t_map_line));
 	if (!node)
-		return;
-	node -> line = line;
-	node -> len = ft_strlen(line);
-	if (node -> len > data -> width)
-		data -> width = node -> len;
-	node -> next = NULL;
+		return ;
+	node->line = line;
+	node->len = ft_strlen(line);
+	if (node->len > data->width)
+		data->width = node->len;
+	node->next = NULL;
 	ft_lstadd_back(&data->data, node);
 }
 
@@ -241,27 +215,22 @@ int	get_surroundings(t_map *m)
 		line[ft_strlen(line) - 1] = 0;
 	while (line && ft_strlen(line))
 	{
-#ifdef DEBUG
-		puts(line);
-#endif
 		ptr = ft_split(line, ' ');
 		if (!ptr || get_list_len(ptr) == 2)
 		{
+			// TODO : might get rid of this
 			debug_color = set_map_colors(m, *ptr[0], ptr[1]);
-#ifdef DEBUG
-			printf("gotten color = %x\n", debug_color);
-#endif
 			if (debug_color == -1)
 				return (ft_putstr_fd("Error\nInvalid Color\n", 2),
-					free_list(ptr),
-					free(line),
-					-1);
+						free_list(ptr),
+						free(line),
+						-1);
 		}
 		free_list(ptr);
 		free(line);
 		line = get_next_line(fd);
 		if (!line)
-			break ;
+			break;
 		line[ft_strlen(line) - 1] = 0;
 	}
 	return (!!m->colors.ceiling_set + !!m->colors.floor_set);
@@ -269,11 +238,10 @@ int	get_surroundings(t_map *m)
 
 int	get_textures(t_map *m)
 {
-	char	*line;
-	char	**ptr;
-	int		fd;
+	char		*line;
+	char		**ptr;
+	const int	fd = m -> fd;
 
-	fd = m->fd;
 	line = get_next_line(fd);
 	if (line)
 		line[ft_strlen(line) - 1] = 0;
@@ -290,8 +258,8 @@ int	get_textures(t_map *m)
 			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
-	return (!!m->tex[UP] + !!m->tex[DOWN] +
-			!!m->tex[RIGHT] + !!m->tex[LEFT]);
+	return (!!m->tex[UP] + !!m->tex[DOWN]
+		+ !!m->tex[RIGHT] + !!m->tex[LEFT]);
 }
 
 int	set_map_colors(t_map *map, char obj, char *lgbt_colors)
@@ -304,17 +272,11 @@ int	set_map_colors(t_map *map, char obj, char *lgbt_colors)
 		return (-1);
 	if (obj == 'F')
 	{
-#ifdef DEBUG
-		printf("floor -> %s\n", lgbt_colors);
-#endif
 		where = &map->colors.floor;
 		flag = &map->colors.floor_set;
 	}
 	else if (obj == 'C')
 	{
-#ifdef DEBUG
-		printf("ceil -> %s\n", lgbt_colors);
-#endif
 		where = &map->colors.ceiling;
 		flag = &map->colors.ceiling_set;
 	}
