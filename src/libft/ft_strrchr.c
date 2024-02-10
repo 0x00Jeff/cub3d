@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 21:26:42 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/08/25 18:45:54 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/07 14:39:47 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/08 13:51:38 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <libft.h>
+#include<libft.h>
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	len;
+	char			*ptr;
+	unsigned char	ch;
 
-	len = ft_strlen(s) + 1;
-	while (len--)
-		if (s[len] == (unsigned char)c)
-			return ((char *)(s + len));
-	return (NULL);
+	ptr = (char *)s + ft_strlen(s);
+	ch = (unsigned char)c;
+	while (ptr >= s)
+	{
+		if (*ptr == ch)
+			return (ptr);
+		ptr--;
+	}
+	return (0);
 }

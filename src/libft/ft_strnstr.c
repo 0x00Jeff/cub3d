@@ -3,36 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 21:16:28 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/08/25 18:45:54 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/22 17:22:02 by afatimi           #+#    #+#             */
+/*   Updated: 2022/11/06 14:38:47 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include<libft.h>
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *s, const char *to, size_t n)
 {
+	size_t	j;
 	size_t	i;
-	size_t	len_to_find;
-	size_t	hay_len;
+	char	*haystack;
+	char	*needle;
 
-	len_to_find = ft_strlen(needle);
 	i = 0;
-	if (len_to_find == 0)
-		return ((char *)haystack);
-	if (!haystack && len == 0)
+	haystack = (char *)s;
+	needle = (char *)to;
+	if ((!needle || !haystack) && n == 0)
 		return (NULL);
-	hay_len = ft_strlen(haystack);
-	if (hay_len == 0 || len == 0 || len_to_find > len)
-		return (NULL);
-	while (haystack[i] && i < len - (len_to_find - 1))
+	if (needle[i] == '\0')
+		return (haystack);
+	while (haystack[i] != '\0' && i < n)
 	{
-		if (haystack[i] == needle[0])
-			if (ft_strncmp(haystack + i, needle, len_to_find) == 0)
-				return ((char *)(haystack + i));
+		j = 0;
+		while (needle[j] && haystack[i + j] == needle[j] && i + j < n)
+			j++;
+		if (needle[j] == '\0')
+			return (haystack + i);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }

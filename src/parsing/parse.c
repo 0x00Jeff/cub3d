@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 19:54:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/10 20:57:40 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <libft.h>
 #include <parse.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int	parser(t_vars *vars, char *file)
 {
@@ -22,21 +23,21 @@ int	parser(t_vars *vars, char *file)
 	map = init_map(file); // TODO : make a destroy map
 	if (!map)
 		return (-1);
-	map->fd = try_open_file(file, "ber");
+	map->fd = try_open_file(file, "cub");
 	if (map->fd < 0)
 		return (-1);
 	if (get_map_parts(map))
 		return (-1);
 	// TODO : quick fix for now, make vars -> map a ptr and make a free map function!
 	vars->map = *map;
-	/*
+#ifdef DEBUG
 	printf("text[NO] = %s\n", map->tex[NORTH]);
 	printf("text[SO] = %s\n", map->tex[SOUTH]);
 	printf("text[WE] = %s\n", map->tex[WEST]);
 	printf("text[EA] = %s\n", map->tex[EAST]);
-	*/
-	printf("F = 0x%x\n", map -> colors.floor);
-	printf("C = 0x%x\n", map -> colors.ceiling);
+	printf("F = 0x%x\n", map->colors.floor);
+	printf("C = 0x%x\n", map->colors.ceiling);
+#endif
 	puts("OK!");
 	return (0);
 }
@@ -53,8 +54,33 @@ size_t	get_list_len(char **l)
 	return (size);
 }
 
+void	display_map(t_map *map)
+{
+	int *content;
+	int w,h;
+	int i,j;
+
+	content = map -> m;
+	w = map -> width;
+	h = map -> height;
+
+	i = 0;
+	while(i < h)
+	{
+		j = 0;
+		while(j < w)
+		{
+			printf("%d, ", content[i * w + j]);
+			j++;
+		}
+		i++;
+		puts("");
+	}
+}
+
 int	get_map_parts(t_map *map)
 {
+	t_map_data *lst_map;
 	int	res;
 
 	if (!map)
@@ -80,7 +106,106 @@ int	get_map_parts(t_map *map)
 			ft_putstr_fd("Error: Missing colors!\n", 2);
 		return (-1);
 	}
+	lst_map = read_map(map);
+	if (!lst_map)
+		return (ft_putstr_fd("Error: while reading the map\n", 2), -1);
+	map -> m = consume_map(lst_map);
+	if(map -> m == NULL)
+		return (ft_putstr_fd("Error: while consuming the map\n", 2), -1);
+	map -> width = lst_map -> width;
+	display_map(map);
 	return (0);
+}
+
+int *consume_map(t_map_data *m)
+{
+	int		*res;
+	size_t	i;
+	size_t	j;
+	t_map_line *map_line;
+
+	if (!m)
+		return (NULL);
+	map_line = m -> data;
+	res = ft_calloc(m -> width * m -> height, sizeof(int));
+	if (!res)
+		return (NULL);
+	i = 0;
+	printf("height = %ld\n", m -> height);
+	printf("width = %ld\n", m -> width);
+	while(i < m -> height)
+	{
+		j = 0;
+		while(j < m -> width)
+		{
+			res[i * m -> width + j] = convert_map_char(map_line -> line[j]);
+			j++;
+		}
+		i++;
+		map_line = map_line -> next;
+	}
+
+	return (res);
+}
+
+int convert_map_char(char c)
+{
+	int res;
+
+	res = 0;
+	// ' ' && '0'
+	res += (c == '1');
+	res += (c == 'N') * NORTH_IN_MAP;
+	res += (c == 'S') * SOUTH_IN_MAP;
+	res += (c == 'W') * WEST_IN_MAP;
+	res += (c == 'E') * EAST_IN_MAP;
+	return (res);
+}
+
+t_map_data	*read_map(t_map *map)
+{
+	t_map_data	*map_data;
+	char		*line;
+	int			fd;
+	int			i;
+
+	map_data = (t_map_data *)ft_calloc(1, sizeof(t_map_data));
+	if (!map_data)
+		return (NULL);
+	i = 0;
+	fd = map -> fd;
+	line = get_next_line(fd);
+	if (line)
+		line[ft_strlen(line) - 1] = 0;
+	while (line && ft_strlen(line))
+	{
+		append_map_node(map_data, line);
+		i++;
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		line[ft_strlen(line) - 1] = 0;
+	}
+	map -> height = i;
+	map_data -> height = i;
+	return (map_data);
+}
+
+// TODO: make this returns an int and test for errors
+void append_map_node(t_map_data *data, char *line)
+{
+	if (!data)
+		return;
+	t_map_line *node;
+	node = (t_map_line *)malloc(sizeof(t_map_line));
+	if (!node)
+		return;
+	node -> line = line;
+	node -> len = ft_strlen(line);
+	if (node -> len > data -> width)
+		data -> width = node -> len;
+	node -> next = NULL;
+	ft_lstadd_back(&data->data, node);
 }
 
 int	get_surroundings(t_map *m)
@@ -108,7 +233,9 @@ int	get_surroundings(t_map *m)
 #endif
 			if (debug_color == -1)
 				return (ft_putstr_fd("Error\nInvalid Color\n", 2),
-					free_list(ptr), free(line), -1);
+					free_list(ptr),
+					free(line),
+					-1);
 		}
 		free_list(ptr);
 		free(line);
@@ -117,7 +244,7 @@ int	get_surroundings(t_map *m)
 			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
-	return (!!m->colors.ceiling_set	+ !!m->colors.floor_set);
+	return (!!m->colors.ceiling_set + !!m->colors.floor_set);
 }
 
 int	get_textures(t_map *m)
@@ -143,10 +270,9 @@ int	get_textures(t_map *m)
 			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
-	return (!!m->tex[UP] + !!m->tex[DOWN] + \
+	return (!!m->tex[UP] + !!m->tex[DOWN] +
 			!!m->tex[RIGHT] + !!m->tex[LEFT]);
 }
-
 
 int	set_map_colors(t_map *map, char obj, char *lgbt_colors)
 {
@@ -218,7 +344,7 @@ int	try_open_file(char *file, char *extension)
 		return (-1);
 	if (check_extension(file, extension))
 	{
-		ft_putstr_fd("we only accept .ber files!\n", 2);
+		ft_putstr_fd("we only accept .cub files!\n", 2);
 		return (-1);
 	}
 	return (open_file(file));
@@ -233,8 +359,8 @@ t_map	*init_map(char *file)
 	map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!map)
 		return (NULL);
-	map -> colors.floor_set = 0;
-	map -> colors.ceiling_set = 0;
+	map->colors.floor_set = 0;
+	map->colors.ceiling_set = 0;
 	return (map);
 }
 

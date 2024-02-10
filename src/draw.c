@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 18:12:17 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/10 19:48:05 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,13 @@ void	do_graphics(t_vars *vars)
 	(void)vars;
 	if (a++ == 0)
 	{
+		/*
 		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
 		draw_map(vars);
 		display_fps(vars);
+		*/
 	}
 	if (mlx_get_time() - old_time > 0.016)
 	{
@@ -166,7 +168,6 @@ void	shoot_rays(t_vars *vars, int num)
 	int			color;
 
 	color = adjust_transparancy(0xff0000, 0);
-	color = adjust_transparancy(0x0000ff, 0);
 	vect_assign(&visual_player, &vars->player.pos);
 	vect_scale(&visual_player, TILE_SIZE);
 	angle = vars->player.angle - (vars->player.fov >> 1);
@@ -198,7 +199,7 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle)
 	vect_scale(&tmp_from, MAP_SCALE_FACTOR);
 	vect_scale(&tmp_to, MAP_SCALE_FACTOR);
 	SKIP;
-	draw_line(vars, tmp_from, &tmp_to, adjust_transparancy(GREEN, 0));
+	draw_line(vars, tmp_from, &tmp_to, adjust_transparancy(RED, 0));
 }
 
 void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)

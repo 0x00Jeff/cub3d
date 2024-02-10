@@ -3,26 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 18:57:27 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/08/25 18:45:54 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/08 13:29:20 by afatimi           #+#    #+#             */
+/*   Updated: 2022/11/05 18:12:37 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
-#include <libft.h>
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_fast_memcpy(void *dst, const void *src, size_t n)
 {
-	int	i;
+	unsigned long long	*word_src;
+	unsigned long long	*word_dst;
+	unsigned char		*byte_src;
+	unsigned char		*byte_dst;
+	size_t				i;
 
-	if (!dest && !src)
-		return (NULL);
-	i = 0;
-	while (n--)
+	word_src = (unsigned long long *)src;
+	word_dst = (unsigned long long *)dst;
+	i = n >> 3;
+	while (i)
 	{
-		((char *)dest)[i] = ((char *)src)[i];
+		*word_dst++ = *word_src++;
+		i--;
+	}
+	n -= i << 3;
+	i = n & 7;
+	byte_src = (unsigned char *)word_src;
+	byte_dst = (unsigned char *)word_dst;
+	while (i--)
+		*byte_dst++ = *byte_src++;
+	return (dst);
+}
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t			i;
+	unsigned char	*d;
+	unsigned char	*s;
+
+	if (!dst && !src)
+		return (NULL);
+	if (!((size_t)dst & 7) && !((size_t)src & 7))
+		return (ft_fast_memcpy(dst, src, n));
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	i = 0;
+	while (i < n)
+	{
+		d[i] = s[i];
 		i++;
 	}
-	return (dest);
+	return (dst);
 }

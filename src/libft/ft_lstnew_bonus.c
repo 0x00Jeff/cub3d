@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 16:09:12 by ylyoussf          #+#    #+#             */
-/*   Updated: 2024/02/10 17:30:23 by afatimi          ###   ########.fr       */
+/*   Created: 2022/10/07 21:40:43 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/09 12:06:23 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<stdlib.h>
+#include<libft.h>
 
-#include <get_next_line.h>
-
-size_t	ft_strlen_noseg(const char *s)
+t_list	*ft_lstnew(void *content)
 {
-	int	len;
+	t_list	*node;
 
-	if (!s)
-		return (0);
-	len = 0;
-	while (*s++)
-		len++;
-	return (len);
+	node = (t_list *)malloc(sizeof(t_list));
+	if (!node)
+		return (NULL);
+	node -> content = content;
+	node -> next = NULL;
+	return (node);
 }

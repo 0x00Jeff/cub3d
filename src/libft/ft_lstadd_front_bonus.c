@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 16:09:12 by ylyoussf          #+#    #+#             */
-/*   Updated: 2024/02/10 17:30:23 by afatimi          ###   ########.fr       */
+/*   Created: 2022/10/09 11:19:45 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/09 12:11:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <get_next_line.h>
+#include<libft.h>
 
-size_t	ft_strlen_noseg(const char *s)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	int	len;
-
-	if (!s)
-		return (0);
-	len = 0;
-	while (*s++)
-		len++;
-	return (len);
+	if (!lst || !new)
+		return ;
+	new -> next = *lst;
+	*lst = new;
 }

@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 16:03:32 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/10/15 16:32:20 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/09 11:20:29 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/09 12:14:49 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include<libft.h>
 
-void	*ft_malloc(unsigned long size)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	void	*ptr;
+	t_list	*ptr;
+	t_list	*tmp;
 
-	ptr = malloc(size);
-	if (!ptr)
+	if (!lst || !f)
+		return ;
+	ptr = lst;
+	while (ptr)
 	{
-		write(2, "shell69: MALLOC FAILED BRO !\n", 29);
-		exit(69);
+		tmp = ptr -> next;
+		f(ptr -> content);
+		ptr = tmp;
 	}
-	return (ptr);
 }

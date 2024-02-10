@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 18:45:21 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/10/04 19:04:55 by afatimi          ###   ########.fr       */
+/*   Created: 2022/10/07 21:50:57 by afatimi           #+#    #+#             */
+/*   Updated: 2024/02/10 17:46:51 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
-int	ft_strcmp(char *s1, char *s2)
+t_map_line	*ft_lstlast(t_map_line *lst)
 {
-	while (*s1 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
+	t_map_line	*ptr;
+
+	if (!lst)
+		return (NULL);
+	ptr = lst;
+	while (ptr -> next)
+		ptr = ptr -> next;
+	return (ptr);
 }

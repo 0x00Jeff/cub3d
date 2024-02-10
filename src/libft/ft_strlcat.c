@@ -3,26 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 19:01:04 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/08/25 18:45:54 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/06/21 12:31:45 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/23 00:44:28 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
-#include <libft.h>
-
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+static char	*ft_strncpy(char *dest, const char *src, unsigned int n)
 {
-	size_t	src_len;
-	size_t	dst_len;
+	unsigned int	i;
+
+	i = 0;
+	while (src[i] && i < n - 1)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
+}
+
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
+{
+	unsigned int	src_len;
+	unsigned int	dst_len;
 
 	src_len = ft_strlen(src);
-	if (dstsize == 0 && dst == NULL)
+	if (!size)
 		return (src_len);
-	dst_len = ft_strlen(dst);
-	if (dstsize <= dst_len)
-		return (dstsize + src_len);
-	ft_strlcpy(dst + dst_len, src, dstsize - dst_len);
-	return (dst_len + src_len);
+	dst_len = ft_strlen(dest);
+	if (size && dst_len < size)
+	{
+		ft_strncpy(&dest[dst_len], src, size - dst_len);
+		return (src_len + dst_len);
+	}
+	else
+		return (src_len + size);
 }

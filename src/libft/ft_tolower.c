@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 18:28:28 by ylyoussf          #+#    #+#             */
-/*   Updated: 2022/10/21 19:50:48 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/07 14:30:49 by afatimi           #+#    #+#             */
+/*   Updated: 2022/11/05 18:44:07 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+static int	ft_isupper(int c)
+{
+	unsigned char	ch;
+
+	ch = (unsigned char)c;
+	if (ch >= 'A' && ch <= 'Z')
+		return (1);
+	return (0);
+}
+
 int	ft_tolower(int c)
 {
-	if (c >= 'A' && c <= 'Z')
-		return (c + 32);
-	return (c);
+	unsigned char	ch;
+	int				toggle;
+
+	ch = (unsigned char)c;
+	toggle = ft_isupper(ch);
+	return (c | 32 * toggle);
 }

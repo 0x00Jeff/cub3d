@@ -3,58 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 17:38:02 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/09/03 12:18:33 by afatimi          ###   ########.fr       */
+/*   Created: 2022/10/07 16:18:09 by afatimi           #+#    #+#             */
+/*   Updated: 2022/11/06 14:44:58 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
-#include <libft.h>
-
-bool	ft_iswhitespace(char c)
+static int	ft_isspace(int c)
 {
-	if (c == '\t' || c == '\n' || c == '\f' || c == '\v' || c == ' '
-		|| c == '\r')
+	if (c == ' ' || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
 
-static int	edgecase(int nbr, int sign, int len, const char *strnbr)
-{
-	if (len > 19 || ft_memcmp(strnbr, "9223372036854775808", len) >= 0)
-	{
-		if (sign == 1)
-			return (-1);
-		return (0);
-	}
-	return (sign * nbr);
-}
-
 int	ft_atoi(const char *str)
 {
-	int	nbr;
-	int	sign;
-	int	i;
-	int	len;
+	long long	result;
+	int			sign;
 
-	if (!str)
-		return (0);
-	nbr = 0;
 	sign = 1;
-	i = 0;
-	len = 0;
-	while (ft_iswhitespace(str[i]))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-		if (str[i++] == '-')
-			sign = -1;
-	while (ft_isdigit(str[i]))
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		nbr = nbr * 10 + (str[i++] - '0');
-		len++;
+		if (*str++ == '-')
+			sign = -1;
 	}
-	if (len >= 19)
-		return (edgecase(nbr, sign, len, str + (i - len)));
-	return (sign * nbr);
+	result = 0;
+	while (ft_isdigit(*str) && *str)
+		result = result * 10 + (*str++ - '0');
+	return ((int)(result * sign));
 }

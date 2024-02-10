@@ -3,16 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 19:51:35 by ylyoussf          #+#    #+#             */
-/*   Updated: 2024/02/08 17:24:10 by afatimi          ###   ########.fr       */
+/*   Created: 2022/10/20 21:14:49 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/23 00:09:33 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include<stdlib.h>
+#include<libft.h>
 
-void	free_list(char **list)
+size_t	count_words(char const *s, char c)
+{
+	unsigned int	i;
+	unsigned int	count;
+
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (!s[i])
+			break ;
+		count++;
+		while (s[i] && s[i] != c)
+			i++;
+	}
+	return (count);
+}
+
+size_t	ft_custom_strlen(const char *s, int c)
+{
+	unsigned int	len;
+
+	len = 0;
+	while (s[len] && s[len] != c)
+		len++;
+	return (len);
+}
+
+void	*free_list(char **list)
 {
 	unsigned int	i;
 
@@ -20,96 +51,34 @@ void	free_list(char **list)
 	while (list[i])
 		free(list[i++]);
 	free(list);
-}
-
-static int	count_words(char const *s, char c)
-{
-	int	in_word;
-	int	i;
-	int	count;
-
-	in_word = 0;
-	count = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (in_word && s[i] == c)
-			in_word = 0;
-		else if (!in_word && s[i] != c)
-		{
-			in_word = 1;
-			count++;
-		}
-		i++;
-	}
-	return (count);
-}
-
-static int	word_len(char const *ptr, char c)
-{
-	int	len;
-
-	len = 0;
-	while (ptr[len] && ptr[len] != c)
-		len++;
-	return (len);
-}
-
-static char	*create_str(char const *word_start, char c)
-{
-	char	*str;
-
-	str = ft_malloc(word_len(word_start, c) + 1);
-	if (str)
-		ft_strlcpy(str, word_start, word_len(word_start, c) + 1);
-	return (str);
-}
-
-static int	fill_target(char const *s, char c, char **target, int word_count)
-{
-	int		i;
-	int		in_word;
-	int		target_i;
-
-	i = 0;
-	target_i = 0;
-	in_word = 0;
-	while (s[i] && target_i < word_count)
-	{
-		if (s[i] == c)
-			in_word = 0;
-		else if (!in_word && s[i] != c)
-		{
-			in_word = 1;
-			target[target_i++] = create_str(s + i, c);
-			if (target[target_i - 1] == NULL)
-			{
-				while (target_i--)
-					free(target[target_i]);
-				return (0);
-			}
-		}
-		i++;
-	}
-	return (1);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**target;
-	int		word_count;
+	char	**result;
+	char	*ptr;
+	size_t	words_count;
+	size_t	i;
+	size_t	word_len;
 
 	if (!s)
 		return (NULL);
-	word_count = count_words(s, c);
-	target = ft_malloc((word_count + 1) * sizeof(char *));
-	if (!target)
+	words_count = count_words(s, c);
+	result = (char **)ft_calloc((words_count + 1), sizeof(char *));
+	if (!result)
 		return (NULL);
-	if (!fill_target(s, c, target, word_count))
+	ptr = (char *)s;
+	i = 0;
+	while (i < words_count)
 	{
-		free(target);
-		return (NULL);
+		while (*ptr == c)
+			ptr++;
+		word_len = ft_custom_strlen(ptr, c);
+		result[i++] = ft_substr(ptr, 0, word_len);
+		if (!result[i - 1])
+			return (free_list(result));
+		ptr += word_len + 1;
 	}
-	target[word_count] = 0;
-	return (target);
+	return (result);
 }

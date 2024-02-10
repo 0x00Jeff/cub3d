@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 18:56:02 by ylyoussf          #+#    #+#             */
-/*   Updated: 2022/10/09 00:47:06 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/07 14:05:13 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/22 23:39:35 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
 int	ft_isprint(int c)
 {
-	return (c >= 040 && c <= 0176);
+	return (c >= ' ' && c <= '~');
 }

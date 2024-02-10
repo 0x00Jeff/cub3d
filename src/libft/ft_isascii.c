@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 18:52:45 by ylyoussf          #+#    #+#             */
-/*   Updated: 2022/10/08 18:55:30 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/07 14:00:00 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/08 12:14:51 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
 int	ft_isascii(int c)
 {
-	return (c >= 0 && c <= 127);
+	if ((unsigned int)c <= 0x7f)
+		return (1);
+	return (0);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 11:13:38 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/10/15 16:18:04 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/07 18:47:37 by afatimi           #+#    #+#             */
+/*   Updated: 2022/11/05 19:31:53 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<stdlib.h>
+#include<libft.h>
 
-#include <libft.h>
-
-static size_t	min(size_t a, size_t b)
+size_t	min(size_t a, size_t b)
 {
 	if (a <= b)
 		return (a);
@@ -21,23 +21,21 @@ static size_t	min(size_t a, size_t b)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*substr;
-	size_t	s_len;
-	size_t	i;
+	size_t	size;
+	char	*result;
 
 	if (!s)
 		return (NULL);
-	s_len = ft_strlen(s);
-	i = 0;
-	if (start >= s_len || (len == 0 && start == 0) || len == 0)
-		return (ft_calloc(1, 1));
-	if (s_len == 0)
+	size = ft_strlen(s);
+	if (start >= size)
+		size = 0;
+	else
+		size -= start;
+	size = min(size, len);
+	result = (char *)malloc((size + 1) * sizeof(char));
+	if (!result)
 		return (NULL);
-	substr = ft_malloc(min(s_len - start + 1, len + 1));
-	if (!substr)
-		return (NULL);
-	while (s[start] && i < len)
-		substr[i++] = s[start++];
-	substr[i] = '\0';
-	return (substr);
+	ft_memcpy(result, s + start, size);
+	result[size] = 0;
+	return (result);
 }

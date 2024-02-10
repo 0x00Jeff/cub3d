@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror # -g -ggdb3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Ofast
 
 LINK_H = -Iinclude
 
@@ -47,13 +47,15 @@ objs:
 
 $(LIBFT):
 	@echo "Compiling libft..."
-	@make -C src/libft
+	@make -C src/libft bonus
 
 $(NAME): $(OBJS) $(LIB)
 	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
+# TODO : you have 2 diff libfts because of hot reloading, fix this shit later!
+
 $(LIB): $(HOT_RELOAD) $(HOT_RELOAD_H)
-	$(CC) $(CFLAGS) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
+	$(CC) $(CFLAGS) $(LIBFT) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(OBJSFOLDER)%.o: src/parsing/%.c include/parse.h $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@

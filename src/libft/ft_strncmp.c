@@ -3,33 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 21:41:36 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/08/25 18:45:54 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/21 20:19:09 by afatimi           #+#    #+#             */
+/*   Updated: 2024/02/10 17:40:57 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
-#include <libft.h>
-
-static int	ft_min(int a, int b)
+static int	min(size_t n, size_t m)
 {
-	if (a > b)
-		return (b);
-	return (a);
+	if (n <= m)
+		return (n);
+	else
+		return (m);
 }
 
-static int	ft_min3(int a, int b, int c)
+int	ft_strncmp(char *s1, char *s2, unsigned int n)
 {
-	return (ft_min(ft_min(a, b), c));
+	return (ft_memcmp(s1, s2, min(n, ft_strlen(s1) + 1)));
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int	len_s1;
-	int	len_s2;
-
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	return (ft_memcmp(s1, s2, ft_min3(len_s1 + 1, len_s2 + 1, n)));
+	return (ft_strncmp(s1, s2, ft_strlen(s1)));
 }

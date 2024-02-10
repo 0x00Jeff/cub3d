@@ -3,55 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 18:27:08 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/10/15 16:18:05 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/10/13 16:24:24 by afatimi           #+#    #+#             */
+/*   Updated: 2022/11/06 14:43:56 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<stdlib.h>
+#include<stdio.h>
+#include<libft.h>
 
-#include <libft.h>
-
-static int	get_length(int n)
+static int	ft_get_ten_pow(int nbr)
 {
-	int	len;
+	int	base;
+	int	devide;
 
-	if (n == 0)
-		return (1);
-	len = 0;
-	while (n != 0)
+	devide = 10;
+	if (nbr < 0)
+		devide = -10;
+	base = 0;
+	while (nbr != 0)
 	{
-		n /= 10;
-		len++;
+		nbr = nbr / devide;
+		base++;
+		if (devide < 10)
+			devide = devide * -1;
 	}
-	return (len);
+	return (base - 1);
 }
 
-char	*ft_itoa(int n)
+static int	ft_ten_pow(int power, int sign)
 {
-	int		neg;
-	char	*target;
-	int		i;
+	int	i;
+	int	result;
 
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	neg = 0;
+	i = 0;
+	result = 1;
+	if (!power && sign == 1)
+		return (1);
+	while (i < power)
+	{
+		result = result * 10;
+		i++;
+	}
+	return (result * sign);
+}
+
+void	ft_fill_buffer(long n, int power, char *result)
+{
+	unsigned int	i;
+	int				sign;
+
+	i = 0;
+	sign = 1;
 	if (n < 0)
 	{
-		neg = 1;
-		n *= -1;
+		sign = -1;
+		result[i++] = '-';
 	}
-	target = ft_malloc(neg + get_length(n) + 1);
-	if (!target)
-		return (NULL);
-	i = neg + get_length(n);
-	target[i--] = '\0';
-	while (i >= neg)
+	while (power >= 0)
 	{
-		target[i--] = (n % 10) + '0';
-		n /= 10;
+		result[i++] = '0' + n / ft_ten_pow(power, sign);
+		n %= ft_ten_pow(power, sign);
+		power = power - 1;
 	}
-	if (neg)
-		target[0] = '-';
-	return (target);
+	result[i] = 0;
+}
+
+char	*ft_itoa(int nbr)
+{
+	long			n;
+	char			*result;
+	int				power;
+
+	if (!nbr)
+		return (ft_strdup("0"));
+	n = (long)nbr;
+	power = ft_get_ten_pow(n);
+	result = (char *)malloc(((power + 2 + (n < 0))) * sizeof(char));
+	if (!result)
+		return (NULL);
+	ft_fill_buffer(n, power, result);
+	return (result);
 }

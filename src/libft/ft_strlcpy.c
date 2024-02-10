@@ -3,26 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 18:52:06 by ylyoussf          #+#    #+#             */
-/*   Updated: 2023/08/25 18:45:54 by ylyoussf         ###   ########.fr       */
+/*   Created: 2022/06/17 22:53:39 by afatimi           #+#    #+#             */
+/*   Updated: 2022/11/05 18:17:17 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
-#include <libft.h>
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+static unsigned int	min(size_t n, size_t m)
 {
-	size_t	src_len;
+	if (n <= m)
+		return (n);
+	return (m);
+}
 
-	src_len = ft_strlen(src);
-	if (src_len < dstsize)
-		dstsize = src_len + 1;
-	if (dstsize != 0)
-	{
-		ft_memcpy(dst, src, dstsize - 1);
-		dst[dstsize - 1] = '\0';
-	}
-	return (src_len);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	size_to_copy;
+
+	if (!size)
+		return (ft_strlen(src));
+	size_to_copy = min(size - 1, ft_strlen(src));
+	ft_memcpy(dest, src, size_to_copy);
+	dest[size_to_copy] = 0;
+	return (ft_strlen(src));
 }

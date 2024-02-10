@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/08 18:47:48 by ylyoussf          #+#    #+#             */
-/*   Updated: 2024/02/08 21:08:41 by afatimi          ###   ########.fr       */
+/*   Created: 2022/10/07 12:48:21 by afatimi           #+#    #+#             */
+/*   Updated: 2024/02/10 17:37:55 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
 int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
-
 int	ft_isnotdigit(int c)
 {
 	return (c < '0' || c > '9');
@@ -26,6 +26,8 @@ int	ft_isdigit_string(char *str)
 
 	if (!str)
 		return (0);
+	if ((*str == '-' || *str == '+' ) && ft_isdigit(str[1]))
+		str++;
 	res = 0;
 	while (*str)
 		res += ft_isnotdigit(*str++);

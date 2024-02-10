@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylyoussf <ylyoussf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 16:09:12 by ylyoussf          #+#    #+#             */
-/*   Updated: 2024/02/10 17:30:23 by afatimi          ###   ########.fr       */
+/*   Created: 2022/10/07 21:48:46 by afatimi           #+#    #+#             */
+/*   Updated: 2022/10/08 11:28:49 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include<libft.h>
 
-#include <get_next_line.h>
-
-size_t	ft_strlen_noseg(const char *s)
+int	ft_lstsize(t_list *lst)
 {
-	int	len;
+	t_list	*ptr;
+	size_t	count;
 
-	if (!s)
+	ptr = lst;
+	if (!ptr)
 		return (0);
-	len = 0;
-	while (*s++)
-		len++;
-	return (len);
+	count = 1;
+	while (ptr -> next)
+	{
+		ptr = ptr -> next;
+		count++;
+	}
+	return (count);
 }
