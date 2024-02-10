@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:11:14 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/07 15:07:45 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/10 21:34:06 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ void	draw_line(t_vars *vars, t_vector pos, t_vector *target_pos, int color)
 void	draw_map(t_vars *vars)
 {
 	SKIP
-	for (int y = 0; y < vars->map.height; y++)
+	for (size_t y = 0; y < vars->map.height; y++)
 	{
-		for (int x = 0; x < vars->map.width; x++)
+		for (size_t x = 0; x < vars->map.width; x++)
 		{
 			if (vars->map.m[y * vars->map.width + x] == 1)
 			{

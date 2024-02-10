@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 20:18:15 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/10 21:31:18 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ typedef struct s_surroundings
 typedef struct s_map
 {
 	int				fd;
-	int				height;
-	int				width;
+	size_t			height;
+	size_t			width;
 	int				*m;
 	char			*tex[4];
 	t_surroundings	colors;

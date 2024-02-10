@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 20:57:40 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/10 21:44:59 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	parser(t_vars *vars, char *file)
 	printf("text[EA] = %s\n", map->tex[EAST]);
 	printf("F = 0x%x\n", map->colors.floor);
 	printf("C = 0x%x\n", map->colors.ceiling);
-#endif
 	puts("OK!");
+#endif
 	return (0);
 }
 
@@ -153,12 +153,32 @@ int convert_map_char(char c)
 	int res;
 
 	res = 0;
-	// ' ' && '0'
+
+	if (c == ' ' || c == '0')
+		res = 0;
+	else if (c == '1')
+		res = 1;
+	else if (c == 'N')
+		res = NORTH_IN_MAP;
+	else if (c == 'S')
+		res = SOUTH_IN_MAP;
+	else if (c == 'W')
+		res = WEST_IN_MAP;
+	else if (c == 'E')
+		res = EAST_IN_MAP;
+	else
+		res = -1;
+
+	/*
+	res = 420;
+	res = res * !(c != ' ');
+	res = res * !(c != '0');
 	res += (c == '1');
 	res += (c == 'N') * NORTH_IN_MAP;
 	res += (c == 'S') * SOUTH_IN_MAP;
 	res += (c == 'W') * WEST_IN_MAP;
 	res += (c == 'E') * EAST_IN_MAP;
+	*/
 	return (res);
 }
 

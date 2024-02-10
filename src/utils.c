@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:13:28 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/08 15:29:24 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/10 21:33:40 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	display_fps(t_vars *vars)
 
 int	get_map_item(t_map *map, double _x, double _y)
 {
-	int	x;
-	int	y;
+	size_t	x;
+	size_t	y;
 	int	*m;
 
 	m = map->m;
