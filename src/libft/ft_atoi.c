@@ -6,10 +6,10 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:09 by afatimi           #+#    #+#             */
-/*   Updated: 2022/11/06 14:44:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:00 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<libft.h>
+#include <libft.h>
 
 static int	ft_isspace(int c)
 {

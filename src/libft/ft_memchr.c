@@ -6,10 +6,10 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 23:03:47 by afatimi           #+#    #+#             */
-/*   Updated: 2022/11/06 14:45:19 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:01 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<libft.h>
+#include <libft.h>
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

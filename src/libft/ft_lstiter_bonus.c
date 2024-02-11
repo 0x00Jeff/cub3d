@@ -6,11 +6,11 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:20:29 by afatimi           #+#    #+#             */
-/*   Updated: 2022/10/09 12:14:49 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:01 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<libft.h>
+#include <libft.h>
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
@@ -22,8 +22,8 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 	ptr = lst;
 	while (ptr)
 	{
-		tmp = ptr -> next;
-		f(ptr -> content);
+		tmp = ptr->next;
+		f(ptr->content);
 		ptr = tmp;
 	}
 }

@@ -6,12 +6,12 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 21:14:49 by afatimi           #+#    #+#             */
-/*   Updated: 2022/10/23 00:09:33 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:48 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdlib.h>
-#include<libft.h>
+#include <libft.h>
+#include <stdlib.h>
 
 size_t	count_words(char const *s, char c)
 {

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 19:25:52 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/05 15:49:17 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 16:53:56 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,10 @@ float	vect_get_distance(t_vector *p1, t_vector *p2)
 	vect_assign(&tmp, p1);
 	vect_sub(&tmp, p2);
 	return (get_vect_len(&tmp));
+}
+
+void	vect_addi(t_vector *to, int n)
+{
+	to->x += n;
+	to->y += n;
 }

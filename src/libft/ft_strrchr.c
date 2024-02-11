@@ -6,10 +6,10 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:39:47 by afatimi           #+#    #+#             */
-/*   Updated: 2022/10/08 13:51:38 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:01 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<libft.h>
+#include <libft.h>
 
 char	*ft_strrchr(const char *s, int c)
 {

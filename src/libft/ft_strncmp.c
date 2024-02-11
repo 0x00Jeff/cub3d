@@ -6,10 +6,10 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 20:19:09 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 17:40:57 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:01 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<libft.h>
+#include <libft.h>
 
 static int	min(size_t n, size_t m)
 {

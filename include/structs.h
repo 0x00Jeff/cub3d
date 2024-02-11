@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 12:17:46 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 17:33:24 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define STRUCTS_H
 # include "../mlx/include/MLX42/MLX42.h"
 # include <dlfcn.h>
-# include <stdio.h>
 # include <fcntl.h>
+# include <stdio.h>
+# include <vectors.h>
 
 # define M_WIDTH 1920
 # define M_HEIGHT 1080
 # define PLAYER_SIZE 5
 # define MAP_SIZE 15
-
 # define PRIV_ESC 0xffffffff
 # define NIGGER 0
 # define RED 0xff0000
@@ -38,20 +38,12 @@ enum
 	NORTH = UP,
 	EAST = RIGHT,
 	SOUTH = DOWN,
-	WEST = LEFT
+	WEST = LEFT,
+	TROLL_DOWN = 0,
+	TROLL_UP = 1,
+	TROLL_RIGHT = 2,
+	TROLL_LEFT = 3,
 };
-
-typedef struct s_vector
-{
-	double			x;
-	double			y;
-}					t_vector;
-
-typedef struct s_ivector
-{
-	int				x;
-	int				y;
-}					t_ivector;
 
 typedef struct s_ray
 {

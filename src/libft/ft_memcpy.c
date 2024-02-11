@@ -6,10 +6,10 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 13:29:20 by afatimi           #+#    #+#             */
-/*   Updated: 2022/11/05 18:12:37 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:01 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<libft.h>
+#include <libft.h>
 
 void	*ft_fast_memcpy(void *dst, const void *src, size_t n)
 {

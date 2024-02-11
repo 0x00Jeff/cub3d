@@ -9,11 +9,14 @@ INCLUDEFOLDER = include/
 
 LIB = lib/lib.so
 
-HOT_RELOAD_FILES = draw.o \
-				vect_utils1.o \
-				vect_utils2.o \
-				utils.o \
-				unused.o \
+HOT_RELOAD_FILES = draw.o	  \
+				   shapes.o	   \
+				draw_utils.o	\
+				rays.o			 \
+				vect_utils1.o 	  \
+				vect_utils2.o 	   \
+				utils.o 		    \
+				unused.o		     \
 
 HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
 HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h \
@@ -21,15 +24,15 @@ HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h \
 					$(INCLUDEFOLDER)utils.h \
 					$(INCLUDEFOLDER)unused.h
 
-OBJS_FILES = test.o		\
-			 hooks.o	 \
-			parse.o		  \
-			parse_utils.o  \
-			map_validation.o\
+OBJS_FILES = test.o		  \
+			 hooks.o	   \
+			parse.o		    \
+			parse_utils.o    \
+			map_validation.o  \
 			validation_utils.o \
 			map_utils.o 		\
 			map_ds_utils.o 		 \
-			texture_utils.o
+			texture_utils.o	 	  \
 
 OS := $(shell uname -s)
 
@@ -61,6 +64,9 @@ $(NAME): $(OBJS) $(LIB)
 
 $(LIB): $(HOT_RELOAD) $(HOT_RELOAD_H)
 	$(CC) $(CFLAGS) $(LIBFT) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
+
+$(OBJSFOLDER)%.o: src/drawing/%.c include/draw.h $(GLOBAL_HEADERS)
+	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/vects/%.c include/vectors.h $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@

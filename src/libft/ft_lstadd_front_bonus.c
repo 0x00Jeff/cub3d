@@ -6,16 +6,16 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:19:45 by afatimi           #+#    #+#             */
-/*   Updated: 2022/10/09 12:11:10 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:00 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<libft.h>
+#include <libft.h>
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (!lst || !new)
 		return ;
-	new -> next = *lst;
+	new->next = *lst;
 	*lst = new;
 }

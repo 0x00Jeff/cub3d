@@ -6,12 +6,12 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:24:24 by afatimi           #+#    #+#             */
-/*   Updated: 2022/11/06 14:43:56 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:00 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<stdlib.h>
-#include<stdio.h>
-#include<libft.h>
+#include <libft.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 static int	ft_get_ten_pow(int nbr)
 {
@@ -72,9 +72,9 @@ void	ft_fill_buffer(long n, int power, char *result)
 
 char	*ft_itoa(int nbr)
 {
-	long			n;
-	char			*result;
-	int				power;
+	long	n;
+	char	*result;
+	int		power;
 
 	if (!nbr)
 		return (ft_strdup("0"));

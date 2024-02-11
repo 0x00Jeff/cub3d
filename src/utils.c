@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:13:28 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 11:33:28 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:44:41 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	inc_pos_vect(t_vector *vect, double factor, double angle)
 	vect->y += factor * sin(angle * (M_PI / 180));
 }
 
-// TODO : draw the fps on the screen instead!
 void	display_fps(t_vars *vars)
 {
+// TODO : draw the fps on the screen instead!
 	static double	old_time;
 	int				fps;
 	//return draw_fps(vars);

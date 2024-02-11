@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 12:14:48 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 18:04:46 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr +
-		(y * data->line_length + x * (data->bits_per_pixel >> 3));
+	dst = data->addr
+		+ (y * data->line_length + x * (data->bits_per_pixel >> 3));
 	*(unsigned int *)dst = color;
 }
 
@@ -58,11 +58,7 @@ int	main(int argc, char *argv[])
 	t_vars	vars;
 
 	if (argc != 2)
-	{
-		// TODO : check this with youssef
-		printf("Usage: %s map.ber\n", argv[0]);
-		return (-1);
-	}
+		return (ft_putstr_fd("Usage: cub3D map.cub\n", 2), -1);
 	if (init_mlx_data(&vars) == -1)
 		return (-1);
 	if (parser(&vars, argv[1]))

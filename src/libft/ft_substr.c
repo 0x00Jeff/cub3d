@@ -6,11 +6,11 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:47:37 by afatimi           #+#    #+#             */
-/*   Updated: 2022/11/05 19:31:53 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:43:02 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<stdlib.h>
-#include<libft.h>
+#include <libft.h>
+#include <stdlib.h>
 
 size_t	min(size_t a, size_t b)
 {

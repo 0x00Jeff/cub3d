@@ -6,11 +6,11 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 13:53:01 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 17:41:56 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 14:42:18 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include<stdio.h>
-#include<libft.h>
+#include <stdio.h>
+#include <libft.h>
 
 unsigned long	char_to_long_long(char c)
 {
