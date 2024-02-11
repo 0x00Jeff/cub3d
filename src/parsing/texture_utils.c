@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:27:08 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 12:50:43 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 12:54:14 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ int	get_textures(t_map *m)
 {
 	char		*line;
 	char		**ptr;
-	const int	fd;
+	const int	fd = m -> fd;
 
-	fd = m->fd;
 	line = get_next_line(fd);
 	if (line)
 		line[ft_strlen(line) - 1] = 0;
