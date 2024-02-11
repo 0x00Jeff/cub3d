@@ -1,10 +1,10 @@
 NO resources/badgeOnRedbricks.png
 EA resources/greybricks.png
-SO resources/greybricks.png
+SO resources/door.png
 WE resources/figureOnWood.png
 
-F -1,105,229
-C 105,105,105
+F 0,105,229
+C 0,105,105
 
 1111
 00W0

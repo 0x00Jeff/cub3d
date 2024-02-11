@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 21:05:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 12:14:48 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	main(int argc, char *argv[])
 		return (-1);
 	if (init_player_data(&vars))
 		return (ft_putstr_fd("Error: could not initiate player data\n", 2), -1);
-	return(0);
 	install_hooks(&vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);

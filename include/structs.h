@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 21:31:18 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 12:17:46 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define STRUCTS_H
 # include "../mlx/include/MLX42/MLX42.h"
 # include <dlfcn.h>
+# include <stdio.h>
+# include <fcntl.h>
 
 # define M_WIDTH 1920
 # define M_HEIGHT 1080

@@ -6,13 +6,14 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:23:11 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 20:49:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 12:51:32 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 # include <libft.h>
+# include <stdlib.h>
 # include <structs.h>
 
 enum
@@ -49,5 +50,7 @@ t_map_data		*read_map(t_map *map);
 void			append_map_node(t_map_data *data, char *line);
 int				*consume_map(t_map_data *m);
 int				convert_map_char(char c);
-void			display_map(t_map *map);
+void			set_where_and_flag(int **where, int **flag, int *w_val,
+					int *f_val);
+int				get_map_textures(t_map *map);
 #endif

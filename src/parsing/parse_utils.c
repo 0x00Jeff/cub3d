@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:05:36 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 11:29:06 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 12:51:46 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,10 @@ int	validate_lgbt(char *_r, char *_g, char *_b)
 	if (b > 0xff)
 		return (-1);
 	return (0);
+}
+
+void	set_where_and_flag(int **where, int **flag, int *w_val, int *f_val)
+{
+	*where = w_val;
+	*flag = f_val;
 }

@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror -Ofast # -g -fsanitize=address
 
 LINK_H = -Iinclude
 
@@ -13,7 +13,7 @@ HOT_RELOAD_FILES = draw.o \
 				vect_utils1.o \
 				vect_utils2.o \
 				utils.o \
-				unused.o
+				unused.o \
 
 HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
 HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h \
@@ -26,7 +26,10 @@ OBJS_FILES = test.o		\
 			parse.o		  \
 			parse_utils.o  \
 			map_validation.o\
-			validation_utils.o
+			validation_utils.o \
+			map_utils.o \
+			map_ds_utils.o \
+			texture_utils.o
 
 OS := $(shell uname -s)
 
