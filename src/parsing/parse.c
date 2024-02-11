@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 12:33:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 20:04:58 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ int	convert_map_char(char c)
 	int	res;
 
 	res = 0;
-	if (c == ' ' || c == '0')
+	if (c == ' ')
+		res = 0x7f;
+	else if (c == '0')
 		res = 0;
 	else if (c == '1')
 		res = 1;

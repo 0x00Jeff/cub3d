@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/09 19:50:39 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 19:55:46 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	init_player_data(t_vars *vars)
 	vars->map.width = MAP_SIZE + 2;
 	vars->player.pos.x = 4.5;
 	vars->player.pos.y = 5.5;
+	// TODO : set player angle based on map
+	// and use map from parser
 	vars->player.angle = 0;
 	vars->player.map_needs_clearing = 69;
 	vars->player.fov = 60;
