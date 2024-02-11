@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:13:28 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 21:33:40 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 11:33:28 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	get_map_item(t_map *map, double _x, double _y)
 	int	*m;
 
 	m = map->m;
-	x = (int)floor(_x);
-	y = (int)floor(_y);
-	if (x < 0 || x >= map->width)
+	x = floor(_x);
+	y = floor(_y);
+	if (x >= map->width)
 		return (0);
-	if (y < 0 || y >= map->height)
+	if (y >= map->height)
 		return (0);
 	return (m[y * map->width + x]);
 }

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 19:48:05 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 11:29:46 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,7 @@ void	shoot_rays(t_vars *vars, int num)
 	double		angle;
 	t_vector	visual_player;
 	t_ray		ray;
-	int			color;
 
-	color = adjust_transparancy(0xff0000, 0);
 	vect_assign(&visual_player, &vars->player.pos);
 	vect_scale(&visual_player, TILE_SIZE);
 	angle = vars->player.angle - (vars->player.fov >> 1);
@@ -209,7 +207,6 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 	int				start_y;
 	int				end_y;
 	double			wall_len;
-	int				color;
 	mlx_texture_t	*tex;
 	int				x_tex;
 	int				i;
@@ -227,7 +224,6 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 		start_y = 0;
 	if (wall_end.y >= M_HEIGHT)
 		end_y = M_HEIGHT - 1;
-	color = adjust_transparancy(GREEN, 0.7);
 	tex = vars->texture[ray->side];
 	x_tex = ray->percent_in_tex * tex->width;
 	i = start_y;

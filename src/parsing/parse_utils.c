@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:05:36 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 23:52:25 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 11:29:06 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ int	validate_lgbt(char *_r, char *_g, char *_b)
 	r = ft_atoi(_r);
 	g = ft_atoi(_g);
 	b = ft_atoi(_b);
-	if (r < 0 || r > 0xff)
+	if (r > 0xff)
 		return (-1);
-	if (g < 0 || g > 0xff)
+	if (g > 0xff)
 		return (-1);
-	if (b < 0 || b > 0xff)
+	if (b > 0xff)
 		return (-1);
 	return (0);
 }
