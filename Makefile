@@ -27,8 +27,8 @@ OBJS_FILES = test.o		\
 			parse_utils.o  \
 			map_validation.o\
 			validation_utils.o \
-			map_utils.o \
-			map_ds_utils.o \
+			map_utils.o 		\
+			map_ds_utils.o 		 \
 			texture_utils.o
 
 OS := $(shell uname -s)
@@ -61,6 +61,9 @@ $(NAME): $(OBJS) $(LIB)
 
 $(LIB): $(HOT_RELOAD) $(HOT_RELOAD_H)
 	$(CC) $(CFLAGS) $(LIBFT) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
+
+$(OBJSFOLDER)%.o: src/vects/%.c include/vectors.h $(GLOBAL_HEADERS)
+	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/validation/%.c $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
