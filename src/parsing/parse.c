@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 20:04:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 22:52:41 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parser(t_vars *vars, char *file)
 	return (0);
 }
 
-static void	display_map(t_map *map)
+void	display_map(t_map *map)
 {
 	// TODO : delete this function later!!
 	int	*content;
@@ -81,17 +81,20 @@ int	get_map_parts(t_map *map)
 	if (map->m == NULL)
 		return (ft_putstr_fd("Error: while consuming the map\n", 2), -1);
 	map->width = lst_map->width;
-	display_map(map);
+	// puts("PARSING....");
+	// display_map(map);
+	// puts("-----------");
 	return (0);
 }
 
 int	convert_map_char(char c)
 {
+	// TODO: add bonus characters
 	int	res;
 
 	res = 0;
 	if (c == ' ')
-		res = 0x7f;
+		res = SPACE_IN_MAP;
 	else if (c == '0')
 		res = 0;
 	else if (c == '1')

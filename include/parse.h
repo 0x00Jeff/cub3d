@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:23:11 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 12:51:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 20:28:24 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 
 enum
 {
-	NORTH_IN_MAP = 69,
+	EAST_IN_MAP = 69,
 	SOUTH_IN_MAP,
 	WEST_IN_MAP,
-	EAST_IN_MAP
+	NORTH_IN_MAP,
+	SPACE_IN_MAP = 9
 };
+
 
 typedef struct s_map_data
 {
@@ -53,4 +55,5 @@ int				convert_map_char(char c);
 void			set_where_and_flag(int **where, int **flag, int *w_val,
 					int *f_val);
 int				get_map_textures(t_map *map);
+void			display_map(t_map *map);
 #endif

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:23:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 12:53:06 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 21:52:27 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int	*consume_map(t_map_data *m)
 		j = 0;
 		while (j < m->width)
 		{
-			res[i * m->width + j] = convert_map_char(map_line->line[j]);
+			if (j >= ft_strlen(map_line->line))
+				res[i * m->width + j] = SPACE_IN_MAP;
+			else
+				res[i * m->width + j] = convert_map_char(map_line->line[j]);
 			j++;
 		}
 		i++;

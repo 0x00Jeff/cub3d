@@ -6,13 +6,13 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 11:33:11 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/11 20:48:04 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <validation.h>
 
-static size_t	count(const int *line, const int width, int c)
+size_t	count(const int *line, const int width, int c)
 {
 	size_t	res;
 	int		i;
@@ -21,6 +21,18 @@ static size_t	count(const int *line, const int width, int c)
 	res = 0;
 	while (i < width)
 		res += line[i++] == c;
+	return (res);
+}
+
+size_t	count_col(const int *col, const int width, const int height, int c)
+{
+	size_t	res;
+	int		i;
+
+	i = 0;
+	res = 0;
+	while (i < height)
+		res += (col[i++ * width] == c);
 	return (res);
 }
 
@@ -48,6 +60,5 @@ size_t	count_object(t_map *map, int object)
 
 int	check_for_invalid_characters(t_map *map)
 {
-	return ((count_players(map) + count_object(map, WALL) + count_object(map,
-				BLANK)) == map->width * map->height);
+	return (count_object(map, -1));
 }
