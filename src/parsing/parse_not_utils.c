@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:55:19 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 19:50:55 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 20:07:13 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ bool	check_colors(t_map *map)
 {
 	return ((map -> colors.ceiling_set
 			+ map -> colors.floor_set) == 2);
+}
+
+bool map_items_collected(t_map *map)
+{
+	return ((check_textures(map) + check_colors(map)) == 6);
 }
 
 int	check_map_items(t_map *map)
@@ -50,8 +55,14 @@ int	get_map_items(t_map *m, int (*item_setter)(t_map *, char *, char *))
 	line = get_next_line(fd);
 	if (line)
 		line[ft_strlen(line) - 1] = 0;
-	while (line && ft_strlen(line))
+	while (line /*&& ft_strlen(line) */&& !map_items_collected(m))
 	{
+		puts(line);
+		if (!ft_strlen(line))
+		{
+			line = get_next_line(fd);
+			continue;
+		}
 		ptr = ft_split(line, ' ');
 		if (!ptr || get_list_len(ptr) == 2)
 		{

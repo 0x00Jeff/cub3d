@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 19:48:11 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 20:06:59 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,13 @@ int	set_map_texture(t_map *map, char *text, char *file)
 	if (!map || !text || !file)
 		return (-1);
 	if (!ft_strncmp(text, "NO", 3))
-	{
-		puts("setting north texture");
 		texture = &map->tex[NORTH];
-	}
 	else if (!ft_strncmp(text, "SO", 3))
-	{
-		puts("setting south texture");
 		texture = &map->tex[SOUTH];
-	}
 	else if (!ft_strncmp(text, "WE", 3))
-	{
-		puts("setting west texture");
 		texture = &map->tex[WEST];
-	}
 	else if (!ft_strncmp(text, "EA", 3))
-	{
-		puts("setting east texture");
 		texture = &map->tex[EAST];
-	}
 	else
 		return (ft_putstr_fd("Error: Wrong map direction\n", 2), -1);
 	fd = try_open_file(file, "png");
@@ -89,7 +77,6 @@ int	set_map_texture(t_map *map, char *text, char *file)
 		return (-1);
 	if (texture)
 		*texture = ft_strdup(file);
-	puts("all good with setting textures!");
 	return (0);
 }
 

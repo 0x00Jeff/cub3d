@@ -1,6 +1,7 @@
 norm
-remove hot reloading
 fix textures
+fix leaks
 handle new lines between textures and colors
 potetically correct errors
 exit instead of return -1
+remove hot reloading
