@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:26 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 13:50:33 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:48:07 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ int		check_for_invalid_characters(t_map *map);
 int		validate_map(t_map *map);
 int		validate_line(int *line, int width);
 void	register_player_pos(t_vars *vars, t_map *map);
-
+bool	line_space_or_wall(int *line, size_t width, size_t height);
+bool	col_space_or_wall(int *line, size_t width, size_t height);
+bool	test_set_horizontal(t_map *map, int *first_line, int *last_line);
+bool	test_set_vertical(t_map *map, int *first_col, int *last_col);
 #endif

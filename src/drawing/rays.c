@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:34:55 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 18:09:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 15:40:46 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void	shoot_ray(t_vars *vars, t_ray *ray, double angle)
 	vect_scale(&tmp_from, MAP_SCALE_FACTOR);
 	vect_scale(&tmp_to, MAP_SCALE_FACTOR);
 	SKIP;
-	draw_line(vars, tmp_from, &tmp_to, adjust_transparancy(RED, 0));
+	//draw_line(vars, tmp_from, &tmp_to, adjust_transparancy(RED, 0));
 }

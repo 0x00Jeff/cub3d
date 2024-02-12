@@ -24,15 +24,20 @@ HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h \
 					$(INCLUDEFOLDER)utils.h \
 					$(INCLUDEFOLDER)unused.h
 
-OBJS_FILES = test.o		  \
-			 hooks.o	   \
-			parse.o		    \
-			parse_utils.o    \
-			map_validation.o  \
-			validation_utils.o \
-			map_utils.o 		\
-			map_ds_utils.o 		 \
-			texture_utils.o	 	  \
+OBJS_FILES = test.o				\
+			 hooks.o	  		 \
+			parse.o			  	  \
+			parse_utils.o	  	   \
+			map_validation.o		\
+			validation_utils.o		 \
+			player_utils.o			  \
+			line_utils.o			   \
+			p_map_utils.o				\
+			v_map_utils.o				 \
+			map_ds_utils.o				  \
+			texture_utils.o				   \
+			parse_not_utils.o				\
+			parse_definitely_not_utils.o	 \
 
 OS := $(shell uname -s)
 

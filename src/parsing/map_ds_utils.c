@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:23:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 21:52:27 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:52:08 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	append_map_node(t_map_data *data, char *line)
 {
 	t_map_line	*node;
 
-	// TODO: might make this returns an int and test for errors -> ask youssf;
 	if (!data)
 		return ;
 	node = (t_map_line *)malloc(sizeof(t_map_line));
@@ -29,6 +28,14 @@ void	append_map_node(t_map_data *data, char *line)
 		data->width = node->len;
 	node->next = NULL;
 	ft_lstadd_back(&data->data, node);
+}
+
+int	get_map_point(size_t j, char *line)
+{
+	if (j >= ft_strlen(line))
+		return (SPACE_IN_MAP);
+	else
+		return (convert_map_char(line[j]));
 }
 
 int	*consume_map(t_map_data *m)
@@ -50,10 +57,7 @@ int	*consume_map(t_map_data *m)
 		j = 0;
 		while (j < m->width)
 		{
-			if (j >= ft_strlen(map_line->line))
-				res[i * m->width + j] = SPACE_IN_MAP;
-			else
-				res[i * m->width + j] = convert_map_char(map_line->line[j]);
+			res[i * m -> width + j] = get_map_point(j, map_line -> line);
 			j++;
 		}
 		i++;

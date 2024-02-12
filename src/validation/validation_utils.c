@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 20:48:04 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:39:08 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ size_t	count_col(const int *col, const int width, const int height, int c)
 	i = 0;
 	res = 0;
 	while (i < height)
-		res += (col[i++ * width] == c);
+		res += (col[i++ *width] == c);
 	return (res);
 }
 

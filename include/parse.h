@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:23:11 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 14:36:47 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 15:56:38 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,7 @@ void			set_where_and_flag(int **where, int **flag, int *w_val,
 					int *f_val);
 int				get_map_textures(t_map *map);
 void			display_map(t_map *map);
+bool			check_textures(t_map *map);
+bool			check_colors(t_map *map);
+int				check_map_items(t_map *map);
 #endif
