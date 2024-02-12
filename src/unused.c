@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:11:14 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/10 21:34:06 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:46:07 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	draw_map(t_vars *vars)
 	{
 		for (size_t x = 0; x < vars->map.width; x++)
 		{
-			if (vars->map.m[y * vars->map.width + x] == 1)
+			if (vars->map.data[y * vars->map.width + x] == 1)
 			{
 				// TODO : might replace the map check with get_map_item not to segfault if checking outside of the map
 				draw_square(vars,

@@ -33,7 +33,6 @@ OBJS_FILES = test.o				\
 			player_utils.o			  \
 			line_utils.o			   \
 			p_map_utils.o				\
-			v_map_utils.o				 \
 			map_ds_utils.o				  \
 			texture_utils.o				   \
 			parse_not_utils.o				\

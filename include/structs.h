@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 15:11:11 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_map
 	int				fd;
 	size_t			height;
 	size_t			width;
-	int				*m;
+	int				*data;
 	char			*tex[4];
 	t_surroundings	colors;
 }					t_map;

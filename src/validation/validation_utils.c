@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 16:39:08 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ size_t	count_object(t_map *map, int object)
 	res = 0;
 	width = map->width;
 	while (i < map->height)
-		res += count(&map->m[i++ *width], width, object);
+		res += count(&map->data[i++ *width], width, object);
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:13:28 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 14:44:41 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	get_map_item(t_map *map, double _x, double _y)
 	size_t	y;
 	int	*m;
 
-	m = map->m;
+	m = map->data;
 	x = floor(_x);
 	y = floor(_y);
 	if (x >= map->width)

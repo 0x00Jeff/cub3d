@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:44:39 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 16:49:01 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	register_player_pos(t_vars *vars, t_map *map)
 		j = 0;
 		while (j < map->width)
 		{
-			if (is_player(map->m[i * map->width + j]))
+			if (is_player(map->data[i * map->width + j]))
 			{
-				angle = (map->m[i * map->width + j] - EAST_IN_MAP) * 90;
+				angle = (map->data[i * map->width + j] - EAST_IN_MAP) * 90;
 				vars->player.angle = angle;
 				vars->player.pos = (t_vector){i + 0.5, j + 0.5};
-				map->m[i * map->width + j] = 0;
+				map->data[i * map->width + j] = 0;
 				break ;
 			}
 			j++;

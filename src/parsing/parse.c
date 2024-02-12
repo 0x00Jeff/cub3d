@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 16:20:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	display_map(t_map *map)
 	int w, h;
 	int i, j;
 
-	content = map->m;
+	content = map->data;
 	w = map->width;
 	h = map->height;
 	i = 0;
@@ -109,8 +109,8 @@ int	get_map_parts(t_map *map)
 	lst_map = read_map(map);
 	if (!lst_map)
 		return (ft_putstr_fd("Error: while reading the map\n", 2), -1);
-	map->m = consume_map(lst_map);
-	if (map->m == NULL)
+	map->data = consume_map(lst_map);
+	if (map->data == NULL)
 		return (ft_putstr_fd("Error: while consuming the map\n", 2), -1);
 	map->width = lst_map->width;
 	return (0);

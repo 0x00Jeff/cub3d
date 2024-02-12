@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 16:50:39 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ bool	zero_or_one(t_map *map, int x, int y)
 		return (false);
 	if (y < 0 || y >= (ll)map->height)
 		return (false);
-	val = map->m[y * map->width + x];
+	val = map->data[y * map->width + x];
 	return (val == 1 || val == 0);
 }
 
 bool	check_neighbours_binary(t_map *map, t_ivector pt)
 {
 	// TODO: add bonus characters
-	if (map->m[(pt.y) * map->width + (pt.x)] == WALL)
+	if (map->data[(pt.y) * map->width + (pt.x)] == WALL)
 		return (true);
-	if (map->m[(pt.y) * map->width + (pt.x)] == SPACE_IN_MAP)
+	if (map->data[(pt.y) * map->width + (pt.x)] == SPACE_IN_MAP)
 		return (true);
 	if (!zero_or_one(map, (pt.x), (pt.y - 1)))
 		return (false);
@@ -70,9 +70,9 @@ bool	test_middle_part(t_map *map, t_ivector start, size_t w, size_t h)
 	while (y < start.y + h)
 	{
 		x = start.x;
-		while (map->m[y * map->width + x] == SPACE_IN_MAP && x < start.x + w)
+		while (map->data[y * map->width + x] == SPACE_IN_MAP && x < start.x + w)
 			x++;
-		while (map->m[y * map->width + x] == WALL && x < start.x + w)
+		while (map->data[y * map->width + x] == WALL && x < start.x + w)
 			x++;
 		while (x < start.x + w)
 		{
