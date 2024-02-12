@@ -6,12 +6,47 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 22:52:17 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:25:24 by ylyoussf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <validation.h>
+#define CRESET "\e[0m"
+#define HBLK "\e[0;90m"
+#define REDHB "\e[41m"
+#define GRNHB "\e[42m"
+#define YELHB "\e[43m"
+
+void	display_map_color(t_map *map, int x, int y, char *color)
+{
+	// TODO : delete this function later!!
+	int	*content;
+	int w, h;
+	int i, j;
+
+	content = map->m;
+	w = map->width;
+	h = map->height;
+	i = 0;
+	while (i < h)
+	{
+		j = 0;
+		while (j < w)
+		{
+			if (i == y && j == x)
+			{
+				printf(HBLK"%s", color);
+				printf("%d"CRESET, content[i * w + j]);
+			}
+			else
+				printf("%d", content[i * w + j]);
+			j++;
+		}
+		i++;
+		puts("");
+	}
+}
 
 int	validator(t_vars *vars)
 {
@@ -28,7 +63,8 @@ int	validator(t_vars *vars)
 	if (validate_map(map) == -1)
 		return (ft_putstr_fd("Error\nInvalid map\n", \
 			2), 1);
-	display_map(map);
+	// display_map(map);
+	puts("MAP OK !");
 	return (0);
 }
 
@@ -60,8 +96,10 @@ void register_player_pos(t_vars *vars, t_map *map)
 		}
 		i++;
 	}
+	# ifdef DEBUG
 	printf("player angle = %f\n", vars->player.angle);
 	printf("player pos = (%f, %f)\n", vars->player.pos.x, vars->player.pos.y);
+	#endif
 }
 
 bool	line_space_or_wall(int *line, size_t width, size_t height)
@@ -77,45 +115,52 @@ bool	col_space_or_wall(int *line, size_t width, size_t height)
 
 bool	test_set_horizontal(t_map *map, int *first_line, int *last_line)
 {
-	size_t	i;
+	ll	i;
 
 	i = 0;
-	while (i < map->height && line_space_or_wall(&map->m[i * map->width], map->width, map->height))
+	while (i < (ll)map->height && line_space_or_wall(&map->m[i * map->width], map->width, map->height))
 		i++;
-	if (i >= map->height)
+	if (i >= (ll)map->height)
 		return (false);
 	*first_line = i;
 	i = map->height - 1;
 	while (i >= 0 && line_space_or_wall(&map->m[i * map->width], map->width, map->height))
 		i--;
 	*last_line = i;
-	if (*first_line == *last_line)
+	if (*first_line > *last_line)
 		return (false);
 	return (true);
 }
 
 bool	test_set_vertical(t_map *map, int *first_col, int *last_col)
 {
-	size_t	i;
+	ll	i;
 
 	i = 0;
-	while (i < map->width && col_space_or_wall(&map->m[i], map->width, map->height))
+	while (i < (ll)map->width && col_space_or_wall(&map->m[i], map->width, map->height))
 		i++;
-	if (i >= map->width)
+	if (i >= (ll)map->width)
 		return (false);
 	*first_col = i;
 	i = map->width - 1;
 	while (i >= 0 && col_space_or_wall(&map->m[i], map->width, map->height))
 		i--;
 	*last_col = i;
-	if (*first_col == *last_col)
+	if (*first_col > *last_col)
 		return (false);
 	return (true);
 }
 
-bool	zero_or_one(int pt)
+bool	zero_or_one(t_map *map, int x, int y)
 {
-	return (pt == 1 || pt == 0);
+	int	val;
+
+	if (x < 0 || x >= (ll)map->width)
+		return (false);
+	if (y < 0 || y >= (ll)map->height)
+		return (false);
+	val = map->m[y * map->width + x];
+	return (val == 1 || val == 0);
 }
 
 bool	check_neighbours_binary(t_map *map, t_ivector pt)
@@ -124,18 +169,19 @@ bool	check_neighbours_binary(t_map *map, t_ivector pt)
 	if (map->m[(pt.y) * map->width + (pt.x)] == WALL)
 		return (true);
 	if (map->m[(pt.y) * map->width + (pt.x)] == SPACE_IN_MAP)
+		return (true);
+	if (!zero_or_one(map, (pt.x), (pt.y - 1)))
 		return (false);
-	if (!zero_or_one(map->m[(pt.y - 1) * map->width + (pt.x)]))
+	if (!zero_or_one(map, (pt.x), (pt.y + 1)))
 		return (false);
-	if (!zero_or_one(map->m[(pt.y + 1) * map->width + (pt.x)]))
+	if (!zero_or_one(map, (pt.x - 1), (pt.y)))
 		return (false);
-	if (!zero_or_one(map->m[(pt.y) * map->width + (pt.x - 1)]))
-		return (false);
-	if (!zero_or_one(map->m[(pt.y) * map->width + (pt.x + 1)]))
+	if (!zero_or_one(map, (pt.x + 1), (pt.y)))
 		return (false);
 	return (true);
 }
 
+#define SLEEP 1000 * 50
 bool	test_middle_part(t_map *map, t_ivector start, size_t width, size_t height)
 {
 	size_t	x;
@@ -145,26 +191,43 @@ bool	test_middle_part(t_map *map, t_ivector start, size_t width, size_t height)
 	while (y < start.y + height)
 	{
 		x = start.x;
-		printf("before (%zu, %zu) %d ... \n", x, y, map->m[y * map->width + x]);
+		// printf("before (%zu, %zu) %d ... \n", x, y, map->m[y * map->width + x]);
 		while(map->m[y * map->width + x] == SPACE_IN_MAP && x < start.x + width)
 		{
+			#ifdef DEBUG
+			display_map_color(map, x, y, REDHB);
 			printf("sliding horiztonally over SPACE\n");
+			usleep(SLEEP);
+			system("clear");
+			#endif
 			x++;
 		}
 		while(map->m[y * map->width + x] == WALL && x < start.x + width)
 		{
+			#ifdef DEBUG
+			display_map_color(map, x, y, REDHB);
 			printf("sliding horiztonally over WALL\n");
+			usleep(SLEEP);
+			system("clear");
+			#endif
 			x++;
 		}
 		while (x < start.x + width)
 		{
+			#ifdef DEBUG
+			display_map_color(map, x, y, YELHB);
 			printf("checking (%zu, %zu) %d ... ", x, y, map->m[y * map->width + x]);
+			#endif
 			if (!check_neighbours_binary(map, (t_ivector){x, y}))
 			{
 				printf("Failed !\n");
 				return (false);
 			}
+			#ifdef DEBUG
 			printf("Passed !\n");
+			usleep(SLEEP);
+			system("clear");
+			#endif
 			x++;
 		}
 		y++;
@@ -180,25 +243,13 @@ int validate_map(t_map *map)
 	int		last_col;
 
 
-	puts("VALIDATING THIS BAD BOY....");
-	display_map(map);
-	puts("-----------");
 	if (!test_set_horizontal(map, &first_line, &last_line))
-	{
-		printf("HORZ: line (%d, %d)\n", first_line, last_line);
 		return (-1);
-	}
-	printf("line (%d, %d)\n", first_line, last_line);
 	if (!test_set_vertical(map, &first_col, &last_col))
-	{
-		printf("VERT: col (%d, %d)\n", first_col, last_col);
 		return (-1);
-	}
-	printf("col (%d, %d)\n", first_col, last_col);
 	if (!test_middle_part(map, (t_ivector){first_col, first_line},
 			last_col - first_col + 1, last_line - first_line + 1))
 		return (-1);
-		
 	return (0);
 }
 
