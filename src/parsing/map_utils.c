@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 12:52:51 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 14:34:52 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,16 @@ void	destroy_map(t_map *map)
 	}
 }
 
-int	set_map_colors(t_map *map, char obj, char *lgbt_colors)
+int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 {
 	int		*where;
 	int		*flag;
 	char	**ptr;
+	char	obj;
 
-	if (!map || !lgbt_colors)
+	if (!map || !lgbt_colors || !_obj)
 		return (-1);
+	obj = *_obj;
 	if (obj == 'F')
 		set_where_and_flag(&where, &flag, &map->colors.floor,
 			&map->colors.floor_set);

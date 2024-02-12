@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:23:11 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 20:28:24 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:36:47 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ enum
 	SPACE_IN_MAP = 9
 };
 
-
 typedef struct s_map_data
 {
 	t_map_line	*data;
@@ -35,6 +34,8 @@ typedef struct s_map_data
 
 //# define DEBUG
 int				parser(t_vars *vars, char *file);
+int				get_map_items(t_map *m, int (*item_setter)(t_map *, char *,
+						char *));
 int				check_extension(char *name, char *extension);
 t_map			*init_map(char *file);
 int				try_open_file(char *file, char *extension);
@@ -42,7 +43,7 @@ int				open_file(char *file);
 int				get_map_parts(t_map *map);
 int				get_textures(t_map *map);
 int				set_map_texture(t_map *map, char *text, char *file);
-int				set_map_colors(t_map *map, char obj, char *lgbt_colors);
+int				set_map_colors(t_map *map, char *_obj, char *lgbt_colors);
 size_t			get_list_len(char **l);
 int				get_surroundings(t_map *_map);
 int				validate_lgbt(char *_r, char *_g, char *_b);

@@ -6,13 +6,14 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:27:08 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 12:54:14 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 14:51:36 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parse.h>
 #include <structs.h>
 
+/*
 int	get_map_textures(t_map *map)
 {
 	int	res;
@@ -28,7 +29,9 @@ int	get_map_textures(t_map *map)
 	}
 	return (0);
 }
+*/
 
+/*
 int	get_textures(t_map *m)
 {
 	char		*line;
@@ -42,8 +45,12 @@ int	get_textures(t_map *m)
 	{
 		ptr = ft_split(line, ' ');
 		if (!ptr || get_list_len(ptr) == 2)
+		{
 			if (set_map_texture(m, ptr[0], ft_strdup(ptr[1])) == -1)
-				return (free_list(ptr), free(line), -1);
+				return (free_list(ptr),
+						free(line)
+						, -1);
+		}
 		free_list(ptr);
 		free(line);
 		line = get_next_line(fd);
@@ -53,28 +60,4 @@ int	get_textures(t_map *m)
 	}
 	return (!!m->tex[UP] + !!m->tex[DOWN] + !!m->tex[RIGHT] + !!m->tex[LEFT]);
 }
-
-int	set_map_texture(t_map *map, char *text, char *file)
-{
-	char	fd;
-	char	**texture;
-
-	if (!map || !text || !file)
-		return (-1);
-	if (!ft_strncmp(text, "NO", 3))
-		texture = &map->tex[NORTH];
-	else if (!ft_strncmp(text, "SO", 3))
-		texture = &map->tex[SOUTH];
-	else if (!ft_strncmp(text, "WE", 3))
-		texture = &map->tex[WEST];
-	else if (!ft_strncmp(text, "EA", 3))
-		texture = &map->tex[EAST];
-	else
-		return (ft_putstr_fd("Error: Wrong map direction\n", 2), -1);
-	fd = try_open_file(file, "png");
-	if (fd < 0 || *texture)
-		return (-1);
-	if (texture)
-		*texture = file;
-	return (0);
-}
+*/
