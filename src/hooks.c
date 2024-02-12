@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 15:35:47 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:02:59 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ int	init_player_data(t_vars *vars)
 	vars -> texture[SOUTH] = mlx_load_png(vars -> map.tex[SOUTH]);
 	vars -> texture[EAST] = mlx_load_png(vars -> map.tex[EAST]);
 	vars -> texture[WEST] = mlx_load_png(vars -> map.tex[WEST]);
+	free(vars -> map.tex[NORTH]);
+	free(vars -> map.tex[SOUTH]);
+	free(vars -> map.tex[EAST]);
+	free(vars -> map.tex[WEST]);
 	return ((!!vars -> texture[NORTH] + !!vars -> texture[SOUTH] + \
 		!!vars -> texture[EAST] + !!vars -> texture[WEST]) != 4);
 }
