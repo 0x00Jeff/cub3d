@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:59:46 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	parser(t_vars *vars, char *file)
 	if (get_map_parts(map))
 		return (-1);
 	vars->map = *map;
-	// TODO : do I need to destroy the map ptr here ???
+	free(map);
 	return (0);
 }
 

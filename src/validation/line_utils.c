@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:45:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:52:39 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ bool	test_set_vertical(t_map *m, int *first_col, int *last_col)
 	ll	i;
 
 	i = 0;
-	while (i < (ll)m->width && col_space_or_wall(&m->data[i], m->width, m->height))
+	while (i < (ll)m->width
+		&& col_space_or_wall(&m->data[i], m->width, m->height))
 		i++;
 	if (i >= (ll)m->width)
 		return (false);
