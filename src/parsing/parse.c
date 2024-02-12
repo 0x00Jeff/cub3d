@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 17:59:46 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:11:15 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	get_map_parts(t_map *map)
 	res = get_map_items(map, set_map_colors);
 	if (res == -1)
 		return (-1);
-	if (!check_map_items(map))
+	if (check_map_items(map) == -1)
 		return (-1);
 	// TODO : make an err_and_exit function
 	// TODO : politically correct errors
