@@ -11,6 +11,7 @@ void free_lst_map(t_map_data *ptr)
 	while(line)
 	{
 		tmp = line -> next;
+		free(line -> line);
 		free(line);
 		line = tmp;
 	}
