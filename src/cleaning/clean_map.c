@@ -23,7 +23,6 @@ void	destroy_map(t_map *map)
 
 	if (!map)
 		return ;
-	// TODO : use this function!
 	i = 0;
 	while (i < 4)
 	{
