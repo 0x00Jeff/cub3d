@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 20:19:34 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:01:34 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	main(int argc, char *argv[])
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	free_textures(vars.texture);
+	free_texture_names((char **)&vars.map.tex);
+	free(vars.map.data);
 	destroy_map(&vars.map);
 	return (0);
 }

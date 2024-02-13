@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:27:08 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 20:33:41 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 20:43:19 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	set_map_texture(t_map *map, char *text, char *file)
 	char	fd;
 	char	**texture;
 
+	texture = NULL;
 	if (!map || !text || !file)
 		return (-1);
 	if (!ft_strncmp(text, "NO", 3))
