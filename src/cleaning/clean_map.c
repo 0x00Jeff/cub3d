@@ -34,4 +34,5 @@ void	destroy_map(t_map *map)
 		}
 		i++;
 	}
+	free(map -> data);
 }
