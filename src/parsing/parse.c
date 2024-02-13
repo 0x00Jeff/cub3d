@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 17:29:22 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:40:43 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parser(t_vars *vars, char *file)
 		return (-1);
 	map->fd = try_open_file(file, "cub");
 	if (map->fd < 0)
-		return (-1);
+		return (free(map), -1);
 	if (get_map_parts(map))
 		return (-1);
 	vars->map = *map;
@@ -48,12 +48,12 @@ int	set_map_texture(t_map *map, char *text, char *file)
 	else if (!ft_strncmp(text, "EA", 3))
 		texture = &map->tex[EAST];
 	else
-		return (ft_putstr_fd("Error: Wrong map direction\n", 2), -1);
+		return (ft_putstr_fd("Error\nWrong map direction\n", 2), -1);
 	fd = try_open_file(file, "png");
 	if (fd < 0)
 		return (-1);
 	if (*texture)
-		return (ft_putstr_fd("Error!\nDuplcated textures!", 2), -1);
+		return (ft_putstr_fd("Error\nDuplicated textures!", 2), -1);
 	*texture = ft_strdup(file);
 	return (0);
 }
@@ -65,25 +65,14 @@ int	get_map_parts(t_map *map)
 
 	if (!map)
 		return (-1);
-	res = get_map_items(map, set_map_texture);
+	res = get_map_items(map);
 	if (res == -1)
 		return (-1);
-	res = get_map_items(map, set_map_colors);
-	if (res == -1)
-		return (-1);
+	//res = get_map_items(map);
+	//if (res == -1)
+		//return (-1);
 	if (check_map_items(map) == -1)
 		return (-1);
-	// TODO : make an err_and_exit function
-	// TODO : politically correct errors
-	/*
-	if (res != 2)
-	{
-		if (res == -1)
-			return (ft_putstr_fd("Erorr: duplicated colors!\n", 2), -1);
-		else
-			return (ft_putstr_fd("Error: Missing colors!\n", 2), -1);
-	}
-	*/
 	lst_map = read_map(map);
 	if (!lst_map)
 		return (ft_putstr_fd("Error: while reading the map\n", 2), -1);

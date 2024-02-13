@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 18:16:09 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:22:58 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,9 @@ t_map	*init_map(char *file)
 		return (NULL);
 	map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!map)
-		return (NULL);
-	// TODO : delete the following 2 lines, they're just for debugging a bug
-	map->colors.floor = 20;
-	map->colors.ceiling = 20;
-	map->colors.floor_set = 0;
-	map->colors.ceiling_set = 0;
+		return (ft_putstr_fd("Error!\nCan't allocate region", 2), NULL);
 	return (map);
 }
-
 
 int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 {

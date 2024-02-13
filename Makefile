@@ -32,7 +32,8 @@ OBJS_FILES = test.o				\
 			utils.o 		    \
 			unused.o		     \
 			clean_textures.o \
-			clean_map.o
+			clean_map.o \
+			clean_mlx.o
 
 OS := $(shell uname -s)
 

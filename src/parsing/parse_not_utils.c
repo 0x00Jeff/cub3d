@@ -6,11 +6,12 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:55:19 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 18:05:52 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:44:31 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parse.h>
+#include <clean.h>
 
 bool	check_textures(t_map *map)
 {
@@ -54,12 +55,11 @@ int	item_setter_dispatcher(t_map *m, char *where, char *what)
 		return set_map_colors(m, where, what);
 }
 
-int	get_map_items(t_map *m, int (*item_setter)(t_map *, char *, char *))
+int	get_map_items(t_map *m)
 {
 	char		*line;
 	char		**ptr;
 	const int	fd = m -> fd;
-	(void)item_setter;
 
 	line = get_next_line(fd);
 	if (line)
@@ -80,6 +80,7 @@ int	get_map_items(t_map *m, int (*item_setter)(t_map *, char *, char *))
 		{
 			if (item_setter_dispatcher(m, ptr[0], ptr[1]) == -1)
 				return (ft_putstr_fd("Error\nInvalid Color\n", 2),
+					free_texture_names(m -> tex),
 					free_stuff(ptr, line), -1);
 		}
 		free_stuff(ptr, line);

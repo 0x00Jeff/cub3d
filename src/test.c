@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 17:40:17 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:46:54 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,20 @@ int	main(int argc, char *argv[])
 	if (init_mlx_data(&vars) == -1)
 		return (-1);
 	if (parser(&vars, argv[1]))
+	{
+		destroy_map(&vars.map);
+		// TODO : destroy_mlx_image();
 		return (-1);
-	if (validator(&vars)) // TOOD : destroy map on all these errors
+	}
+	if (validator(&vars)){ // TOOD : destroy map on all these errors
+		destroy_map(&vars.map);
+		// TODO : destroy_mlx_image();
 		return (-1);
+	}
 	if (init_player_data(&vars))
 	{
+		destroy_map(&vars.map);
+		// TODO : destroy_mlx_image();
 		free_textures(vars.texture);
 		return (ft_putstr_fd("Error: could not initiate player data\n", 2), -1);
 	}

@@ -16,3 +16,12 @@ void free_textures(mlx_texture_t **textures)
 	while(i < 4)
 		free_tex(textures[i++]);
 }
+
+void free_texture_names(char **texture_names)
+{
+	int i;
+
+	i = 0;
+	while(i < 4)
+		free(texture_names[i++]);
+}
