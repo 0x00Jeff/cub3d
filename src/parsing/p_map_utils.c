@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 21:35:15 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 23:39:20 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int	open_file(char *file)
 		return (-1);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
+	{
+		ft_putstr_fd("Error\n", 2);
 		perror("open");
+		exit(EXIT_FAILURE);
+	}
 	return (fd);
 }
 
