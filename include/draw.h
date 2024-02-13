@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 17:50:27 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:25:37 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct e_wall
 	double		len;
 }				t_wall;
 
+void			do_graphics(t_vars *vars);
 double			if_else(bool condition, double _true, double _false);
 void			set_intersection_point(t_ray *ray, t_vector intersect,
 					double dist);

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 14:57:23 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:30:29 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,6 @@ int	parser(t_vars *vars, char *file)
 	vars->map = *map;
 	free(map);
 	return (0);
-}
-
-void	display_map(t_map *map)
-{
-	// TODO : delete this function later!!
-	int	*content;
-	int w, h;
-	int i, j;
-
-	content = map->data;
-	w = map->width;
-	h = map->height;
-	i = 0;
-	while (i < h)
-	{
-		j = 0;
-		while (j < w)
-		{
-			printf("%d, ", content[i * w + j]);
-			j++;
-		}
-		i++;
-		puts("");
-	}
 }
 
 int	set_map_texture(t_map *map, char *text, char *file)

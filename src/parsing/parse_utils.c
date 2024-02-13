@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:05:36 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 16:15:36 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:19:23 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ uint32_t	construct_lgbt(char *_r, char *_g, char *_b)
 	col.b = ft_atoi(_b);
 	if (validate_lgbt(_r, _g, _b) == -1)
 		return (ft_putstr_fd("Error: invalid lgbt\n", 2), -1);
-	// TODO: fix after removing hot reloading
 	return (col.r << 16 | col.g << 8 | col.b);
-	//return (adjust_transparancy(col.r << 16 | col.g << 8 | col.b, 0.5));
 }
 
 int	validate_lgbt(char *_r, char *_g, char *_b)

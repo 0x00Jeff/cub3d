@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -Ofast # -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address
 
 LINK_H = -Iinclude
 
@@ -9,20 +9,6 @@ INCLUDEFOLDER = include/
 
 LIB = lib/lib.so
 
-HOT_RELOAD_FILES = draw.o	  \
-				   shapes.o	   \
-				draw_utils.o	\
-				rays.o			 \
-				vect_utils1.o 	  \
-				vect_utils2.o 	   \
-				utils.o 		    \
-				unused.o		     \
-
-HOT_RELOAD		= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
-HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h \
-					$(INCLUDEFOLDER)vectors.h \
-					$(INCLUDEFOLDER)utils.h \
-					$(INCLUDEFOLDER)unused.h
 
 OBJS_FILES = test.o				\
 			 hooks.o	  		 \
@@ -37,6 +23,14 @@ OBJS_FILES = test.o				\
 			texture_utils.o				   \
 			parse_not_utils.o				\
 			parse_definitely_not_utils.o	 \
+			draw.o	  \
+			shapes.o	   \
+			draw_utils.o	\
+			rays.o			 \
+			vect_utils1.o 	  \
+			vect_utils2.o 	   \
+			utils.o 		    \
+			unused.o		     \
 
 OS := $(shell uname -s)
 
@@ -47,6 +41,18 @@ else
 endif
 
 OBJS = $(foreach obj, $(OBJS_FILES), $(OBJSFOLDER)$(obj))
+HEADER_FILES	=	$(INCLUDEFOLDER)draw.h \
+					$(INCLUDEFOLDER)fps.h \
+					$(INCLUDEFOLDER)get_next_line.h \
+					$(INCLUDEFOLDER)hooks.h \
+					$(INCLUDEFOLDER)libft.h \
+					$(INCLUDEFOLDER)parse.h \
+					$(INCLUDEFOLDER)structs.h \
+					$(INCLUDEFOLDER)test.h \
+					$(INCLUDEFOLDER)unused.h \
+					$(INCLUDEFOLDER)utils.h \
+					$(INCLUDEFOLDER)validation.h \
+					$(INCLUDEFOLDER)vectors.h
 
 GLOBAL_HEADERS = include/structs.h
 
@@ -61,13 +67,8 @@ $(LIBFT):
 	@echo "Compiling libft..."
 	@make -C src/libft bonus
 
-$(NAME): $(OBJS) $(LIB)
+$(NAME): $(OBJS)
 	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
-
-# TODO : you have 2 diff libfts because of hot reloading, fix this shit later!
-
-$(LIB): $(HOT_RELOAD) $(HOT_RELOAD_H)
-	$(CC) $(CFLAGS) $(LIBFT) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(OBJSFOLDER)%.o: src/drawing/%.c include/draw.h $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
@@ -83,7 +84,6 @@ $(OBJSFOLDER)%.o: src/parsing/%.c include/parse.h $(GLOBAL_HEADERS)
 
 $(OBJSFOLDER)%.o: src/%.c $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
-
 
 re: fclean all
 

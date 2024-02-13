@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 15:26:43 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:30:58 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	validator(t_vars *vars)
 		return (ft_putstr_fd("Error\nfound weird chars in map!\n", \
 			2), 1);
 	printf("%ld players found\n", count_players(map));
-	display_map(map);
 	if (count_players(map) != 1)
 		return (ft_putstr_fd("Error\nThere has to be one player on the map\n", \
 			2), 1);
