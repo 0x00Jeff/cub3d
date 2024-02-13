@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:55:16 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 15:51:41 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:05:34 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	draw_rectangle(t_vars *vars, t_vector start, t_vector end, int color)
 	}
 }
 
-void static	init_wall(t_wall *wall)
+static void	init_wall(t_wall *wall)
 {
 	wall->draw_start.y = M_HEIGHT / 2 - wall->len / 2;
 	wall->draw_end.y = M_HEIGHT / 2 + wall->len / 2;

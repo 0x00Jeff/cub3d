@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address
+CFLAGS = -Wall -g -fsanitize=address #-Wextra -Werror -Ofast #-g -fsanitize=address
 
 LINK_H = -Iinclude
 
@@ -31,6 +31,7 @@ OBJS_FILES = test.o				\
 			vect_utils2.o 	   \
 			utils.o 		    \
 			unused.o		     \
+			clean_textures.o
 
 OS := $(shell uname -s)
 
@@ -80,6 +81,9 @@ $(OBJSFOLDER)%.o: src/validation/%.c $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/parsing/%.c include/parse.h $(GLOBAL_HEADERS)
+	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
+
+$(OBJSFOLDER)%.o: src/cleaning/%.c $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/%.c $(GLOBAL_HEADERS)

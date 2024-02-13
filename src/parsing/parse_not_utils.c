@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:55:19 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 15:31:11 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:05:19 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	check_colors(t_map *map)
 
 bool map_items_collected(t_map *map)
 {
-	return (check_textures(map) * check_colors(map));
+	return (check_textures(map) & check_colors(map));
 }
 
 int	check_map_items(t_map *map)

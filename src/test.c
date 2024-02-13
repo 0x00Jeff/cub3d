@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 16:51:33 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:19:56 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <libft.h>
 #include <validation.h>
+#include <clean.h>
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -68,10 +69,14 @@ int	main(int argc, char *argv[])
 	if (validator(&vars))
 		return (-1);
 	if (init_player_data(&vars))
+	{
+		free_textures(vars.texture);
 		return (ft_putstr_fd("Error: could not initiate player data\n", 2), -1);
+	}
 	// TODO : free player data (texture) in case of an error
 	install_hooks(&vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
+	free_textures(vars.texture);
 	return (0);
 }
