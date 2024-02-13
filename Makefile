@@ -35,8 +35,8 @@ OBJS_FILES = test.o				\
 			clean_map.o \
 			clean_mlx.o \
 			tiny_parsing_helpers.o \
-			dda.o
-			
+			dda.o					\
+			fps.o
 
 OS := $(shell uname -s)
 

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 22:52:45 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 23:35:04 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	do_graphics(t_vars *vars)
 	static int		a;
 	static double	old_time;
 
-	(void)vars;
 	if (a++ == 0)
 	{
 		draw_surroundings(vars);
@@ -101,11 +100,11 @@ void	do_graphics(t_vars *vars)
 		old_time = mlx_get_time();
 		if (!needs_clearing(vars))
 		{
-			display_fps(vars);
+			draw_fps(vars);
 			return ;
 		}
 		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
-		display_fps(vars);
+		draw_fps(vars);
 	}
 }

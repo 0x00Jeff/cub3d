@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 19:49:23 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 23:35:03 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	init_player_data(t_vars *vars)
 void	install_hooks(t_vars *vars)
 {
 	do_graphics(vars);
+	mlx_loop_hook(vars->mlx, draw_fps, vars);;
 	mlx_loop_hook(vars->mlx, print_key, vars);
 	mlx_close_hook(vars->mlx, win_close, vars->mlx);
 }

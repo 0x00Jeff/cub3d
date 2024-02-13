@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 22:50:16 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 23:29:08 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,5 @@ void			init_steps(t_vars *vars, t_intersection *inter,
 					t_vector *direction, double angle);
 void			draw_stripe(t_vars *vars, t_ray *ray, int x, double angle);
 void			draw_surroundings(t_vars *vars);
+void			draw_fps(void *param);
 #endif

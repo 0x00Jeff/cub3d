@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:13:28 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 22:57:28 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 23:33:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	inc_pos_vect(t_vector *vect, double factor, double angle)
 
 void	display_fps(t_vars *vars)
 {
-// TODO : draw the fps on the screen instead!
 	static double	old_time;
 	int				fps;
-	//return draw_fps(vars);
+	return draw_fps(vars);
 	fps = (int)(1 / vars->mlx->delta_time);
+	// TODO : delete this!!
 	if (mlx_get_time() - old_time > 0.25)
 	{
 		printf("fps: %d    \r", fps);
