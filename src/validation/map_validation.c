@@ -6,12 +6,13 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 17:06:09 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 20:35:58 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <validation.h>
+#include <utils.h>
 
 int	validator(t_vars *vars)
 {
@@ -20,15 +21,12 @@ int	validator(t_vars *vars)
 
 	map = &vars->map;
 	if (check_for_invalid_characters(map))
-		return (ft_putstr_fd("Error\nfound weird chars in map!\n", \
-			2), 1);
+		err_and_exit("found weird chars in map!\n");
 	if (count_players(map) != 1)
-		return (ft_putstr_fd("Error\nThere has to be one player on the map\n", \
-			2), 1);
+		err_and_exit("There has to be one player on the map\n");
 	register_player_pos(vars, map);
 	if (validate_map(map) == -1)
-		return (ft_putstr_fd("Error\nInvalid map\n", \
-			2), 1);
+		err_and_exit("Error\nInvalid map\n");
 	return (0);
 }
 

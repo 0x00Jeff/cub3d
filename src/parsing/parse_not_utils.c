@@ -6,12 +6,13 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:55:19 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 19:44:31 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 20:31:39 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parse.h>
 #include <clean.h>
+#include <utils.h>
 
 bool	check_textures(t_map *map)
 {
@@ -35,9 +36,9 @@ bool map_items_collected(t_map *map)
 int	check_map_items(t_map *map)
 {
 	if (!check_textures(map))
-		return (ft_putstr_fd("Error!\nTextures problem\n", 2), -1);
+		err_and_exit("Textures problem\n");
 	if (!check_colors(map))
-		return (ft_putstr_fd("Error!\nColors problem\n", 2), -1);
+		err_and_exit("Colors problem\n");
 	return (0);
 }
 
@@ -79,9 +80,7 @@ int	get_map_items(t_map *m)
 		if (!ptr || get_list_len(ptr) == 2)
 		{
 			if (item_setter_dispatcher(m, ptr[0], ptr[1]) == -1)
-				return (ft_putstr_fd("Error\nInvalid Color\n", 2),
-					free_texture_names(m -> tex),
-					free_stuff(ptr, line), -1);
+				err_and_exit("Invalid Color\n");
 		}
 		free_stuff(ptr, line);
 		line = get_next_line(fd);

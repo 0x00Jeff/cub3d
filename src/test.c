@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 19:46:54 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 20:19:34 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char *argv[])
 	t_vars	vars;
 
 	if (argc != 2)
-		return (ft_putstr_fd("Usage: cub3D map.cub\n", 2), -1);
+		err_and_exit("Usage: cub3D map.cub\n");
 	if (init_mlx_data(&vars) == -1)
 		return (-1);
 	if (parser(&vars, argv[1]))
@@ -80,7 +80,7 @@ int	main(int argc, char *argv[])
 		destroy_map(&vars.map);
 		// TODO : destroy_mlx_image();
 		free_textures(vars.texture);
-		return (ft_putstr_fd("Error: could not initiate player data\n", 2), -1);
+		err_and_exit("Error: could not initiate player data\n");
 	}
 	// TODO : free player data (texture) in case of an error
 	install_hooks(&vars);

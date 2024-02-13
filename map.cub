@@ -4,6 +4,7 @@ EA resources/doorSlit.png
 WE resources/greybricks.png
 
 C 255,0,0
+F 255,255,255
 
   1
  111

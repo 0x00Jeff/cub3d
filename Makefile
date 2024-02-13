@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -g -ggdb3 -fsanitize=address #-Wextra -Werror -Ofast #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Ofast #-g -fsanitize=address
 
 LINK_H = -Iinclude
 
@@ -74,22 +74,22 @@ $(NAME): $(OBJS)
 	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(OBJSFOLDER)%.o: src/drawing/%.c include/draw.h $(GLOBAL_HEADERS)
-	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
+	$(CC) $(CFLAGS) $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/vects/%.c include/vectors.h $(GLOBAL_HEADERS)
-	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
+	$(CC) $(CFLAGS) $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/validation/%.c $(GLOBAL_HEADERS)
-	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
+	$(CC) $(CFLAGS) $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/parsing/%.c include/parse.h $(GLOBAL_HEADERS)
-	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
+	$(CC) $(CFLAGS) $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/cleaning/%.c $(GLOBAL_HEADERS)
-	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
+	$(CC) $(CFLAGS) $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/%.c $(GLOBAL_HEADERS)
-	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
+	$(CC) $(CFLAGS) $(LINK_H) -c $< -o $@
 
 re: fclean all
 

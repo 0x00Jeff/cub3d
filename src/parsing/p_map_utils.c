@@ -6,12 +6,13 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 19:22:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 20:26:27 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parse.h>
 #include <structs.h>
+#include <utils.h>
 
 int	open_file(char *file)
 {
@@ -33,7 +34,7 @@ t_map	*init_map(char *file)
 		return (NULL);
 	map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!map)
-		return (ft_putstr_fd("Error!\nCan't allocate region", 2), NULL);
+		err_and_exit("Error!\nCan't allocate region");
 	return (map);
 }
 
@@ -44,6 +45,8 @@ int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 	char	**ptr;
 	char	obj;
 
+	flag = NULL;
+	where = NULL;
 	if (!map || !lgbt_colors || !_obj)
 		return (-1);
 	obj = *_obj;
@@ -54,9 +57,9 @@ int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 		set_where_and_flag(&where, &flag, &map->colors.ceiling,
 			&map->colors.ceiling_set);
 	else
-		return (ft_putstr_fd("Error: invalid objects!\n", 2), -1);
+		err_and_exit("Invalid objects!\n");
 	if (*flag)
-		return (ft_putstr_fd("duplicated colors\n!", 2), -1);
+		err_and_exit("Duplicated colors\n!");
 	ptr = ft_split(lgbt_colors, ',');
 	*where = construct_lgbt(ptr[0], ptr[1], ptr[2]);
 	*flag = (*where != -1);

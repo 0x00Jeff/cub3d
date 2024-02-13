@@ -6,11 +6,13 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:13:28 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 15:57:55 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 20:14:51 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <utils.h>
+#include <libft.h>
+#include <stdlib.h>
 #include <fps.h>
 
 uint32_t	swap_endianess(uint32_t value)
@@ -70,4 +72,11 @@ int	get_map_item(t_map *map, double _x, double _y)
 	if (y >= map->height)
 		return (0);
 	return (m[y * map->width + x]);
+}
+
+void err_and_exit(char *err)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(err, 2);
+	exit(-1);
 }
