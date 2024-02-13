@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall -g -fsanitize=address #-Wextra -Werror -Ofast #-g -fsanitize=address
+CFLAGS = -Wall  #-Wextra -Werror -Ofast #-g -fsanitize=address
 
 LINK_H = -Iinclude
 
