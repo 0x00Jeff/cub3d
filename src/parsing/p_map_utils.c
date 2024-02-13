@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 23:39:20 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 23:44:48 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 		set_where_and_flag(&where, &flag, &map->colors.ceiling,
 			&map->colors.ceiling_set);
 	else
-		err_and_exit("Invalid objects!\n");
+		err_and_exit("Invalid surrounding!\n");
 	if (*flag)
 		err_and_exit("Duplicated colors\n!");
 	ptr = ft_split(lgbt_colors, ',');

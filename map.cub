@@ -1,13 +1,15 @@
-NO resources/badgeOnRedbricks.pn
+NO resources/badgeOnRedbricks.png
 SO resources/door.png
 EA resources/doorSlit.png
+WE resources/doorSlit.png
 
 C 255,0,0
 F 255,255,255
+C 255,0,0
 
   1
  111
-1N001
+1W001
  111
 
 
