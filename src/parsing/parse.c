@@ -6,13 +6,14 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 16:30:29 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:29:22 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <stdlib.h>
 #include <parse.h>
+#include <clean.h>
 
 int	parser(t_vars *vars, char *file)
 {
@@ -90,6 +91,7 @@ int	get_map_parts(t_map *map)
 	if (map->data == NULL)
 		return (ft_putstr_fd("Error: while consuming the map\n", 2), -1);
 	map->width = lst_map->width;
+	free_lst_map(lst_map);
 	return (0);
 }
 
