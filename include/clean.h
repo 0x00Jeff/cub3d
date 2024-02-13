@@ -5,3 +5,4 @@
 
 void free_textures(mlx_texture_t **textures);
 void free_lst_map(t_map_data *ptr);
+void	destroy_map(t_map *map);

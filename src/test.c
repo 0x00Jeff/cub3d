@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 17:19:56 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:40:17 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char *argv[])
 		return (-1);
 	if (parser(&vars, argv[1]))
 		return (-1);
-	if (validator(&vars))
+	if (validator(&vars)) // TOOD : destroy map on all these errors
 		return (-1);
 	if (init_player_data(&vars))
 	{
@@ -78,5 +78,6 @@ int	main(int argc, char *argv[])
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	free_textures(vars.texture);
+	destroy_map(&vars.map);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:55:19 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 17:05:19 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:31:29 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ int	get_map_items(t_map *m, int (*item_setter)(t_map *, char *, char *))
 			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
+	free(line);
 	return (0);
 }

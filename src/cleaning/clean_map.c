@@ -16,3 +16,22 @@ void free_lst_map(t_map_data *ptr)
 	}
 	free(ptr);
 }
+
+void	destroy_map(t_map *map)
+{
+	int	i;
+
+	if (!map)
+		return ;
+	// TODO : use this function!
+	i = 0;
+	while (i < 4)
+	{
+		if (map->tex[i])
+		{
+			free(map->tex[i]);
+			map->tex[i] = NULL;
+		}
+		i++;
+	}
+}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   p_map_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 16:30:05 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 17:41:02 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,6 @@ t_map	*init_map(char *file)
 	return (map);
 }
 
-void	destroy_map(t_map *map)
-{
-	int	i;
-
-	if (!map)
-		return ;
-	// TODO : use this function!
-	i = 0;
-	while (i < 4)
-	{
-		if (map->tex[i])
-		{
-			free(map->tex[i]);
-			map->tex[i] = NULL;
-		}
-		i++;
-	}
-}
 
 int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 {
@@ -102,15 +84,19 @@ t_map_data	*read_map(t_map *map)
 	line = get_next_line(fd);
 	if (line)
 		line[ft_strlen(line) - 1] = 0;
+	if (!ft_strlen(line))
+	free(line);
 	while (line && ft_strlen(line))
 	{
 		append_map_node(map_data, line);
 		i++;
+		line = NULL;
 		line = get_next_line(fd);
 		if (!line)
 			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
+	line = NULL;
 	map->height = i;
 	map_data->height = i;
 	return (map_data);
