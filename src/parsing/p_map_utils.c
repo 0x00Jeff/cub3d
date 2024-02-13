@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 14:34:52 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 14:53:49 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,9 @@ int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 			&map->colors.ceiling_set);
 	else
 		return (ft_putstr_fd("Error: invalid objects!\n", 2), -1);
+	if (*flag)
+		return (ft_putstr_fd("duplicated colors\n!", 2), -1);
 	ptr = ft_split(lgbt_colors, ',');
-	if (!ptr || get_list_len(ptr) != 3 || check_digit_list(ptr))
-		return (ft_putstr_fd("Error\nInvalid colors\n", 2), -1);
-	if (*where)
-		return (ft_putstr_fd("Error, duplicated colors!\n", 2), -1);
-	*where = construct_lgbt(ptr[0], ptr[1], ptr[2]);
 	*flag = (*where != -1);
 	return (free_list(ptr), *where);
 }

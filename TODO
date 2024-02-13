@@ -1,7 +1,7 @@
 norm
 fix textures
 fix leaks
-handle new lines between textures and colors
-potetically correct errors
+fix there has to be one player on the map
+poletically correct errors
 exit instead of return -1
 remove hot reloading

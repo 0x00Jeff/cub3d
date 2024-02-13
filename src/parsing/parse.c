@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 20:06:59 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 14:57:23 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ int	set_map_texture(t_map *map, char *text, char *file)
 	else
 		return (ft_putstr_fd("Error: Wrong map direction\n", 2), -1);
 	fd = try_open_file(file, "png");
-	if (fd < 0 || *texture)
+	if (fd < 0)
 		return (-1);
-	if (texture)
-		*texture = ft_strdup(file);
+	if (*texture)
+		return (ft_putstr_fd("Error!\nDuplcated textures!", 2), -1);
+	*texture = ft_strdup(file);
 	return (0);
 }
 
