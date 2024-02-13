@@ -7,9 +7,6 @@ LINK_H = -Iinclude
 OBJSFOLDER = objs/
 INCLUDEFOLDER = include/
 
-LIB = lib/lib.so
-
-
 OBJS_FILES = test.o				\
 			 hooks.o	  		 \
 			parse.o			  	  \
@@ -97,11 +94,11 @@ $(OBJSFOLDER)%.o: src/%.c $(GLOBAL_HEADERS)
 re: fclean all
 
 fclean: clean
-	rm -rf $(NAME) $(LIB)
+	rm -rf $(NAME)
 	make -C src/libft clean
 
 clean:
-	rm -rf $(OBJS) $(HOT_RELOAD)
+	rm -rf $(OBJS)
 	make -C src/libft fclean
 
 norm:
