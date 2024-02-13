@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:55:16 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 15:40:08 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 15:51:41 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	draw_stripe(t_vars *vars, t_ray *ray, int x, double angle)
 					* (M_PI / 180))) * sin((vars->player.fov / 2) * (M_PI
 					/ 180)));
 	init_wall(&wall);
-	printf("ray side = %d\n", ray -> side);
 	tex = vars->texture[ray->side];
 	itex.x = ray->percent_in_tex * tex->width;
 	i = wall.start_y;

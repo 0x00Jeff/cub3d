@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 15:27:21 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:11:14 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ t_map	*init_map(char *file)
 	map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!map)
 		return (NULL);
+	// TODO : delete the following 2 lines, they're just for debugging a bug
+	map->colors.floor = 20;
+	map->colors.ceiling = 20;
 	map->colors.floor_set = 0;
 	map->colors.ceiling_set = 0;
 	return (map);
@@ -79,6 +82,7 @@ int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 	if (*flag)
 		return (ft_putstr_fd("duplicated colors\n!", 2), -1);
 	ptr = ft_split(lgbt_colors, ',');
+	*where = construct_lgbt(ptr[0], ptr[1], ptr[2]);
 	*flag = (*where != -1);
 	return (free_list(ptr), *where);
 }
