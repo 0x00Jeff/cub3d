@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:44:16 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 enum
 {
-	UP,
+	UP = 0,
 	RIGHT,
 	DOWN,
 	LEFT,
@@ -39,10 +39,10 @@ enum
 	EAST = RIGHT,
 	SOUTH = DOWN,
 	WEST = LEFT,
-	TROLL_DOWN = 0,
-	TROLL_UP = 1,
-	TROLL_RIGHT = 2,
-	TROLL_LEFT = 3,
+	//TROLL_DOWN = 0,
+	//TROLL_UP = 1,
+	//TROLL_RIGHT = 2,
+	//TROLL_LEFT = 3,
 };
 
 typedef struct s_ray

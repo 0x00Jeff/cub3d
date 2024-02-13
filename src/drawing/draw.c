@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 17:51:41 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 15:47:28 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,13 +141,13 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 	if (h_distance < v_distance)
 	{
 		set_intersection_point(ray, h_intersect, h_distance);
-		ray->side = TROLL_DOWN + direction -> y > 0;
+		ray->side = UP + 2 * (direction -> y > 0);
 		ray->percent_in_tex = fabs(ray->to.x - floor(ray->to.x));
 	}
 	else
 	{
 		set_intersection_point(ray, v_intersect, v_distance);
-		ray->side = TROLL_RIGHT + direction -> x > 0;
+		ray->side = RIGHT + 2 * (direction -> x < 0);
 		ray->percent_in_tex = fabs(ray->to.y - floor(ray->to.y));
 	}
 	vect_scale(&ray->to, TILE_SIZE);

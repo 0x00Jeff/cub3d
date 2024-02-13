@@ -1,6 +1,6 @@
 norm
-fix textures
+remove hot reloading
+
 fix leaks
 poletically correct errors
 exit instead of return -1
-remove hot reloading
