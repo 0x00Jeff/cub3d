@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 16:42:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:51:33 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,26 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int	init_mlx_data(t_vars *vars)
 {
+	char *err;
+
 	vars->mlx = mlx_init(M_WIDTH, M_HEIGHT, "I hate my self", 1);
 	if (!vars->mlx)
 	{
-		fprintf(stderr, "%s\n", (mlx_strerror(mlx_errno)));
-		return (-1);
+		err = (char *)mlx_strerror(mlx_errno);
+		return (write(2, err, ft_strlen(err)), -1);
 	}
 	vars->image = mlx_new_image(vars->mlx, M_WIDTH, M_HEIGHT);
 	if (!vars->image)
 	{
 		mlx_close_window(vars->mlx);
-		fprintf(stderr, "%s\n", (mlx_strerror(mlx_errno)));
-		return (-1);
+		err = (char *)mlx_strerror(mlx_errno);
+		return (write(2, err, ft_strlen(err)), -1);
 	}
 	if (mlx_image_to_window(vars->mlx, vars->image, 0, 0) == -1)
 	{
 		mlx_close_window(vars->mlx);
-		fprintf(stderr, "%s\n", (mlx_strerror(mlx_errno)));
-		return (-1);
+		err = (char *)mlx_strerror(mlx_errno);
+		return (write(2, err, ft_strlen(err)), -1);
 	}
 	return (0);
 }
