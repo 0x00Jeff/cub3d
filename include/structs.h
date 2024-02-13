@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 20:45:04 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 20:12:10 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 22:55:55 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ enum
 	SOUTH = DOWN,
 	WEST = LEFT,
 };
+
+typedef struct s_intersection
+{
+	t_vector		h;
+	t_vector		v;
+	t_vector		v_step;
+	t_vector		h_step;
+	double			h_dist;
+	double			v_dist;
+}					t_intersection;
 
 typedef struct s_ray
 {

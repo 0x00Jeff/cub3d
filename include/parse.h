@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:23:11 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 19:33:31 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 22:37:09 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_map_data
 }				t_map_data;
 
 //# define DEBUG
+bool			map_items_collected(t_map *map);
+int				item_setter_dispatcher(t_map *m, char *where, char *what);
 int				parser(t_vars *vars, char *file);
 int				get_map_items(t_map *map);
 int				check_extension(char *name, char *extension);

@@ -1,6 +1,6 @@
 NAME = cub3D
 
-CFLAGS = -Wall  #-Wextra -Werror -Ofast #-g -fsanitize=address
+CFLAGS = -Wall  -Wextra -Werror -Ofast -g -fsanitize=address
 
 LINK_H = -Iinclude
 
@@ -33,7 +33,10 @@ OBJS_FILES = test.o				\
 			unused.o		     \
 			clean_textures.o \
 			clean_map.o \
-			clean_mlx.o
+			clean_mlx.o \
+			tiny_parsing_helpers.o \
+			dda.o
+			
 
 OS := $(shell uname -s)
 

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 21:02:18 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:58:30 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	parser(t_vars *vars, char *file)
 	return (0);
 }
 
-
 int	get_map_parts(t_map *map)
 {
 	t_map_data	*lst_map;
@@ -44,9 +43,6 @@ int	get_map_parts(t_map *map)
 	res = get_map_items(map);
 	if (res == -1)
 		return (-1);
-	//res = get_map_items(map);
-	//if (res == -1)
-		//return (-1);
 	if (check_map_items(map) == -1)
 		return (-1);
 	lst_map = read_map(map);
@@ -62,8 +58,8 @@ int	get_map_parts(t_map *map)
 
 int	convert_map_char(char c)
 {
-	// TODO : don't copy this old version into your bonus!!
 	int	res;
+	// TODO : don't copy this old version into your bonus!!
 
 	res = 0;
 	if (c == ' ')

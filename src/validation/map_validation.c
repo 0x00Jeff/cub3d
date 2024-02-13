@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 20:35:58 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:56:57 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 int	validator(t_vars *vars)
 {
 	t_map	*map;
-
 
 	map = &vars->map;
 	if (check_for_invalid_characters(map))
@@ -34,9 +33,9 @@ bool	zero_or_one(t_map *map, int x, int y)
 {
 	int	val;
 
-	if (x < 0 || x >= (ll)map->width)
+	if (x < 0 || x >= (long long)map->width)
 		return (false);
-	if (y < 0 || y >= (ll)map->height)
+	if (y < 0 || y >= (long long)map->height)
 		return (false);
 	val = map->data[y * map->width + x];
 	return (val == 1 || val == 0);
@@ -44,7 +43,7 @@ bool	zero_or_one(t_map *map, int x, int y)
 
 bool	check_neighbours_binary(t_map *map, t_ivector pt)
 {
-	// TODO: add bonus characters
+	// TODO: keep your bonus chars
 	if (map->data[(pt.y) * map->width + (pt.x)] == WALL)
 		return (true);
 	if (map->data[(pt.y) * map->width + (pt.x)] == SPACE_IN_MAP)

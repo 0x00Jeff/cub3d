@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 16:25:37 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 22:50:16 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ void			move_player(t_vars *vars);
 void			draw_map(t_vars *vars);
 void			dda(t_vars *vars, t_vector *direction, double angle,
 					t_ray *ray);
+void			init_intersections(t_vars *vars, t_intersection *inter,
+					t_vector *direction, double angle);
+void			init_steps(t_vars *vars, t_intersection *inter,
+					t_vector *direction, double angle);
 void			draw_stripe(t_vars *vars, t_ray *ray, int x, double angle);
 void			draw_surroundings(t_vars *vars);
 #endif

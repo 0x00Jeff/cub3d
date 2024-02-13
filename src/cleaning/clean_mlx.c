@@ -1,6 +1,18 @@
-#include<clean.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_mlx.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/13 21:22:02 by afatimi           #+#    #+#             */
+/*   Updated: 2024/02/13 21:24:25 by afatimi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void destroy_mlx_image(t_vars *vars)
+#include <clean.h>
+
+void	destroy_mlx_image(t_vars *vars)
 {
-		mlx_close_window(vars->mlx);
+	mlx_close_window(vars->mlx);
 }

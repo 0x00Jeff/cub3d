@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:13:28 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 20:14:51 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 22:57:28 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	get_map_item(t_map *map, double _x, double _y)
 {
 	size_t	x;
 	size_t	y;
-	int	*m;
+	int		*m;
 
 	m = map->data;
 	x = floor(_x);
@@ -74,7 +74,7 @@ int	get_map_item(t_map *map, double _x, double _y)
 	return (m[y * map->width + x]);
 }
 
-void err_and_exit(char *err)
+void	err_and_exit(char *err)
 {
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(err, 2);
