@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 14:53:49 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 15:27:21 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_map_data	*read_map(t_map *map)
 	line = get_next_line(fd);
 	if (line)
 		line[ft_strlen(line) - 1] = 0;
+	puts(line);
 	while (line && ft_strlen(line))
 	{
 		append_map_node(map_data, line);
@@ -105,6 +106,7 @@ t_map_data	*read_map(t_map *map)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
+		puts(line);
 		line[ft_strlen(line) - 1] = 0;
 	}
 	map->height = i;

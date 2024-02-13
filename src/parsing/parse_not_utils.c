@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:55:19 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 15:17:38 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 15:31:11 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	check_colors(t_map *map)
 
 bool map_items_collected(t_map *map)
 {
-	return ((check_textures(map) + check_colors(map)) == 6);
+	return (check_textures(map) * check_colors(map));
 }
 
 int	check_map_items(t_map *map)
@@ -49,15 +49,9 @@ static void	free_stuff(char **ptr, char *line)
 int	item_setter_dispatcher(t_map *m, char *where, char *what)
 {
 	if (!check_textures(m))
-	{
-		printf("sending %s to set_map_texture\n", where);
 		return set_map_texture(m, where, what);
-	}
 	else
-	{
-		printf("sending %s to set_map_colors\n", where);
 		return set_map_colors(m, where, what);
-	}
 }
 
 int	get_map_items(t_map *m, int (*item_setter)(t_map *, char *, char *))
