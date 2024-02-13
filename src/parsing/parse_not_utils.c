@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:55:19 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 14:57:04 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 15:17:38 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	get_map_items(t_map *m, int (*item_setter)(t_map *, char *, char *))
 		if (!ft_strlen(line))
 		{
 			line = get_next_line(fd);
+			if (!line)
+				break;
 			line[ft_strlen(line) - 1] = 0;
 			continue;
 		}
