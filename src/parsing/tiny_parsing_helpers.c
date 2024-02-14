@@ -6,14 +6,14 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:43:22 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 16:49:33 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 18:31:35 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parse.h>
 #include <utils.h>
 
-int	item_setter_dispatcher(t_map *m, char *where, char *what)
+int	item_setter_dispatcher(t_map *m, char *line, char *where, char *what)
 {
 	int	res;
 
@@ -25,9 +25,17 @@ int	item_setter_dispatcher(t_map *m, char *where, char *what)
 		+ (!ft_strncmp(where, "WE", 3))
 		+ (!ft_strncmp(where, "EA", 3));
 	if (res)
+	{
+		if (count_chars(line, ' ') != 1)
+			err_and_exit("Error with textures\n");
 		return (set_map_texture(m, where, what));
+	}
 	else
+	{
+		if (count_chars(line, ',') != 2)
+			err_and_exit("Error with rgb values\n");
 		return (set_map_colors(m, where, what));
+	}
 }
 
 int	check_map_items(t_map *map)

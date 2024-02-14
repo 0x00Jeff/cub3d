@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 18:01:43 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 18:38:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 	else
 		err_and_exit("Invalid surrounding!\n");
 	if (*flag)
-		err_and_exit("Duplicated colors\n!");
+		err_and_exit("Duplicated colors!\n");
 	ptr = ft_split(lgbt_colors, ',');
+	if (check_digit_list(ptr))
+		err_and_exit("Rgb not a numeric value!\n");
 	*where = construct_lgbt(ptr[0], ptr[1], ptr[2]);
 	*flag = (*where != -1);
 	return (free_list(ptr), *where);
