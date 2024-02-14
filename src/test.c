@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 14:26:57 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:56:59 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	init_mlx_data(t_vars *vars)
 
 void check_leaks()
 {
-//	system("leaks cub3D");
+	system("leaks cub3D");
 }
 
 int	main(int argc, char *argv[])

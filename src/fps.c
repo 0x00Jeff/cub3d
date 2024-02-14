@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:39:43 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 14:53:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:01:25 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,24 @@ static void	draw_number(const t_vars *vars, int number, t_ivector pos, int size)
 	}
 }
 
-void	draw_fps(void *param)
+static double    ifelsed(bool condition, double truthy, double falsy)
 {
-	static double	old_time = 0;
-	static int		fps;
-	double			current_time;
-	t_vars			*vars = param;
+    if (condition)
+        return (truthy);
+    return (falsy);
+}
 
-	current_time = mlx_get_time();
-	if (current_time - old_time > 0.2)
-	{
-		fps = 1 / (vars->mlx->delta_time + 0.001);
-		old_time = current_time;
-	}
+void	draw_fps(t_vars *vars)
+{
+    static double    old_time;
+    static int        fps;
+    double            current_time;
+
+    current_time = mlx_get_time();
+    if (current_time - old_time > 0.2)
+    {
+        fps = ifelsed(vars->mlx->delta_time != 0, 1 / vars->mlx->delta_time, 69);
+        old_time = current_time;
+    }
 	draw_number(vars, fps, (t_ivector){vars->mlx->width, 10}, 10);
 }
