@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:43:22 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 15:20:39 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 16:49:33 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	item_setter_dispatcher(t_map *m, char *where, char *what)
 {
 	int	res;
 
+	if (!where || !what)
+		return (-1);
 	res = 0;
 	res += (!ft_strncmp(where, "NO", 3))
 		+ (!ft_strncmp(where, "SO", 3))
