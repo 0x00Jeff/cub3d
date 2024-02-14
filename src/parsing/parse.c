@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:22:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 21:58:30 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 11:39:52 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	get_map_parts(t_map *map)
 int	convert_map_char(char c)
 {
 	int	res;
-	// TODO : don't copy this old version into your bonus!!
 
 	res = 0;
 	if (c == ' ')

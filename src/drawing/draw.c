@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 23:35:04 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 11:47:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	move_player(t_vars *vars)
 {
 	void		*mlx;
 	t_player	*player;
+	double		speed;
 
+	speed = (double)SPEED / (double)TILE_SIZE;
 	mlx = vars->mlx;
 	player = &vars->player;
 	player->map_needs_clearing = player->pos.x * 10000 + \
@@ -44,13 +46,13 @@ void	move_player(t_vars *vars)
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 		player->angle -= ROT_SPEED;
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
-		inc_pos_vect(&player->pos, -SPEED, player->angle - 90);
+		inc_pos_vect(&player->pos, -speed, player->angle - 90);
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
-		inc_pos_vect(&player->pos, -SPEED, player->angle + 90);
+		inc_pos_vect(&player->pos, -speed, player->angle + 90);
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
-		inc_pos_vect(&player->pos, -SPEED, player->angle);
+		inc_pos_vect(&player->pos, -speed, player->angle);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
-		inc_pos_vect(&player->pos, SPEED, player->angle);
+		inc_pos_vect(&player->pos, speed, player->angle);
 }
 
 int	needs_clearing(t_vars *vars)

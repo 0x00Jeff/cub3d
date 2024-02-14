@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 23:29:08 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 11:47:48 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <vectors.h>
 # define ROT_SPEED 4
 # define TILE_SIZE 64
-# define SPEED ((double)5 / (double)TILE_SIZE)
+# define SPEED 5
 # define RAY_LEN 10
 # define RAYS_NUM 1920
 # define MAP_SCALE_FACTOR 0.5
