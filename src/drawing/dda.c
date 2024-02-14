@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:06:34 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 22:56:54 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:03:37 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_intersections(t_vars *vars, t_intersection *inter,
 	inter -> h_dist = 0;
 }
 
-void	init_steps(t_vars *vars, t_intersection *inter,
+void	init_steps(t_intersection *inter,
 		t_vector *direction, double angle)
 {
 	inter -> h_step.y = -1 + 2 * (direction->y > 0);
@@ -39,10 +39,6 @@ void	init_steps(t_vars *vars, t_intersection *inter,
 			&& inter -> v_step.y > 0, -1, 1);
 	inter -> v_step.y *= if_else(direction->y > 0
 			&& inter -> v_step.y < 0, -1, 1);
-	inter -> h_dist = calc_dist(vars, &inter -> h,
-			(t_ivector){0, direction->y < 0}, &inter -> h_step);
-	inter -> v_dist = calc_dist(vars, &inter -> v,
-			(t_ivector){direction -> x < 0, 0}, &inter -> v_step);
 }
 
 void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
@@ -50,7 +46,11 @@ void	dda(t_vars *vars, t_vector *direction, double angle, t_ray *ray)
 	t_intersection	inter;
 
 	init_intersections(vars, &inter, direction, angle);
-	init_steps(vars, &inter, direction, angle);
+	init_steps(&inter, direction, angle);
+	inter.h_dist = calc_dist(vars, &inter.h,
+			(t_ivector){0, direction->y < 0}, &inter.h_step);
+	inter.v_dist = calc_dist(vars, &inter.v,
+			(t_ivector){direction -> x < 0, 0}, &inter.v_step);
 	if (inter.h_dist < inter.v_dist)
 	{
 		set_intersection_point(ray, inter.h, inter.h_dist);

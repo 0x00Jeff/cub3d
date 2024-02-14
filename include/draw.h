@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 11:47:48 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:03:35 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void			dda(t_vars *vars, t_vector *direction, double angle,
 					t_ray *ray);
 void			init_intersections(t_vars *vars, t_intersection *inter,
 					t_vector *direction, double angle);
-void			init_steps(t_vars *vars, t_intersection *inter,
+void			init_steps(t_intersection *inter,
 					t_vector *direction, double angle);
 void			draw_stripe(t_vars *vars, t_ray *ray, int x, double angle);
 void			draw_surroundings(t_vars *vars);

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:41 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 12:46:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:05:48 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	init_player_data(t_vars *vars)
 {
 	vars->player.map_needs_clearing = 69;
-	vars->player.fov = 60;
+	vars->player.fov = 50;
 	vars -> texture[NORTH] = mlx_load_png(vars -> map.tex[NORTH]);
 	vars -> texture[SOUTH] = mlx_load_png(vars -> map.tex[SOUTH]);
 	vars -> texture[EAST] = mlx_load_png(vars -> map.tex[EAST]);

@@ -6,13 +6,14 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:23:52 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 21:25:05 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:14:28 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <clean.h>
+#include <structs.h>
 
-static void	free_tex(mlx_texture_t *tex)
+void	free_tex(mlx_texture_t *tex)
 {
 	if (!tex)
 		return ;
@@ -26,7 +27,7 @@ void	free_textures(mlx_texture_t **textures)
 
 	i = 0;
 	while (i < 4)
-		free_tex(textures[i++]);
+		mlx_delete_texture(textures[i++]);
 }
 
 void	free_texture_names(char **texture_names)

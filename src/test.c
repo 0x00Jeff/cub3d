@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 18:35:18 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 21:19:29 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:13:32 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,16 @@ int	init_mlx_data(t_vars *vars)
 	return (0);
 }
 
+void check_leaks()
+{
+	system("leaks cub3D");
+}
+
 int	main(int argc, char *argv[])
 {
 	t_vars	vars;
+
+	atexit(check_leaks);
 
 	if (argc != 2)
 		err_and_exit("Usage: cub3D map.cub\n");
