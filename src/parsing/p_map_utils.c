@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 23:44:48 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:11:01 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,21 +89,26 @@ static void	read_and_append(t_map_data *map_data, t_map *m, char *line, int fd)
 	map_data->height = i;
 }
 
-t_map_data	*read_map(t_map *map)
+t_map_data    *read_map(t_map *map)
 {
-	t_map_data	*map_data;
-	char		*line;
-	int			fd;
+    t_map_data    *map_data;
+    char        *line;
+    int            fd;
 
-	map_data = (t_map_data *)ft_calloc(1, sizeof(t_map_data));
-	if (!map_data)
-		return (NULL);
-	fd = map->fd;
-	line = get_next_line(fd);
-	if (line)
-		line[ft_strlen(line) - 1] = 0;
-	if (!ft_strlen(line))
-		(free(line), line = NULL);
-	read_and_append(map_data, map, line, fd);
-	return (map_data);
+    map_data = (t_map_data *)ft_calloc(1, sizeof(t_map_data));
+    if (!map_data)
+        return (NULL);
+    fd = map->fd;
+    line = get_next_line(fd);
+    if (line)
+        line[ft_strlen(line) - 1] = 0;
+    while (!ft_strlen(line))
+    {
+        free(line);
+        line = get_next_line(fd);
+        if (line)
+            line[ft_strlen(line) - 1] = 0;
+    }
+    read_and_append(map_data, map, line, fd);
+    return (map_data);
 }
