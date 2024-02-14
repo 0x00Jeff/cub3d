@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:05:36 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 17:52:40 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 18:07:08 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ uint32_t	construct_lgbt(char *_r, char *_g, char *_b)
 
 	if (!_r || !_g || !_b)
 		err_and_exit("Weird with rgb values\n");
-
 	col.r = ft_atoi(_r);
 	col.g = ft_atoi(_g);
 	col.b = ft_atoi(_b);
