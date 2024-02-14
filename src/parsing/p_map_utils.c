@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 16:51:32 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 18:01:43 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_map	*init_map(char *file)
 		return (NULL);
 	map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!map)
-		err_and_exit("Error!\nCan't allocate region");
+		err_and_exit("Can't allocate region");
 	return (map);
 }
 
