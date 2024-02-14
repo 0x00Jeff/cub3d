@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 15:11:01 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:21:11 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
 
 static void	read_and_append(t_map_data *map_data, t_map *m, char *line, int fd)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (line && ft_strlen(line))
@@ -89,26 +89,26 @@ static void	read_and_append(t_map_data *map_data, t_map *m, char *line, int fd)
 	map_data->height = i;
 }
 
-t_map_data    *read_map(t_map *map)
+t_map_data	*read_map(t_map *map)
 {
-    t_map_data    *map_data;
-    char        *line;
-    int            fd;
+	t_map_data	*map_data;
+	char		*line;
+	int			fd;
 
-    map_data = (t_map_data *)ft_calloc(1, sizeof(t_map_data));
-    if (!map_data)
-        return (NULL);
-    fd = map->fd;
-    line = get_next_line(fd);
-    if (line)
-        line[ft_strlen(line) - 1] = 0;
-    while (!ft_strlen(line))
-    {
-        free(line);
-        line = get_next_line(fd);
-        if (line)
-            line[ft_strlen(line) - 1] = 0;
-    }
-    read_and_append(map_data, map, line, fd);
-    return (map_data);
+	map_data = (t_map_data *)ft_calloc(1, sizeof(t_map_data));
+	if (!map_data)
+		return (NULL);
+	fd = map->fd;
+	line = get_next_line(fd);
+	if (line)
+		line[ft_strlen(line) - 1] = 0;
+	while (!ft_strlen(line))
+	{
+		free(line);
+		line = get_next_line(fd);
+		if (line)
+			line[ft_strlen(line) - 1] = 0;
+	}
+	read_and_append(map_data, map, line, fd);
+	return (map_data);
 }

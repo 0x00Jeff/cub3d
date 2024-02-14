@@ -6,25 +6,26 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:43:22 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 15:05:48 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:20:39 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parse.h>
 #include <utils.h>
 
-int    item_setter_dispatcher(t_map *m, char *where, char *what)
+int	item_setter_dispatcher(t_map *m, char *where, char *what)
 {
-    int    res = 0;
+	int	res;
 
-    res += (!ft_strncmp(where, "NO", 3))
-         + (!ft_strncmp(where, "SO", 3))
-        + (!ft_strncmp(where, "WE", 3))
-        + (!ft_strncmp(where, "EA", 3));
-    if (res)
-        return (set_map_texture(m, where, what));
-    else
-        return (set_map_colors(m, where, what));
+	res = 0;
+	res += (!ft_strncmp(where, "NO", 3))
+		+ (!ft_strncmp(where, "SO", 3))
+		+ (!ft_strncmp(where, "WE", 3))
+		+ (!ft_strncmp(where, "EA", 3));
+	if (res)
+		return (set_map_texture(m, where, what));
+	else
+		return (set_map_colors(m, where, what));
 }
 
 int	check_map_items(t_map *map)
@@ -38,16 +39,13 @@ int	check_map_items(t_map *map)
 
 bool	check_textures(t_map *map)
 {
-	return ((!!map -> tex[SOUTH]
-			+ !!map -> tex[NORTH]
-			+ !!map -> tex[EAST]
-			+ !!map -> tex[WEST]) == 4);
+	return ((!!map->tex[SOUTH] + !!map->tex[NORTH] + !!map->tex[EAST]
+			+ !!map->tex[WEST]) == 4);
 }
 
 bool	check_colors(t_map *map)
 {
-	return ((map -> colors.ceiling_set
-			+ map -> colors.floor_set) == 2);
+	return ((map->colors.ceiling_set + map->colors.floor_set) == 2);
 }
 
 bool	map_items_collected(t_map *map)
