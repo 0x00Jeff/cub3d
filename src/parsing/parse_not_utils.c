@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:55:19 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 22:38:29 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:52:18 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	scan_and_dispatch(t_map *m, char *line, int fd)
 	{
 		if (!ft_strlen(line))
 		{
-			free(line);
+			(free(line), line = NULL);
 			line = get_next_line(fd);
 			if (!line)
 				break ;
@@ -37,16 +37,15 @@ void	scan_and_dispatch(t_map *m, char *line, int fd)
 		}
 		ptr = ft_split(line, ' ');
 		if (!ptr || get_list_len(ptr) == 2)
-		{
 			if (item_setter_dispatcher(m, ptr[0], ptr[1]) == -1)
 				err_and_exit("Invalid Color\n");
-		}
-		free_stuff(ptr, line);
+		(free_stuff(ptr, line), line = NULL);
 		line = get_next_line(fd);
 		if (!line)
 			break ;
 		line[ft_strlen(line) - 1] = 0;
 	}
+	free(line);
 }
 
 int	get_map_items(t_map *m)

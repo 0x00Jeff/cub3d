@@ -6,11 +6,12 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:39:43 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 12:24:22 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:53:42 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <draw.h>
+#include <stdlib.h>
 
 static void	draw_digit(const t_vars *vars, int digit, t_ivector pos, int size)
 {
@@ -52,6 +53,7 @@ static void	draw_number(const t_vars *vars, int number, t_ivector pos, int size)
 {
 	int	i;
 
+	number = abs(number);
 	draw_digit(vars, number % 10,
 		(t_ivector){pos.x - 3 * size - size, pos.y}, size);
 	number /= 10;
@@ -74,6 +76,9 @@ void	draw_fps(void *param)
 
 	current_time = mlx_get_time();
 	if (current_time - old_time > 0.2)
-		fps = 1 / vars->mlx->delta_time;
+	{
+		fps = 1 / (vars->mlx->delta_time + 0.001);
+		old_time = current_time;
+	}
 	draw_number(vars, fps, (t_ivector){vars->mlx->width, 10}, 10);
 }
