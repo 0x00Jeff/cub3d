@@ -6,13 +6,10 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 19:39:54 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 11:47:10 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 12:29:10 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <fps.h> // TODO : delete this later
-//#include <unused.h> // TODO : delete this later
-#include <unused.h> // TODO : delete this!!
 #include <draw.h>
 #include <structs.h>
 
@@ -92,19 +89,14 @@ void	do_graphics(t_vars *vars)
 	{
 		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
-		draw_player(vars);
-		draw_map(vars);
-		display_fps(vars);
+		draw_fps(vars);
 	}
 	if (mlx_get_time() - old_time > 0.016)
 	{
 		move_player(vars);
 		old_time = mlx_get_time();
 		if (!needs_clearing(vars))
-		{
-			draw_fps(vars);
 			return ;
-		}
 		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
 		draw_fps(vars);

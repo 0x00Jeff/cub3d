@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:44:39 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 17:44:21 by ylyoussf         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:45:17 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	register_player_pos(t_vars *vars, t_map *map)
 			{
 				angle = (map->data[i * map->width + j] - EAST_IN_MAP) * 90;
 				vars->player.angle = angle;
-				vars->player.pos = (t_vector){i + 0.5, j + 0.5};
+				vars->player.pos = (t_vector){j + 0.5, i + 0.5};
 				map->data[i * map->width + j] = 0;
 				break ;
 			}

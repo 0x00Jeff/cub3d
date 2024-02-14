@@ -6,14 +6,13 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:30:49 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 17:39:26 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 12:40:58 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <draw.h>
 #include <utils.h>
 #include <vectors.h>
-#include <unused.h>
 
 void	set_intersection_point(t_ray *ray, t_vector intersect, double dist)
 {
@@ -29,7 +28,7 @@ double	calc_dist(t_vars *vars, t_vector *intersect, t_ivector condition,
 
 	i = 0;
 	map = &vars->map;
-	while (i < 2000)
+	while (i < 500)
 	{
 		if (get_map_item(map, intersect->x - condition.x, intersect->y
 				- condition.y))
@@ -37,6 +36,8 @@ double	calc_dist(t_vars *vars, t_vector *intersect, t_ivector condition,
 		vect_add(intersect, step);
 		i++;
 	}
+	if (i >= 500)
+		return (2000);
 	return (vect_get_distance(&vars->player.pos, intersect));
 }
 

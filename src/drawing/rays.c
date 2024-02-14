@@ -6,12 +6,11 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:34:55 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 21:28:06 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 12:28:33 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <draw.h>
-#include <unused.h> //  TODO : delete later
 
 void	shoot_rays(t_vars *vars, int num)
 {
