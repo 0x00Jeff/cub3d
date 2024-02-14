@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 18:38:42 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 18:44:30 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,33 +42,32 @@ t_map	*init_map(char *file)
 	return (map);
 }
 
-int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
+int	set_map_colors(t_map *m, char *_obj, char *lgbt_colors)
 {
 	int		*where;
-	int		*flag;
+	int		*f;
 	char	**ptr;
 	char	obj;
 
-	flag = NULL;
+	f = NULL;
 	where = NULL;
-	if (!map || !lgbt_colors || !_obj)
+	if (!m || !lgbt_colors || !_obj)
 		return (-1);
 	obj = *_obj;
 	if (obj == 'F')
-		set_where_and_flag(&where, &flag, &map->colors.floor,
-			&map->colors.floor_set);
+		set_where_and_flag(&where, &f, &m->colors.floor, &m->colors.floor_set);
 	else if (obj == 'C')
-		set_where_and_flag(&where, &flag, &map->colors.ceiling,
-			&map->colors.ceiling_set);
+		set_where_and_flag(&where, &f, &m->colors.ceiling,
+			&m->colors.ceiling_set);
 	else
 		err_and_exit("Invalid surrounding!\n");
-	if (*flag)
+	if (*f)
 		err_and_exit("Duplicated colors!\n");
 	ptr = ft_split(lgbt_colors, ',');
 	if (check_digit_list(ptr))
 		err_and_exit("Rgb not a numeric value!\n");
 	*where = construct_lgbt(ptr[0], ptr[1], ptr[2]);
-	*flag = (*where != -1);
+	*f = (*where != -1);
 	return (free_list(ptr), *where);
 }
 
