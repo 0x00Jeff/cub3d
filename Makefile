@@ -69,7 +69,14 @@ $(LIBFT):
 	@echo "Compiling libft..."
 	@make -C src/libft bonus
 
-$(NAME): $(OBJS)
+mlx/libmlx42.a:
+	cmake -S mlx -B mlx
+	make -C mlx
+
+lib/libmlx42.a: mlx/libmlx42.a
+	cp mlx/libmlx42.a lib
+
+$(NAME): $(OBJS) lib/libmlx42.a
 	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(OBJSFOLDER)%.o: src/drawing/%.c include/draw.h $(GLOBAL_HEADERS)
@@ -94,11 +101,10 @@ re: fclean all
 
 fclean: clean
 	rm -rf $(NAME)
-	make -C src/libft clean
+	rm lib/*
 
 clean:
 	rm -rf $(OBJS)
-	make -C src/libft fclean
 
 norm:
 	norminette src/*.c include/*.h
