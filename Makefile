@@ -101,7 +101,7 @@ re: fclean all
 
 fclean: clean
 	rm -rf $(NAME)
-	rm lib/*
+	rm -rf lib/*
 
 clean:
 	rm -rf $(OBJS)
