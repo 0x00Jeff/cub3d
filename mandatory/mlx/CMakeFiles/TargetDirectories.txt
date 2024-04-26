@@ -1,0 +1,7 @@
+/Users/afatimi/git/cub3d/mlx/CMakeFiles/mlx42.dir
+/Users/afatimi/git/cub3d/mlx/CMakeFiles/edit_cache.dir
+/Users/afatimi/git/cub3d/mlx/CMakeFiles/rebuild_cache.dir
+/Users/afatimi/git/cub3d/mlx/CMakeFiles/list_install_components.dir
+/Users/afatimi/git/cub3d/mlx/CMakeFiles/install.dir
+/Users/afatimi/git/cub3d/mlx/CMakeFiles/install/local.dir
+/Users/afatimi/git/cub3d/mlx/CMakeFiles/install/strip.dir
