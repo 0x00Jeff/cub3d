@@ -102,10 +102,12 @@ re: fclean all
 
 fclean: clean
 	rm -rf $(NAME)
+	make -C src/libft fclean
 	rm -rf lib/*
 
 clean:
 	rm -rf $(OBJS)
+	make -C src/libft clean
 
 norm:
 	norminette src/*.c include/*.h
