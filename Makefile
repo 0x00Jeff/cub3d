@@ -74,7 +74,7 @@ mlx/libmlx42.a:
 	make -C mlx
 
 lib/libmlx42.a: mlx/libmlx42.a
-	cp mlx/libmlx42.a lib
+	cp mlx/libmlx42.a lib/
 
 $(NAME): $(OBJS) lib/libmlx42.a
 	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
