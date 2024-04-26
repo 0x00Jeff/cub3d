@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 18:44:30 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:14:27 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,14 @@ int	set_map_colors(t_map *m, char *_obj, char *lgbt_colors)
 	int		*where;
 	int		*f;
 	char	**ptr;
-	char	obj;
 
 	f = NULL;
 	where = NULL;
 	if (!m || !lgbt_colors || !_obj)
 		return (-1);
-	obj = *_obj;
-	if (obj == 'F')
+	if (!ft_strncmp(_obj, "F", 2))
 		set_where_and_flag(&where, &f, &m->colors.floor, &m->colors.floor_set);
-	else if (obj == 'C')
+	else if (!ft_strncmp(_obj, "C", 2))
 		set_where_and_flag(&where, &f, &m->colors.ceiling,
 			&m->colors.ceiling_set);
 	else

@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:43:22 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/14 18:31:35 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:07:51 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int	item_setter_dispatcher(t_map *m, char *line, char *where, char *what)
 		+ (!ft_strncmp(where, "SO", 3))
 		+ (!ft_strncmp(where, "WE", 3))
 		+ (!ft_strncmp(where, "EA", 3));
+#ifdef BONUS
+	res += (!ft_strncmp(where, "DO", 3))
+#endif
 	if (res)
 	{
 		if (count_chars(line, ' ') != 1)
@@ -49,8 +52,13 @@ int	check_map_items(t_map *map)
 
 bool	check_textures(t_map *map)
 {
+#ifdef BONUS
+	return ((!!map->tex[SOUTH] + !!map->tex[NORTH] + !!map->tex[EAST]
+			+ !!map->tex[WEST]) + !!map->tex[DOOR_TEX] == 5);
+#else
 	return ((!!map->tex[SOUTH] + !!map->tex[NORTH] + !!map->tex[EAST]
 			+ !!map->tex[WEST]) == 4);
+#endif
 }
 
 bool	check_colors(t_map *map)
