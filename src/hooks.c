@@ -28,6 +28,16 @@ void	hot_reload(void)
 	g_do_graphics_ptr = dlsym(g_module, "do_graphics");
 }
 
+
+void	hot_reload_pacman(void)
+{
+	if (g_module)
+		dlclose(g_module);
+	g_module = NULL;
+	g_module = dlopen("lib/pacman.so", RTLD_NOW);
+	g_do_graphics_ptr = dlsym(g_module, "do_graphics");
+}
+
 int	init_player_data(t_vars *vars)
 {
 	vars->player.map_needs_clearing = 69;
@@ -64,7 +74,10 @@ void	print_key(void *param)
 	mlx = ((t_vars *)param)->mlx;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		win_close(mlx);
+	while (!g_module || !g_do_graphics_ptr);
 	g_do_graphics_ptr(param);
 	if (mlx_is_key_down(mlx, MLX_KEY_R))
 		hot_reload();
+	if (mlx_is_key_down(mlx, MLX_KEY_P))
+		hot_reload_pacman();
 }
