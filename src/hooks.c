@@ -38,6 +38,15 @@ void	hot_reload_pacman(void)
 	g_do_graphics_ptr = dlsym(g_module, "do_graphics");
 }
 
+void	hot_reload_rick_roll(void)
+{
+	if (g_module)
+		dlclose(g_module);
+	g_module = NULL;
+	g_module = dlopen("lib/easter_egg.so", RTLD_NOW);
+	g_do_graphics_ptr = dlsym(g_module, "do_graphics");
+}
+
 int	init_player_data(t_vars *vars)
 {
 	vars->player.map_needs_clearing = 69;
@@ -80,4 +89,6 @@ void	print_key(void *param)
 		hot_reload();
 	if (mlx_is_key_down(mlx, MLX_KEY_P))
 		hot_reload_pacman();
+	if (mlx_is_key_down(mlx, MLX_KEY_Z))
+		hot_reload_rick_roll();
 }
