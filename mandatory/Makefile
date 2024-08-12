@@ -1,66 +1,72 @@
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror -Ofast -Wno-bitwise-instead-of-logical
 
 LINK_H = -Iinclude
 
 OBJSFOLDER = objs/
 INCLUDEFOLDER = include/
 
-OBJS_FILES = test.o				\
-			 hooks.o	  		 \
-			parse.o			  	  \
-			parse_utils.o	  	   \
-			map_validation.o		\
-			validation_utils.o		 \
-			player_utils.o			  \
-			line_utils.o			   \
-			p_map_utils.o				\
-			map_ds_utils.o				  \
-			texture_utils.o				   \
-			parse_not_utils.o				\
-			parse_definitely_not_utils.o	 \
-			draw.o	  \
-			shapes.o	   \
-			draw_utils.o	\
-			rays.o			 \
-			vect_utils1.o 	  \
-			vect_utils2.o 	   \
-			utils.o 		    \
-			clean_textures.o \
-			clean_map.o \
-			clean_mlx.o \
-			tiny_parsing_helpers.o \
-			dda.o					\
-			fps.o
+LIB = lib/lib.so
+
+HOT_RELOAD	= $(foreach obj, $(HOT_RELOAD_FILES), $(OBJSFOLDER)$(obj))
+HOT_RELOAD_H	= $(INCLUDEFOLDER)draw.h	\
+			$(INCLUDEFOLDER)utils.h  \
+			$(INCLUDEFOLDER)utils.h	  \
+			$(INCLUDEFOLDER)vectors.h  \
+			$(INCLUDEFOLDER)vectors.h   \
+
+HOT_RELOAD_FILES = rays.o	\
+			dda.o	 \
+			fps.o	  \
+			draw.o     \
+			utils.o     \
+			shapes.o     \
+			draw_utils.o  \
+			vect_utils1.o  \
+			vect_utils2.o   \
+
+OBJS_FILES = test.o	    \
+		hooks.o	     \
+		parse.o	      \
+		clean_map.o    \
+		clean_mlx.o     \
+		line_utils.o     \
+		parse_utils.o     \
+		p_map_utils.o	   \
+		player_utils.o	    \
+		map_ds_utils.o	     \
+		texture_utils.o	      \
+		map_validation.o       \
+		clean_textures.o        \
+		validation_utils.o       \
+		parse_not_utils.o	  \
+		tiny_parsing_helpers.o	   \
+		parse_definitely_not_utils.o\
 
 OS := $(shell uname -s)
 
 ifeq ($(OS), Darwin)
-	LINKS = -lmlx42 -L"$(HOME)/.brew/opt/glfw/lib/"
+	LINKS = -lmlx42 # -L"$(HOME)/.brew/opt/glfw/lib/"
 else
 	LINKS = -lmlx42_linux -ldl -pthread -lm
 endif
 
 OBJS = $(foreach obj, $(OBJS_FILES), $(OBJSFOLDER)$(obj))
-HEADER_FILES	=	$(INCLUDEFOLDER)draw.h \
-					$(INCLUDEFOLDER)fps.h \
-					$(INCLUDEFOLDER)get_next_line.h \
-					$(INCLUDEFOLDER)hooks.h \
-					$(INCLUDEFOLDER)libft.h \
-					$(INCLUDEFOLDER)parse.h \
-					$(INCLUDEFOLDER)structs.h \
-					$(INCLUDEFOLDER)test.h \
-					$(INCLUDEFOLDER)unused.h \
-					$(INCLUDEFOLDER)utils.h \
-					$(INCLUDEFOLDER)validation.h \
-					$(INCLUDEFOLDER)vectors.h
+HEADER_FILES	=	$(INCLUDEFOLDER)draw.h		\
+				$(INCLUDEFOLDER)test.h	  \
+				$(INCLUDEFOLDER)hooks.h	   \
+				$(INCLUDEFOLDER)libft.h	    \
+				$(INCLUDEFOLDER)parse.h	     \
+				$(INCLUDEFOLDER)structs.h     \
+				$(INCLUDEFOLDER)validation.h   \
+				$(INCLUDEFOLDER)get_next_line.h	\
 
 GLOBAL_HEADERS = include/structs.h
 
 LIBFT = src/libft/libft.a
 
-all: objs $(LIBFT) $(NAME)
+all: objs lib/libmlx42.a $(LIBFT) $(LIB) $(NAME)
 
 objs:
 	@mkdir objs
@@ -74,11 +80,14 @@ mlx/libmlx42.a:
 	make -C mlx
 
 lib/libmlx42.a: mlx/libmlx42.a
-	-mkdir lib/
+	-mkdir lib/ 2>/dev/null
 	cp mlx/libmlx42.a lib/
 
-$(NAME): $(OBJS) lib/libmlx42.a
-	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
+$(NAME): lib/libmlx42.a $(OBJS) $(LIB)
+	$(CC) $(OBJS) $(CFLAGS) $(LIBFT) $(LIB) -o $@ -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
+
+$(LIB): $(HOT_RELOAD) $(HOT_RELOAD_H)
+	$(CC) $(CFLAGS) $(LIBFT) -shared $(HOT_RELOAD) -o $(LIB) -L`pwd`/lib $(LINKS) $(LINK_H) -lglfw
 
 $(OBJSFOLDER)%.o: src/drawing/%.c include/draw.h $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) $(LINK_H) -c $< -o $@

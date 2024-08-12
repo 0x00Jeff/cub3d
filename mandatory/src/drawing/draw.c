@@ -12,6 +12,7 @@
 
 #include <draw.h>
 #include <structs.h>
+#include <stdio.h>
 
 void	rotate_player(t_vars *vars)
 {
@@ -74,16 +75,20 @@ void	draw_surroundings(t_vars *vars)
 
 	ceil_color = adjust_transparancy(vars -> map.colors.ceiling, 0.5);
 	floor_color = adjust_transparancy(vars -> map.colors.floor, 0.5);
-	draw_rectangle(vars, (t_vector){0, 0}, (t_vector){M_WIDTH, M_HEIGHT / 2},
+	draw_rectangle(vars, (t_vector){0, 0}, (t_vector){M_WIDTH, M_HEIGHT >> 1},
 		ceil_color);
-	draw_rectangle(vars, (t_vector){0, M_HEIGHT / 2}, (t_vector){M_WIDTH,
+	draw_rectangle(vars, (t_vector){0, M_HEIGHT >> 1}, (t_vector){M_WIDTH,
 		M_HEIGHT}, floor_color);
 }
 
-void	do_graphics(t_vars *vars)
+
+
+void	ft_do_graphics(t_vars *vars)
 {
 	static int		a;
 	static double	old_time;
+	(void)old_time;
+	(void)vars;
 
 	if (a++ == 0)
 	{
@@ -91,14 +96,14 @@ void	do_graphics(t_vars *vars)
 		shoot_rays(vars, RAYS_NUM);
 		draw_fps(vars);
 	}
-	if (mlx_get_time() - old_time > 0.016)
-	{
-		move_player(vars);
+//	if (mlx_get_time() - old_time > 0.016)
+//	{
+//		move_player(vars);
 		old_time = mlx_get_time();
 		if (!needs_clearing(vars))
 			return ;
 		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
 		draw_fps(vars);
-	}
+//	}
 }

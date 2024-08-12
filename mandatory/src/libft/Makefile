@@ -27,7 +27,7 @@ $(NAME) : $(OBJ) ../../include/libft.h
 	ar rcs $@ $(OBJ)
 
 bonus : $(OBJ) $(bonus_obj) ../../include/libft.h
-	ar rcs $(NAME) $^
+	ar rcs $(NAME) $(OBJ) $(bonus_obj)
 
 %.o : %.c libft.h
 	$(CC) $(CFLAGS)  -c $< -o $@

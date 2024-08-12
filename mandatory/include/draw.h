@@ -16,7 +16,6 @@
 # include <math.h>
 # include <structs.h>
 # include <utils.h>
-# include <vectors.h>
 # define ROT_SPEED 4
 # define TILE_SIZE 64
 # define SPEED 5

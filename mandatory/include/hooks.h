@@ -15,6 +15,11 @@
 # include "../include/structs.h"
 # include "../mlx/include/MLX42/MLX42.h"
 
+typedef void	(*t_do_graphics)(t_vars *vars);
+t_do_graphics	g_do_graphics_ptr = NULL;
+void			*g_module = NULL;
+#define NOT_SYSTEM system
+
 enum
 {
 	ON_KEYDOWN = 2,
