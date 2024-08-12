@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:45:47 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 17:52:39 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:11:57 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ bool	col_space_or_wall(int *line, size_t width, size_t height)
 
 bool	test_set_horizontal(t_map *m, int *first_line, int *last_line)
 {
-	ll	i;
+	long long	i;
 
 	i = 0;
-	while (i < (ll)m->height
+	while (i < (long long)m->height
 		&& line_space_or_wall(&m->data[i * m->width], m->width, m->height))
 		i++;
-	if (i >= (ll)m->height)
+	if (i >= (long long)m->height)
 		return (false);
 	*first_line = i;
 	i = m->height - 1;
@@ -48,13 +48,13 @@ bool	test_set_horizontal(t_map *m, int *first_line, int *last_line)
 
 bool	test_set_vertical(t_map *m, int *first_col, int *last_col)
 {
-	ll	i;
+	long long	i;
 
 	i = 0;
-	while (i < (ll)m->width
+	while (i < (long long)m->width
 		&& col_space_or_wall(&m->data[i], m->width, m->height))
 		i++;
-	if (i >= (ll)m->width)
+	if (i >= (long long)m->width)
 		return (false);
 	*first_col = i;
 	i = m->width - 1;

@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   p_map_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 12:16:48 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 16:11:14 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:14:27 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parse.h>
 #include <structs.h>
+#include <utils.h>
 
 int	open_file(char *file)
 {
@@ -21,7 +22,11 @@ int	open_file(char *file)
 		return (-1);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
+	{
+		ft_putstr_fd("Error\n", 2);
 		perror("open");
+		exit(EXIT_FAILURE);
+	}
 	return (fd);
 }
 
@@ -33,76 +38,42 @@ t_map	*init_map(char *file)
 		return (NULL);
 	map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!map)
-		return (NULL);
-	// TODO : delete the following 2 lines, they're just for debugging a bug
-	map->colors.floor = 20;
-	map->colors.ceiling = 20;
-	map->colors.floor_set = 0;
-	map->colors.ceiling_set = 0;
+		err_and_exit("Can't allocate region");
 	return (map);
 }
 
-void	destroy_map(t_map *map)
-{
-	int	i;
-
-	if (!map)
-		return ;
-	// TODO : use this function!
-	i = 0;
-	while (i < 4)
-	{
-		if (map->tex[i])
-		{
-			free(map->tex[i]);
-			map->tex[i] = NULL;
-		}
-		i++;
-	}
-}
-
-int	set_map_colors(t_map *map, char *_obj, char *lgbt_colors)
+int	set_map_colors(t_map *m, char *_obj, char *lgbt_colors)
 {
 	int		*where;
-	int		*flag;
+	int		*f;
 	char	**ptr;
-	char	obj;
 
-	if (!map || !lgbt_colors || !_obj)
+	f = NULL;
+	where = NULL;
+	if (!m || !lgbt_colors || !_obj)
 		return (-1);
-	obj = *_obj;
-	if (obj == 'F')
-		set_where_and_flag(&where, &flag, &map->colors.floor,
-			&map->colors.floor_set);
-	else if (obj == 'C')
-		set_where_and_flag(&where, &flag, &map->colors.ceiling,
-			&map->colors.ceiling_set);
+	if (!ft_strncmp(_obj, "F", 2))
+		set_where_and_flag(&where, &f, &m->colors.floor, &m->colors.floor_set);
+	else if (!ft_strncmp(_obj, "C", 2))
+		set_where_and_flag(&where, &f, &m->colors.ceiling,
+			&m->colors.ceiling_set);
 	else
-		return (ft_putstr_fd("Error: invalid objects!\n", 2), -1);
-	if (*flag)
-		return (ft_putstr_fd("duplicated colors\n!", 2), -1);
+		err_and_exit("Invalid surrounding!\n");
+	if (*f)
+		err_and_exit("Duplicated colors!\n");
 	ptr = ft_split(lgbt_colors, ',');
+	if (check_digit_list(ptr))
+		err_and_exit("Rgb not a numeric value!\n");
 	*where = construct_lgbt(ptr[0], ptr[1], ptr[2]);
-	*flag = (*where != -1);
+	*f = (*where != -1);
 	return (free_list(ptr), *where);
 }
 
-t_map_data	*read_map(t_map *map)
+static void	read_and_append(t_map_data *map_data, t_map *m, char *line, int fd)
 {
-	t_map_data	*map_data;
-	char		*line;
-	int			fd;
-	int			i;
+	int	i;
 
-	map_data = (t_map_data *)ft_calloc(1, sizeof(t_map_data));
-	if (!map_data)
-		return (NULL);
 	i = 0;
-	fd = map->fd;
-	line = get_next_line(fd);
-	if (line)
-		line[ft_strlen(line) - 1] = 0;
-	puts(line);
 	while (line && ft_strlen(line))
 	{
 		append_map_node(map_data, line);
@@ -110,10 +81,32 @@ t_map_data	*read_map(t_map *map)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		puts(line);
 		line[ft_strlen(line) - 1] = 0;
 	}
-	map->height = i;
+	free(line);
+	m->height = i;
 	map_data->height = i;
+}
+
+t_map_data	*read_map(t_map *map)
+{
+	t_map_data	*map_data;
+	char		*line;
+	const int	fd = map -> fd;
+
+	map_data = (t_map_data *)ft_calloc(1, sizeof(t_map_data));
+	if (!map_data)
+		return (NULL);
+	line = get_next_line(fd);
+	if (line)
+		line[ft_strlen(line) - 1] = 0;
+	while (line && !ft_strlen(line))
+	{
+		free(line);
+		line = get_next_line(fd);
+		if (line)
+			line[ft_strlen(line) - 1] = 0;
+	}
+	read_and_append(map_data, map, line, fd);
 	return (map_data);
 }

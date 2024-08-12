@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:26 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/12 16:48:07 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:16:33 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define VALIDATION_H
 # include <parse.h>
 # include <structs.h>
-# define ll long long
 
 enum
 {

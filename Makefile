@@ -38,6 +38,7 @@ OBJS_FILES = test.o				\
 			texture_utils.o				   \
 			parse_not_utils.o				\
 			parse_definitely_not_utils.o	 \
+			tiny_parsing_helpers.o
 
 OS := $(shell uname -s)
 
@@ -80,7 +81,7 @@ $(OBJSFOLDER)%.o: src/validation/%.c $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/parsing/%.c include/parse.h $(GLOBAL_HEADERS)
-	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@
+	$(CC) $(CFLAGS) -Wno-bitwise-instead-of-logical -fPIC $(LINK_H) -c $< -o $@
 
 $(OBJSFOLDER)%.o: src/%.c $(GLOBAL_HEADERS)
 	$(CC) $(CFLAGS) -fPIC $(LINK_H) -c $< -o $@

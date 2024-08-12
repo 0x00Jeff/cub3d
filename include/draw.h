@@ -6,7 +6,7 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:32:59 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/11 17:50:27 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:00:32 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <vectors.h>
 # define ROT_SPEED 4
 # define TILE_SIZE 64
-# define SPEED ((double)5 / (double)TILE_SIZE)
+# define SPEED 5
 # define RAY_LEN 10
 # define RAYS_NUM 1920
 # define MAP_SCALE_FACTOR 0.5
@@ -33,6 +33,7 @@ typedef struct e_wall
 	double		len;
 }				t_wall;
 
+void			do_graphics(t_vars *vars);
 double			if_else(bool condition, double _true, double _false);
 void			set_intersection_point(t_ray *ray, t_vector intersect,
 					double dist);
@@ -54,6 +55,11 @@ void			move_player(t_vars *vars);
 void			draw_map(t_vars *vars);
 void			dda(t_vars *vars, t_vector *direction, double angle,
 					t_ray *ray);
+void			init_intersections(t_vars *vars, t_intersection *inter,
+					t_vector *direction, double angle);
+void			init_steps(t_intersection *inter,
+					t_vector *direction, double angle);
 void			draw_stripe(t_vars *vars, t_ray *ray, int x, double angle);
 void			draw_surroundings(t_vars *vars);
+void			draw_fps(t_vars *vars);
 #endif

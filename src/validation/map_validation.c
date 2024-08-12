@@ -6,31 +6,26 @@
 /*   By: afatimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:01:27 by afatimi           #+#    #+#             */
-/*   Updated: 2024/02/13 15:26:43 by afatimi          ###   ########.fr       */
+/*   Updated: 2024/02/14 18:01:25 by afatimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <validation.h>
+#include <utils.h>
 
 int	validator(t_vars *vars)
 {
 	t_map	*map;
 
-
 	map = &vars->map;
 	if (check_for_invalid_characters(map))
-		return (ft_putstr_fd("Error\nfound weird chars in map!\n", \
-			2), 1);
-	printf("%ld players found\n", count_players(map));
-	display_map(map);
+		err_and_exit("found weird chars in map!\n");
 	if (count_players(map) != 1)
-		return (ft_putstr_fd("Error\nThere has to be one player on the map\n", \
-			2), 1);
+		err_and_exit("There has to be one player on the map\n");
 	register_player_pos(vars, map);
 	if (validate_map(map) == -1)
-		return (ft_putstr_fd("Error\nInvalid map\n", \
-			2), 1);
+		err_and_exit("Invalid map\n");
 	return (0);
 }
 
@@ -38,9 +33,9 @@ bool	zero_or_one(t_map *map, int x, int y)
 {
 	int	val;
 
-	if (x < 0 || x >= (ll)map->width)
+	if (x < 0 || x >= (long long)map->width)
 		return (false);
-	if (y < 0 || y >= (ll)map->height)
+	if (y < 0 || y >= (long long)map->height)
 		return (false);
 	val = map->data[y * map->width + x];
 	return (val == 1 || val == 0);
@@ -48,7 +43,6 @@ bool	zero_or_one(t_map *map, int x, int y)
 
 bool	check_neighbours_binary(t_map *map, t_ivector pt)
 {
-	// TODO: add bonus characters
 	if (map->data[(pt.y) * map->width + (pt.x)] == WALL)
 		return (true);
 	if (map->data[(pt.y) * map->width + (pt.x)] == SPACE_IN_MAP)
