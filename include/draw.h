@@ -19,7 +19,7 @@
 # include <vectors.h>
 # define ROT_SPEED 4
 # define TILE_SIZE 64
-# define SPEED 5
+# define SPEED 0.25
 # define RAY_LEN 10
 # define RAYS_NUM 1920
 # define MAP_SCALE_FACTOR 0.5
