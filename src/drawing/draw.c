@@ -10,11 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <fps.h> // TODO : delete this later
-//#include <unused.h> // TODO : delete this later
-#include<unused.h> // TODO : delete this!!
+#include <unused.h> // TODO : delete this later
 #include <draw.h>
 #include <structs.h>
+#include <fps.h>
 
 void	rotate_player(t_vars *vars)
 {
@@ -75,9 +74,9 @@ void	draw_surroundings(t_vars *vars)
 
 	ceil_color = adjust_transparancy(vars -> map.colors.ceiling, 1);
 	floor_color = adjust_transparancy(vars -> map.colors.floor, 1);
-	draw_rectangle(vars, (t_vector){0, 0}, (t_vector){M_WIDTH, M_HEIGHT / 2},
+	draw_rectangle(vars, (t_vector){0, 0}, (t_vector){M_WIDTH, M_HEIGHT >> 1},
 		ceil_color);
-	draw_rectangle(vars, (t_vector){0, M_HEIGHT / 2}, (t_vector){M_WIDTH,
+	draw_rectangle(vars, (t_vector){0, M_HEIGHT >> 1}, (t_vector){M_WIDTH,
 		M_HEIGHT}, floor_color);
 }
 
@@ -93,7 +92,7 @@ void	do_graphics(t_vars *vars)
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars);
 		draw_map(vars);
-		display_fps(vars);
+		draw_fps(vars);
 	}
 	if (mlx_get_time() - old_time > 0.016)
 	{
@@ -101,14 +100,14 @@ void	do_graphics(t_vars *vars)
 		old_time = mlx_get_time();
 		if (!needs_clearing(vars))
 		{
-			display_fps(vars);
+			draw_fps(vars);
 			return ;
 		}
 		draw_surroundings(vars);
 		shoot_rays(vars, RAYS_NUM);
 		draw_player(vars); // TODO : delete this!!
 		draw_map(vars);
-		display_fps(vars);
+		draw_fps(vars);
 	}
 }
 

@@ -42,8 +42,8 @@ void	draw_rectangle(t_vars *vars, t_vector start, t_vector end, int color)
 
 void static	init_wall(t_wall *wall)
 {
-	wall->draw_start.y = M_HEIGHT / 2 - wall->len / 2;
-	wall->draw_end.y = M_HEIGHT / 2 + wall->len / 2;
+	wall->draw_start.y = (M_HEIGHT >> 1) - (wall->len / 2);
+	wall->draw_end.y = (M_HEIGHT >> 1) + (wall->len / 2);
 	wall->start_y = wall->draw_start.y;
 	wall->end_y = wall->draw_end.y;
 	if (wall->draw_start.y < 0)

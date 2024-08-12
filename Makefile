@@ -10,6 +10,7 @@ INCLUDEFOLDER = include/
 LIB = lib/lib.so
 
 HOT_RELOAD_FILES = draw.o	  \
+			fps.o \
 				   shapes.o	   \
 				draw_utils.o	\
 				rays.o			 \
@@ -41,7 +42,7 @@ OBJS_FILES = test.o				\
 OS := $(shell uname -s)
 
 ifeq ($(OS), Darwin)
-	LINKS = -lmlx42 -L"$(HOME)/.brew/opt/glfw/lib/"
+	LINKS = -lmlx42 
 else
 	LINKS = -lmlx42_linux -ldl -pthread -lm
 endif
